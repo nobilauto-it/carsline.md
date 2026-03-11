@@ -13,3 +13,6 @@ backend/venv/
 frontend/api/venv/
 
 frontend/api/
+
+__pycache__/
+*.pyc
