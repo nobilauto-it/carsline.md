@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include("../partials/head-links.html", {"title": "Carento - Car rental Bootstrap 5 Template"})
+  </head>
+
+  <body>
+    <!-- prettier-ignore -->
+    @@include("../partials/preloader.html") 
+    @@include("../partials/header-2.html"  )
+    <main class="main">
+      <!-- prettier-ignore -->
+      @@include("../partials/page-header.html", {
+        "banner": "assets/imgs/page-header/banner8.png",
+        "title": "Peugeot Sheffield",
+        "description": "Since 2012",
+        "navigation-page": "d-none",
+        "current-page": "",
+      })
+      @@include("../sections/dealer/dealer-details.html")
+      @@include("../sections/cars-listing/cars-listing-10.html")  
+      @@include("../partials/footer-1.html")
+      @@include("../partials/scripts.html")    
+  </body>
+</html>

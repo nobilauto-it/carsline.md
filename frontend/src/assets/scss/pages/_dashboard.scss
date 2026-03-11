@@ -1,0 +1,55 @@
+.btn-edit {
+  width: 28px;
+  height: 28px;
+  background-color: var(--bs-neutral-200);
+  text-align: center;
+}
+.avatar {
+  position: relative;
+  height: 2.625rem;
+  width: 2.625rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  &.avatar-xl {
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.25rem;
+  }
+  &.avatar-xxl {
+    width: 5rem;
+    height: 5rem;
+    min-height: 5rem;
+    max-width: 5rem;
+  }
+}
+.bg-neutral-100 {
+  background-color: $neutral-100;
+}
+.thumb-1 {
+  max-width: 80px;
+}
+.icon-addon {
+  position: absolute;
+  top: 3px;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  color: #393f4d;
+  pointer-events: none;
+  font-size: 1em;
+}
+.input-small {
+  color: #4e5561;
+  min-height: 32px;
+  padding: 4px 8px;
+  padding-left: 28px;
+  height: 36px;
+  font-size: 14px;
+  border-radius: 4px;
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include("../partials/head-links.html", {"title": "Carento - Car rental Bootstrap 5 Template"})
+  </head>
+
+  <body>
+    <!-- prettier-ignore -->
+    @@include("../partials/preloader.html") 
+    @@include("../partials/header-2.html"  )
+    <main class="main">
+      <!-- prettier-ignore -->
+      @@include("../partials/page-header.html", {
+        "banner": "assets/imgs/page-header/banner1.png",
+        "title": "Our Services",
+        "description": "Perfect service, top experts",
+        "current-page": "Services",
+      })
+      @@include("../sections/services/services-ilst-1.html")
+      @@include("../sections/banners/banners-3.html")
+      @@include("../sections/testimonials/testimonials-2.html")
+      @@include("../sections/cta/cta-10.html")
+      @@include("../sections/static/static-1.html", {
+        "classList": "border-bottom",
+        "classList2": "pt-65 pb-96",
+      })
+      @@include("../sections/blog/blog-1.html")  
+      @@include("../partials/footer-1.html")
+      @@include("../partials/scripts.html")    
+  </body>
+</html>

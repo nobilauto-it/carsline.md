@@ -1,0 +1,66 @@
+/* Стили для кнопки сортировки */
+.btn-sort {
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+}
+
+.btn-sort:hover {
+    background: #f8f9fa;
+    border-color: #007bff;
+    transform: scale(1.05);
+}
+
+.btn-sort:active {
+    transform: scale(0.95);
+}
+
+/* Состояние сортировки по возрастанию */
+.btn-sort.sort-asc {
+    background: #e3f2fd;
+    border-color: #2196f3;
+    color: #1976d2;
+}
+
+.btn-sort.sort-asc svg path {
+    stroke: #1976d2;
+}
+
+/* Состояние сортировки по убыванию */
+.btn-sort.sort-desc {
+    background: #f3e5f5;
+    border-color: #9c27b0;
+    color: #7b1fa2;
+}
+
+.btn-sort.sort-desc svg path {
+    stroke: #7b1fa2;
+}
+
+/* Анимация для SVG иконки */
+.btn-sort svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-sort.sort-asc svg {
+    transform: rotate(180deg);
+}
+
+/* Подсветка при наведении в активном состоянии */
+.btn-sort.sort-asc:hover {
+    background: #bbdefb;
+    border-color: #1976d2;
+}
+
+.btn-sort.sort-desc:hover {
+    background: #e1bee7;
+    border-color: #7b1fa2;
+}

@@ -1,0 +1,604 @@
+<!--Couner-->
+<div class="row">
+    <div class="col-xl-3 mb-2 mb-lg-0">
+        <div class="card shadow-none">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <span class="avatar avatar-xl rounded-circle bg-primary me-3">
+                        <i class="fi fi-rr-ticket-alt"></i>
+                    </span>
+                    <div>
+                        <p>Total Bookings</p>
+                        <h5><span class="odometer" data-count="425"></span></h5>
+                        <p><span class="text-success"><i class="fi fi-rr-arrow-small-up"></i>45%</span> This Week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 mb-2 mb-lg-0">
+        <div class="card shadow-none">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <span class="avatar avatar-xl rounded-circle bg-danger me-3">
+                        <i class="fi fi-rr-car-side"></i>
+                    </span>
+                    <div>
+                        <p>New Vehicles Listings</p>
+                        <h5><span class="odometer" data-count="15"></span></h5>
+                        <p><span class="text-danger">15%</span> This Week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 mb-2 mb-lg-0">
+        <div class="card shadow-none">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <span class="avatar avatar-xl rounded-circle bg-info me-3">
+                        <i class="fi fi-rr-sack-dollar"></i>
+                    </span>
+                    <div>
+                        <p>Total Transaction</p>
+                        <h5>$<span class="odometer" data-count="625"></span></h5>
+                        <p><span class="text-success"><i class="fi fi-rr-arrow-small-up"></i>25%</span> This Week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 mb-2 mb-lg-0">
+        <div class="card shadow-none">
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <span class="avatar avatar-xl rounded-circle bg-warning me-3">
+                        <i class="fi fi-rr-users-alt"></i>
+                    </span>
+                    <div>
+                        <p>New Agents</p>
+                        <h5><span class="odometer" data-count="12"></span></h5>
+                        <p><span class="text-danger"><i class="fi fi-rr-arrow-small-down"></i>5%</span> This Week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--notifications & recent bookings-->
+<div class="row mt-4">
+    <!-- Booking -->
+    <div class="col-xl-12 d-flex">
+        <div class="card shadow-none flex-fill">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="neutral-1000 text-md-bold fs-5">Earnings</span>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle btn btn-sort bg-neutral-100 btn-sm text-gray-6 rounded-pill fw-normal fs-8 d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                            <i class="fi fi-rr-filter-list me-2"></i>Fillter
+                        </a>
+                        <ul class="dropdown-menu small dropdown-menu-end p-2">
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>Success
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>Pending
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>Canceled
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>Total Earnings</p>
+                <div class="d-flex align-items-end gap-3">
+                    <h6 class="text-primary-dark">$125.987</h6>
+                    <span><span class="text-success me-2"><i class="fi fi-rr-arrow-small-up"></i>5%</span>vs last years</span>
+                </div>
+
+                <div class="card shadow-none mb-2 mt-3">
+                    <div class="card-body">
+                        <div id="chart-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Booking -->
+
+</div>
+
+<div class="row mt-4">
+    <div class="col-xl-12">
+        <div class="card shadow-none flex-fill">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="neutral-1000 text-md-bold fs-5">Latest Invoices</span>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle btn btn-sort bg-neutral-100 btn-sm text-gray-6 rounded-pill fw-normal fs-8 d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                            <i class="fi fi-rr-filter-list me-2"></i>Fillter
+                        </a>
+                        <ul class="dropdown-menu small dropdown-menu-end p-2">
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>Recent
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table datatable table-striped">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Car &amp; Type</th>
+                                <th>Travellers</th>
+                                <th>Days</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="javascript:void(0);" class="text-primary-dark fw-medium">#CR-5236</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="cars-details-1.html" class="avatar avatar-lg"><img src="assets/imgs/cars-listing/cars-listing-6/car-7.png" class="img-fluid" alt="img"></a>
+                                        <div class="ms-2">
+                                            <p class="text-dark mb-0 fw-medium fs-14"><a href="cars-details-1.html">Infiniti QX60 </a></p>
+                                            <span class="fs-14 fw-normal neutral-500">Hatchback</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    2 Adults, 2 Child
+                                </td>
+                                <td>5 Days</td>
+                                <td>$2,380</td>
+                                <td>12 Jul 2025</td>
+                                <td>
+                                    <span class="badge badge-warning rounded-pill d-inline-flex align-items-center fs-10"><i class="fi fi-rr-caret-right me-1"></i>Pending</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" class="text-primary-dark fw-medium">#CR-1256</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="cars-details-1.html" class="avatar avatar-lg"><img src="assets/imgs/cars-listing/cars-listing-6/car-8.png" class="img-fluid" alt="img"></a>
+                                        <div class="ms-2">
+                                            <p class="text-dark mb-0 fw-medium fs-14"><a href="cars-details-1.html">Toyota 86 Coupe</a></p>
+                                            <span class="fs-14 fw-normal neutral-500">Sedan</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    2 Adults, 1 Child
+                                </td>
+                                <td>3 Days</td>
+                                <td>$1,400</td>
+                                <td>26 Jul 2025</td>
+                                <td>
+                                    <span class="badge badge-success rounded-pill d-inline-flex align-items-center fs-10"><i class="fi fi-rr-caret-right me-1"></i>Completed</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" class="text-primary-dark fw-medium">#CR-2356</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="cars-details-1.html" class="avatar avatar-lg"><img src="assets/imgs/cars-listing/cars-listing-6/car-9.png" class="img-fluid" alt="img"></a>
+                                        <div class="ms-2">
+                                            <p class="text-dark mb-0 fw-medium fs-14"><a href="cars-details-1.html">Jeep Wrangler</a></p>
+                                            <span class="fs-14 fw-normal neutral-500">Coupe</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    2 Adults, 2 Child
+                                </td>
+                                <td>2 Days</td>
+                                <td>$1,810</td>
+                                <td>10 Aug 2025</td>
+                                <td>
+                                    <span class="badge badge-success rounded-pill d-inline-flex align-items-center fs-10"><i class="fi fi-rr-caret-right me-1"></i>Completed</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" class="text-primary-dark fw-medium">#CR-5414</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="cars-details-1.html" class="avatar avatar-lg"><img src="assets/imgs/cars-listing/cars-listing-6/car-10.png" class="img-fluid" alt="img"></a>
+                                        <div class="ms-2">
+                                            <p class="text-dark mb-0 fw-medium fs-14"><a href="cars-details-1.html">Jaguar XK</a></p>
+                                            <span class="fs-14 fw-normal neutral-500">Sedan</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    3 Adults, 1 Child
+                                </td>
+                                <td>2 Days</td>
+                                <td>$1,450</td>
+                                <td>22 Aug 2025</td>
+                                <td>
+                                    <span class="badge badge-danger rounded-pill d-inline-flex align-items-center fs-10"><i class="fi fi-rr-caret-right me-1"></i>Canceled</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">
+                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.00016 1.33325L1.3335 5.99992M1.3335 5.99992L6.00016 10.6666M1.3335 5.99992H10.6668" stroke="" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">
+                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.99967 10.6666L10.6663 5.99992L5.99968 1.33325M10.6663 5.99992L1.33301 5.99992" stroke="" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <!-- Notifications -->
+    <div class="col-xl-5 d-flex">
+        <div class="card shadow-none flex-fill">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="neutral-1000 text-md-bold fs-5">Notifications</span>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle btn btn-sort bg-neutral-100 btn-sm text-gray-6 rounded-pill fw-normal fs-8 d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                            <i class="fi fi-rr-filter-list me-2"></i>All
+                        </a>
+                        <ul class="dropdown-menu small dropdown-menu-end p-2">
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>Recent
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="d-flex align-items-center mb-3">
+                    <span class="avatar avatar-lg bg-primary rounded-circle flex-shrink-0 me-2 lh-1">
+                        <i class="fi fi-rr-calendar-clock"></i>
+                    </span>
+                    <div class="flex-fill overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="fs-6 text-truncate text-md-bold">Reservation Confirmed</p>
+                            <p class="fs-8 text-primary-dark text-nowrap">2 mins ago</p>
+                        </div>
+                        <p class="fs-8 two-line-ellipsis neutral-500">Your car rental reservation
+                            <span class="text-md-bold neutral-700">#12345</span> has been
+                            successfully confirmed.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <span class="avatar avatar-lg bg-warning rounded-circle flex-shrink-0 me-2 lh-1">
+                        <i class="fi fi-rr-money-check-edit"></i>
+                    </span>
+                    <div class="flex-fill overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="fs-6 text-truncate text-md-bold">Payment Successful</p>
+                            <p class="fs-8 text-primary-dark text-nowrap">25 mins ago</p>
+                        </div>
+                        <p class="fs-8 two-line-ellipsis neutral-500">Payment for your upcoming rental has been
+                            processed successfully.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <span class="avatar avatar-lg bg-info rounded-circle flex-shrink-0 me-2 lh-1">
+                        <i class="fi fi-rr-bolt"></i>
+                    </span>
+                    <div class="flex-fill overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="fs-6 text-truncate text-md-bold">New Promotion Alert</p>
+                            <p class="fs-8 text-primary-dark text-nowrap">2 hours ago</p>
+                        </div>
+                        <p class="fs-8 two-line-ellipsis neutral-500">Enjoy
+                            <span class="text-md-bold neutral-700">20%</span> off on all SUV rentals booked this
+                            weekend.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <span class="avatar avatar-lg bg-danger rounded-circle flex-shrink-0 me-2 lh-1">
+                        <i class="fi fi-rr-bell-ring"></i>
+                    </span>
+                    <div class="flex-fill overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="fs-6 text-truncate text-md-bold">Vehicle Ready for Pickup</p>
+                            <p class="fs-8 text-primary-dark text-nowrap">4 days ago</p>
+                        </div>
+                        <p class="fs-8 two-line-ellipsis neutral-500">The vehicle you reserved is ready for pickup at
+                            the designated location.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /Notifications -->
+    <!-- Booking -->
+    <div class="col-xl-7 d-flex">
+        <div class="card shadow-none flex-fill">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="neutral-1000 text-md-bold fs-5">Recent Bookings</span>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle btn btn-sort bg-neutral-100 btn-sm text-gray-6 rounded-pill fw-normal fs-8 d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                            <i class="fi fi-rr-filter-list me-2"></i>Fillter
+                        </a>
+                        <ul class="dropdown-menu small dropdown-menu-end p-2">
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item rounded-1">
+                                    <i class="ti ti-point-filled me-1"></i>Recent
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card shadow-none mb-2">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center flex-wrap row-gap-2">
+                            <a href="cars-details-1.html" class="thumb-1 flex-shrink-0 me-2">
+                                <img src="assets/imgs/cars-listing/cars-listing-6/car-1.png" class="img-fluid" alt="Img">
+                            </a>
+                            <div class="flex-fill">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <p class="fs-6 text-truncate text-md-bold"><a href="cars-details-1.html">GMC Sierra
+                                            2500HD Denali
+                                            <span class="text-gray-5 fw-normal fs-8">( Australia )</span></a>
+                                    </p>
+                                    <span class="badge badge-purple badge-sm neutral-500 rounded-pill"><i class="ti ti-point-filled me-1"></i>Paid</span>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <p class="fs-8 d-flex align-items-center border-end pe-2 me-2 mb-0"><i class="isax isax-calendar-25 me-2"></i>Date : 01 Jan 2025</p>
+                                    <p class="fs-8 d-flex align-items-center"><i class="isax isax-timer5 me-2"></i>Time:
+                                        06:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-none mb-2">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center flex-wrap row-gap-2">
+                            <a href="cars-details-1.html" class="thumb-1 flex-shrink-0 me-2">
+                                <img src="assets/imgs/cars-listing/cars-listing-6/car-2.png" class="img-fluid" alt="Img">
+                            </a>
+                            <div class="flex-fill">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <p class="fs-6 text-truncate text-md-bold"><a href="cars-details-1.html">Ford
+                                            Mustang GT Premium
+                                            <span class="text-gray-5 fw-normal fs-8">( Australia )</span></a>
+                                    </p>
+                                    <span class="badge badge-purple badge-sm neutral-500 rounded-pill"><i class="ti ti-point-filled me-1"></i>Paid</span>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <p class="fs-8 d-flex align-items-center border-end pe-2 me-2 mb-0"><i class="isax isax-calendar-25 me-2"></i>Date : 01 Jan 2025</p>
+                                    <p class="fs-8 d-flex align-items-center"><i class="isax isax-timer5 me-2"></i>Time:
+                                        06:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-none mb-2">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center flex-wrap row-gap-2">
+                            <a href="cars-details-1.html" class="thumb-1 flex-shrink-0 me-2">
+                                <img src="assets/imgs/cars-listing/cars-listing-6/car-3.png" class="img-fluid" alt="Img">
+                            </a>
+                            <div class="flex-fill">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <p class="fs-6 text-truncate text-md-bold"><a href="cars-details-1.html">Subaru
+                                            Impreza WRX STI
+                                            <span class="text-gray-5 fw-normal fs-8">( Australia )</span></a>
+                                    </p>
+                                    <span class="badge badge-purple badge-sm neutral-500 rounded-pill"><i class="ti ti-point-filled me-1"></i>Paid</span>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <p class="fs-8 d-flex align-items-center border-end pe-2 me-2 mb-0"><i class="isax isax-calendar-25 me-2"></i>Date : 01 Jan 2025</p>
+                                    <p class="fs-8 d-flex align-items-center"><i class="isax isax-timer5 me-2"></i>Time:
+                                        06:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-none mb-2">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center flex-wrap row-gap-2">
+                            <a href="cars-details-1.html" class="thumb-1 flex-shrink-0 me-2">
+                                <img src="assets/imgs/cars-listing/cars-listing-6/car-4.png" class="img-fluid" alt="Img">
+                            </a>
+                            <div class="flex-fill">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <p class="fs-6 text-truncate text-md-bold"><a href="cars-details-1.html">Mazda MX-5
+                                            Miata Club
+                                            <span class="text-gray-5 fw-normal fs-8">( Australia )</span></a>
+                                    </p>
+                                    <span class="badge badge-purple badge-sm neutral-500 rounded-pill"><i class="ti ti-point-filled me-1"></i>Paid</span>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <p class="fs-8 d-flex align-items-center border-end pe-2 me-2 mb-0"><i class="isax isax-calendar-25 me-2"></i>Date : 01 Jan 2025</p>
+                                    <p class="fs-8 d-flex align-items-center"><i class="isax isax-timer5 me-2"></i>Time:
+                                        06:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Booking -->
+</div>
+
+
+
+<div class="row mt-4">
+    <div class="col-xl-12">
+        <div class="card shadow-none flex-fill">
+            <div class="card-header">
+                <p class="neutral-1000 text-md-bold fs-5 py-1">Premium Brands</p>
+            </div>
+            <div class="card-body">
+                <div class="carouselTicker carouselTicker-left box-list-brand-car justify-content-center  wow fadeIn">
+                    <ul class="carouselTicker__list">
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/lexus.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/lexus-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/mer.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/mer-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/bugatti.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/bugatti-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/jaguar.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/jaguar-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/honda.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/honda-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/chevrolet.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/chevrolet-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/acura.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/acura-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/bmw.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/bmw-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/toyota.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/toyota-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/lexus.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/lexus-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/mer.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/mer-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                        <li class="carouselTicker__item">
+                            <a href="cars-list-2.html" class="item-brand">
+                                <img class="light-mode" src="assets/imgs/page/homepage2/bugatti.png" alt="Carento" />
+                                <img class="dark-mode" src="assets/imgs/page/homepage2/bugatti-w.png" alt="Carento" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

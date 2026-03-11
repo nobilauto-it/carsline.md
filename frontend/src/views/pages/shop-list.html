@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include("../partials/head-links.html", {"title": "Carento - Car rental Bootstrap 5 Template"})
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    @@include("../partials/preloader.html") 
+    @@include("../partials/header-2.html"  )
+    <main class="main">
+      <!-- prettier-ignore -->
+      @@include("../partials/page-header-2.html", {
+        "image": "assets/imgs/page-header/banner9.png",
+        "tag": "Find cars for sale and for rent near you",
+        "title": "Find the Perfect Part at the <br > Best Price for Your Vehicle's Comfort",
+        "subtitle": "",
+        "prev-page": "Shop",
+        "current-page": "All items",
+      })
+      @@include("../sections/shop/shop-list.html")
+      @@include("../partials/footer-1.html")
+      @@include("../partials/scripts.html")    
+  </body>
+</html>

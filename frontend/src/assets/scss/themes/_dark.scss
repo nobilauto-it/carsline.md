@@ -1,0 +1,135 @@
+[data-bs-theme='dark'] {
+  --bs-border-color: #{$border-dark};
+  --bs-color-white: #{$neutral-0};
+  --bs-background-1000: #{$neutral-1000};
+  --bs-background-body: #{$background-body-dark};
+  --bs-background-1: #{$background-1-dark};
+  --bs-background-2: #{$background-2-dark};
+  --bs-background-3: #{$background-3-dark};
+  --bs-background-4: #{$background-4-dark};
+  --bs-background-5: #{$background-5-dark};
+  --bs-background-6: #{$background-6-dark};
+  --bs-background-7: #{$background-7-dark};
+  --bs-background-8: #{$background-8-dark};
+  --bs-background-9: #{$background-9-dark};
+  --bs-background-card: #{$background-card-dark};
+  --bs-neutral-0: #{$neutral-0-dark};
+  --bs-neutral-100: #{$neutral-100-dark};
+  --bs-neutral-200: #{$neutral-200-dark};
+  --bs-neutral-300: #{$neutral-300-dark};
+  --bs-neutral-400: #{$neutral-400-dark};
+  --bs-neutral-500: #{$neutral-500-dark};
+  --bs-neutral-600: #{$neutral-600-dark};
+  --bs-neutral-700: #{$neutral-700-dark};
+  --bs-neutral-800: #{$neutral-800-dark};
+  --bs-neutral-900: #{$neutral-900-dark};
+  --bs-neutral-1000: #{$neutral-1000-dark};
+  --bs-button-bg: #{$button-bg-dark};
+  --bs-button-bg-2: #{$button-bg-2-dark};
+  --bs-button-text: #{$button-text-dark};
+  --bs-button-text-2: #{$button-text-2-dark};
+  .dark-invert {
+    filter: invert(1) !important;
+  }
+  .card-popular .card-info .card-meta .meta-links a {
+    border: 0 !important;
+  }
+  .card {
+    border-color: $neutral-100-dark !important;
+    .card-header {
+      border-color:  $neutral-100-dark !important;
+    }
+  }
+  input {
+    border: 1px solid $neutral-100-dark !important;;
+  }
+  .dashboard {
+    .table {
+      border-color: #2E3031;
+      margin-block-end: 0;
+      thead tr {
+        border-color: #2E3031;
+      }
+      .thead-light th {
+        background-color: #2E3031;
+        color: #bcccf0;
+      }
+      tbody tr {
+        border-bottom: 1px solid #2E3031 !important;
+      }
+      td {
+        padding: 12px 20px;
+        vertical-align: middle;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .bg-neutral-100 {
+    background-color: #4b4b4b;
+  }
+  .btn {
+    &.neutral-500 {
+      color: #f4f4f4 !important;
+    }
+  }
+  .card-journey-small .card-info,
+  .card-news .card-info,
+  .card-flight.card-hotel .card-info
+  {
+    background-color: var(--bs-neutral-100);
+  }
+  .box-list-brand-car .item-brand,
+  .box-list-brand-car .item-brand-2
+  {
+    background-color: var(--bs-neutral-200);
+  }
+  .box-list-brand-car .item-brand-2 {
+    .neutral-500 {
+      color: var(--bs-neutral-800) !important;
+    }
+  }
+  .rounded-circle.background-100 {
+    background-color: var(--bs-neutral-200) !important;
+  }
+  .card-journey-small .card-info .card-program .card-location .text-location {
+    background: url(../imgs/template/icons/location-dark.svg) no-repeat left center;
+    padding-left: 20px;
+  }
+  .card-property.card-flight.card-hotel .card-facilities .item-facilities p.room {
+    background-image: url(../imgs/template/icons/mile-dark.svg);
+  }
+  .card-flight.card-hotel .card-info .card-program .card-location .text-location {
+    background: url(../imgs/template/icons/location-dark.svg) no-repeat left center;
+    padding-left: 20px;
+  }
+  .card-property.card-flight.card-hotel .card-facilities .item-facilities p.size {
+    background-image: url(../imgs/template/icons/automatic-dark.svg);
+  }
+  .card-property.card-flight.card-hotel .card-facilities .item-facilities p.parking {
+    background-image: url(../imgs/template/icons/suitcase-dark.svg);
+  }
+  .card-property.card-flight.card-hotel .card-facilities .item-facilities p.bed {
+    background-image: url(../imgs/template/icons/fuel-dark.svg);
+  }
+  .card-property.card-flight.card-hotel .card-facilities .item-facilities p.bathroom {
+    background-image: url(../imgs/template/icons/seat-dark.svg);
+  }
+  .card-property.card-flight.card-hotel .card-facilities .item-facilities p.pet {
+    background-image: url(../imgs/template/icons/car-dark.svg);
+  }
+  .item-feature-car img,
+  .container-banner-activities .box-button-abs .btn img{
+    filter: invert(1);
+  }
+  .card-contact .card-icon svg{
+    filter: invert(0);
+    path {
+      fill: #fff;
+    } 
+  }
+  li::marker {
+    color: #fff;
+  }
+}

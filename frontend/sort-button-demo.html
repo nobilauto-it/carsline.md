@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демо кнопки сортировки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="sort-button-styles.css" rel="stylesheet">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .demo-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .status-info {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>Демонстрация работы кнопки сортировки</h1>
+        
+        <div class="demo-section">
+            <h3>Кнопка сортировки</h3>
+            <p>Нажмите на кнопку ниже, чтобы переключить направление сортировки:</p>
+            
+            <!-- Кнопка сортировки -->
+            <a class="btn btn-sort" href="#" title="Переключить направление сортировки">
+                <svg width="18" height="18" viewbox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.25 6L5.25 3M5.25 3L2.25 6M5.25 3L5.25 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M9.75 12L12.75 15M12.75 15L15.75 12M12.75 15L12.75 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </a>
+            
+            <div class="status-info" id="statusInfo">
+                Текущее направление сортировки: <strong>desc</strong> (по убыванию)
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3>Как это работает:</h3>
+            <ul>
+                <li><strong>Клик по кнопке</strong> переключает направление сортировки между 'asc' и 'desc'</li>
+                <li><strong>Визуальные изменения</strong> показывают текущее состояние (цвет, подсказка)</li>
+                <li><strong>API запрос</strong> отправляется с параметром <code>sort_direction</code></li>
+                <li><strong>Данные перезагружаются</strong> с новым направлением сортировки</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h3>API запросы:</h3>
+            <div class="status-info" id="apiInfo">
+                Последний запрос: <code>GET /cars?page=1&limit=15&sort_direction=desc</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Простая демонстрация работы кнопки сортировки
+        class SortButtonDemo {
+            constructor() {
+                this.sortDirection = 'desc';
+                this.init();
+            }
+
+            init() {
+                const sortButton = document.querySelector('.btn-sort');
+                if (sortButton) {
+                    sortButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.toggleSortDirection();
+                    });
+                    console.log('Демо кнопки сортировки инициализировано');
+                }
+            }
+
+            toggleSortDirection() {
+                this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+                console.log(`Направление сортировки изменено на: ${this.sortDirection}`);
+                
+                // Обновляем визуальное состояние
+                this.updateVisualState();
+                
+                // Обновляем информацию о статусе
+                this.updateStatusInfo();
+                
+                // Симулируем API запрос
+                this.simulateApiRequest();
+            }
+
+            updateVisualState() {
+                const sortButton = document.querySelector('.btn-sort');
+                if (sortButton) {
+                    if (this.sortDirection === 'asc') {
+                        sortButton.classList.add('sort-asc');
+                        sortButton.classList.remove('sort-desc');
+                        sortButton.title = 'Сортировка по возрастанию (нажмите для убывания)';
+                    } else {
+                        sortButton.classList.add('sort-desc');
+                        sortButton.classList.remove('sort-asc');
+                        sortButton.title = 'Сортировка по убыванию (нажмите для возрастания)';
+                    }
+                }
+            }
+
+            updateStatusInfo() {
+                const statusInfo = document.getElementById('statusInfo');
+                const directionText = this.sortDirection === 'asc' ? 'asc (по возрастанию)' : 'desc (по убыванию)';
+                statusInfo.innerHTML = `Текущее направление сортировки: <strong>${directionText}</strong>`;
+            }
+
+            simulateApiRequest() {
+                const apiInfo = document.getElementById('apiInfo');
+                const apiUrl = `GET /cars?page=1&limit=15&sort_direction=${this.sortDirection}`;
+                apiInfo.innerHTML = `Последний запрос: <code>${apiUrl}</code>`;
+                
+                // Добавляем анимацию загрузки
+                apiInfo.style.opacity = '0.5';
+                setTimeout(() => {
+                    apiInfo.style.opacity = '1';
+                }, 500);
+            }
+        }
+
+        // Инициализируем демо
+        const sortDemo = new SortButtonDemo();
+    </script>
+</body>
+</html>

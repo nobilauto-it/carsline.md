@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include("../partials/head-links.html", {"title": "Carento - Car rental Bootstrap 5 Template"})
+  </head>
+
+  <body>
+    <!-- prettier-ignore -->
+    @@include("../partials/preloader.html") 
+    @@include("../partials/header-2.html"  )
+    <main class="main">
+      <!-- prettier-ignore -->
+      @@include("../partials/page-header.html", {
+        "banner": "assets/imgs/page-header/banner7.png",
+        "title": "Dealer Listing",
+        "description": "Professional car rental people",
+        "navigation-page": "d-none",
+        "current-page": "",
+      })
+      @@include("../sections/dealer/dealer-listing.html")
+      @@include("../sections/cta/cta-8.html")
+      @@include("../sections/static/static-1.html", {
+        "classList": "background-2 pt-80 pb-80",
+        "classList2": "",
+      }) 
+      @@include("../partials/footer-1.html")
+      @@include("../partials/scripts.html")    
+  </body>
+</html>

@@ -1,0 +1,1995 @@
+{% extends 'layouts/vertical.html' %}
+
+{% block title %}{% if page_title is defined %}{{ page_title }}{% else %}Дэшборд Test{% endif %}{% endblock %}
+
+{% block styles %}
+<link href="{{ config.ASSETS_ROOT }}/libs/simple-datatables/style.css" rel="stylesheet" type="text/css"/>
+<style>
+    .entity-table-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; margin-bottom: 16px; }
+    .entity-table-toolbar .btn-plus-content { width: 48px; height: 48px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; }
+    .entity-table-toolbar .btn-gear { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+    .entity-table-loading { padding: 24px; text-align: center; color: #64748b; }
+    .entity-table-grid-wrap { min-width: 0; overflow: auto; max-height: 70vh; }
+    /* Те же стили, что у шаблонных table.datatable.datatable-table (simple-datatables + _tables.scss) */
+    .entity-table-section .entity-table-grid-wrap .datatable-table,
+    .entity-table-section .entity-table-grid-wrap table.datatable-table {
+        width: max-content;
+        min-width: 100%;
+        border-spacing: 0;
+        border-collapse: separate;
+        white-space: nowrap;
+    }
+    .entity-table-section .entity-table-grid-wrap .datatable-table > thead {
+        background-color: var(--bs-light, #f8f9fa) !important;
+    }
+    .entity-table-section .entity-table-grid-wrap .datatable-table > thead > tr > th {
+        color: var(--bs-secondary-color, #495057);
+        font-weight: 500;
+        font-size: 0.875rem;
+        background-color: var(--bs-light, #f8f9fa);
+        vertical-align: middle;
+        text-align: left;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+    }
+    .entity-table-section .entity-table-grid-wrap .datatable-table > tbody > tr > td,
+    .entity-table-section .entity-table-grid-wrap .datatable-table > tbody > tr > th,
+    .entity-table-section .entity-table-grid-wrap .datatable-table > thead > tr > td {
+        vertical-align: middle;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 220px;
+        min-width: 4rem;
+    }
+    .entity-table-section .entity-table-grid-wrap .datatable-table th a {
+        text-decoration: none;
+        color: inherit;
+    }
+    .modal-entity-list .entity-group { margin-bottom: 16px; }
+    .modal-entity-list .entity-group-title { font-weight: 700; margin-bottom: 8px; }
+    .modal-entity-list .form-check { margin-bottom: 4px; }
+    .fields-modal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px; max-height: 400px; overflow-y: auto; }
+    .fields-modal-nested { margin-bottom: 12px; }
+    .fields-modal-nested .nested-title { font-weight: 600; margin-bottom: 6px; }
+    #paginationBlock.datatable-bottom { padding: 8px 10px; margin-top: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    #paginationBlock .datatable-input { padding: 6px 12px; margin: 0 4px; }
+    #paginationBlock .entity-table-pager-btn { border: 1px solid transparent; padding: 6px 12px; margin-left: 2px; text-decoration: none; color: #333; cursor: pointer; border-radius: 4px; background: transparent; font-size: inherit; }
+    #paginationBlock .entity-table-pager-btn:hover:not(:disabled) { background-color: #d9d9d9; }
+    #paginationBlock .entity-table-pager-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .entity-table-section .datatable-bottom.paginationBlockInSection { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 8px 0; margin-top: 0; width: 100%; max-width: 100%; min-width: 0; flex-shrink: 0; border-top: 1px solid var(--bs-border-color, #dee2e6); box-sizing: border-box; }
+    .entity-table-section .paginationBlockInSection .pagination-left-in-section { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+    .entity-table-section .paginationBlockInSection .paginationNavInSection { flex: 0 0 auto; min-width: 0; }
+    .entity-table-section .pagination-left-in-section { flex: 0 0 auto; }
+    .entity-table-section .datatable-pagination.paginationNavInSection { margin-left: auto; flex-shrink: 0; }
+    .entity-table-section .datatable-pagination ul { display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 0; list-style: none; }
+    .entity-table-section .datatable-pagination li button { padding: 6px 12px; border: 1px solid var(--bs-border-color, #dee2e6); border-radius: var(--bs-border-radius, 4px); background: var(--bs-card-bg, #fff); color: var(--bs-body-color); cursor: pointer; font-size: inherit; }
+    .entity-table-section .datatable-pagination li button:hover:not(:disabled) { background-color: var(--bs-tertiary-bg, #e9ecef); border-color: var(--bs-border-color); }
+    .entity-table-section .datatable-pagination li.datatable-active button { background-color: #6f6af8; border-color: #6f6af8; color: #fff; }
+    .entity-table-section .datatable-pagination li.datatable-disabled button { opacity: 0.4; cursor: not-allowed; }
+    .entity-list-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; max-height: 50vh; overflow-y: auto; }
+    @media (max-width: 576px) { .entity-list-two-cols { grid-template-columns: 1fr; } }
+    .entity-select-hint .entity-select-hint-icon { width: 24px; height: 24px; min-width: 24px; font-size: 14px; font-weight: 600; font-style: normal; }
+    #nestedCheckboxesRow .btn.nested-toggle.active { background-color: var(--bs-primary); color: #fff; border-color: var(--bs-primary); }
+    #gridTopRow #btnFields { margin-left: auto !important; }
+    .entity-table-grid-wrap th.entity-table-th-draggable { cursor: grab; user-select: none; }
+    .entity-table-grid-wrap th.entity-table-th-draggable:active { cursor: grabbing; }
+    .entity-table-grid-wrap th.dragging { opacity: 0.5; }
+    .entity-table-grid-wrap th.drag-over { border-left: 2px solid var(--bs-primary); background-color: rgba(var(--bs-primary-rgb), 0.08); }
+    /* auto — ширина колонок по содержимому; при ручном ресайзе сохраняем width в columnWidths */
+    .entity-table-grid-wrap .datatable-table { table-layout: auto; }
+    .entity-table-grid-wrap th.entity-table-th-wrap { position: relative; padding-right: 10px; }
+    .entity-table-grid-wrap th .entity-table-col-resize { position: absolute; right: 0; top: 0; bottom: 0; width: 6px; cursor: col-resize; user-select: none; }
+    .entity-table-grid-wrap th .entity-table-col-resize:hover { background: rgba(var(--bs-primary-rgb), 0.2); }
+    #entityTablesContainer { display: grid; gap: 1rem; align-items: start; }
+    .entity-table-section { min-width: 0; margin-bottom: 0; border: 1px solid var(--bs-border-color, #dee2e6); border-radius: 8px; padding: 1rem; background: var(--bs-body-bg, #fff); display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .entity-table-section .entity-table-toolbar { margin-bottom: 12px; }
+    .entity-table-section .gridTopRowInSection { margin-bottom: 12px; }
+    .entity-table-section .entity-table-grid-wrap { flex: 1 1 auto; min-height: 0; border-radius: 6px; border: 1px solid var(--bs-border-color-translucent, rgba(0,0,0,.08)); }
+    .entity-table-section .entity-table-section-table { width: 100%; margin-bottom: 0; }
+    .entity-table-section .entity-table-cell-link { color: var(--bs-primary, #6f6af8); text-decoration: none; word-break: break-all; }
+    .entity-table-section .entity-table-cell-link:hover { text-decoration: underline; }
+    .entity-table-section .emptyBlockInSection { cursor: pointer; padding: 1.5rem; border: 2px dashed var(--bs-border-color); border-radius: 8px; transition: border-color .15s, background-color .15s; }
+    .entity-table-section .emptyBlockInSection:hover { border-color: var(--bs-primary); background-color: rgba(var(--bs-primary-rgb), 0.04); }
+    .entity-insert-grid .insert-grid-cell { min-height: 72px; border: 2px dashed var(--bs-border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .15s, background-color .15s; }
+    .entity-insert-grid .insert-grid-cell:hover:not(.disabled) { border-color: var(--bs-primary); background-color: rgba(var(--bs-primary-rgb), 0.06); }
+    .entity-insert-grid .insert-grid-cell.disabled { opacity: 0.4; cursor: not-allowed; }
+    .entity-insert-grid .insert-grid-cell .cell-placeholder { color: var(--bs-secondary); font-size: 1.25rem; }
+    .entity-insert-grid .insert-grid-cell-occupied { border-style: solid; background: rgba(var(--bs-primary-rgb), 0.08); border-color: rgba(var(--bs-primary-rgb), 0.3); }
+    .entity-insert-grid .insert-grid-cell-occupied .cell-occupied { font-weight: 600; color: var(--bs-primary); }
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-end align-items-center gap-2 mb-2" id="entityTableAdminToolbar">
+                <button type="button" class="btn btn-outline-primary btn-sm" id="btnAddTableBlock" title="Добавить ещё одну таблицу на страницу">
+                    <i class="iconoir-plus"></i> Добавить таблицу
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnSaveDashboard" title="Создать дэшборд для просмотра (появится в меню)">
+                    <i class="iconoir-dashboard-dots"></i> Сохранить Дэшборд
+                </button>
+            </div>
+            <div id="entityTablesContainer">
+                <div class="entity-table-section" data-table-index="0">
+                    <div class="entity-table-toolbar d-flex align-items-center flex-wrap">
+                        <button type="button" class="btn btn-primary btn-plus-content btnAddEntityInSection" title="Добавить сущность / настройки таблицы">
+                            <i class="iconoir-plus"></i>
+                        </button>
+                        <span class="text-muted small selectedEntitiesLabelInSection ms-2"></span>
+                    </div>
+                    <div class="entity-table-loading loadingBlockInSection d-none">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mb-0 mt-2 loadingTextInSection">Загрузка...</p>
+                    </div>
+                    <div class="d-flex align-items-start mb-3 gridTopRowInSection d-none">
+                        <div class="tableTitleBlockInSection d-none flex-grow-1">
+                            <h4 class="mb-1 tableTitleTextInSection" data-placeholder="Название таблицы"></h4>
+                            <p class="text-muted small mb-0 tableDescriptionTextInSection" data-placeholder="Описание"></p>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary btn-gear btnFieldsInSection d-none ms-auto flex-shrink-0" title="Настроить поля">
+                            <i class="iconoir-settings"></i>
+                        </button>
+                    </div>
+                    <div class="entity-table-grid-wrap table-responsive gridBlockInSection d-none">
+                        <table class="table table-sm border-dashed datatable datatable-table mb-0 entityTableInSection entity-table-section-table">
+                            <thead class="table-light entity-table-grid-head"></thead>
+                            <tbody class="entity-table-grid-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="entity-table-loading emptyBlockInSection">
+                        <p class="text-muted mb-0">Выберите сущности или шаблон (кнопка «+»).</p>
+                    </div>
+                    <div class="datatable-bottom paginationBlockInSection d-none">
+                        <div class="pagination-left-in-section d-flex align-items-center flex-wrap gap-2">
+                            <span class="datatable-info small text-muted paginationInfoInSection">Показано 0 — 0 из 0 записей</span>
+                            <span class="small text-muted">На странице:</span>
+                            <select class="datatable-input pageSizeInSection" style="width:70px;">
+                                <option value="10">10</option>
+                                <option value="25" selected>25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <nav class="datatable-pagination paginationNavInSection" aria-label="Пагинация таблицы"></nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEntity" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление таблицы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body modal-entity-list">
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Шаблоны</button>
+                        <ul class="dropdown-menu dropdown-menu-end" id="templatesDropdown"></ul>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="tableNameInput">Название таблицы <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="tableNameInput" placeholder="Название таблицы" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="tableDescriptionInput">Описание <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="tableDescriptionInput" rows="2" placeholder="Описание" required></textarea>
+                </div>
+                <div class="entity-select-hint col-auto ms-auto bg-primary-subtle p-2 border border-dashed border-primary rounded mb-3 d-flex align-items-center gap-2" role="alert">
+                    <span class="entity-select-hint-icon rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center">i</span>
+                    <span class="text-dark">Выберите <strong>основную сущность</strong> для создания таблицы.</span>
+                </div>
+                <div id="modalEntityBody" class="entity-list-two-cols"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="modalEntitySave">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalFields" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Поля для таблицы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                    <div class="flex-grow-1" style="min-width: 200px;">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="iconoir-search"></i></span>
+                            <input type="text" class="form-control" id="fieldsSearchInput" placeholder="Поиск полей" autocomplete="off">
+                        </div>
+                    </div>
+                    <div id="nestedCheckboxesRow" class="d-flex flex-wrap gap-2 align-items-center"></div>
+                </div>
+                <div class="fields-modal-grid" id="fieldsList"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" id="modalFieldsSave">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalInsertTableGrid" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Куда вставить новую таблицу?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-3">Выберите ячейку сетки — новая таблица появится в выбранной позиции.</p>
+                <div id="insertTableGrid" class="entity-insert-grid row g-2" style="max-width: 320px;">
+                    <!-- 3×3: ячейки с data-insert-index="0".."8" подставляются скриптом -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSaveDashboard" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Сохранить Дэшборд</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label" for="dashboardNameInput">Введите имя, на кого создать дэшборд</label>
+                <input type="text" class="form-control" id="dashboardNameInput" placeholder="Например: Иван" autocomplete="off">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary" id="modalSaveDashboardCreate">Создать</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var PAGE_SLUG = "dash-test";
+    var pathMatch = window.location.pathname.match(/^\/([^\/]+)/);
+    if (pathMatch && pathMatch[1]) {
+        PAGE_SLUG = pathMatch[1];
+    } else if (PAGE_SLUG === 'dash-test' || !PAGE_SLUG) {
+        PAGE_SLUG = 'entity-table';
+    }
+    const API = {
+        processesDeals: '/api/entity-table/processes-deals/',
+        dealCategories: '/api/entity-table/deal-categories/',
+        metaFields: '/api/entity-table/entity-meta-fields/',
+        metaData: '/api/entity-table/entity-meta-data/',
+        config: '/api/entity-table/config',
+        templates: '/api/entity-table/templates',
+        saveDashboard: '/api/entity-table/save-dashboard',
+    };
+
+    var isReadOnly = false;
+    var DASHBOARD_HIDE_CLASS = 'dashboard-toolbar-hidden';
+    function applyReadOnlyMode() {
+        var hide = isReadOnly || isDashboardSlug();
+        var toolbar = document.getElementById('entityTableAdminToolbar');
+        if (toolbar) {
+            if (hide) {
+                toolbar.style.setProperty('display', 'none', 'important');
+                toolbar.classList.add(DASHBOARD_HIDE_CLASS);
+            } else {
+                toolbar.classList.remove(DASHBOARD_HIDE_CLASS);
+                toolbar.style.display = '';
+            }
+        }
+        var b1 = document.getElementById('btnAddTableBlock');
+        var b2 = document.getElementById('btnSaveDashboard');
+        if (b1) { if (hide) { b1.style.setProperty('display', 'none', 'important'); b1.classList.add(DASHBOARD_HIDE_CLASS); } else { b1.classList.remove(DASHBOARD_HIDE_CLASS); b1.style.display = ''; } }
+        if (b2) { if (hide) { b2.style.setProperty('display', 'none', 'important'); b2.classList.add(DASHBOARD_HIDE_CLASS); } else { b2.classList.remove(DASHBOARD_HIDE_CLASS); b2.style.display = ''; } }
+        if (entityTablesContainer) {
+            entityTablesContainer.querySelectorAll('.btnAddEntityInSection, .btnFieldsInSection').forEach(function(el) {
+                if (hide) { el.style.setProperty('display', 'none', 'important'); el.classList.add(DASHBOARD_HIDE_CLASS); } else { el.classList.remove(DASHBOARD_HIDE_CLASS); el.style.display = ''; }
+            });
+        }
+    }
+    function isDashboardSlug() {
+        return (String(PAGE_SLUG || '').toLowerCase().indexOf('dash-') === 0);
+    }
+
+    function defaultTableState() {
+        return {
+            selectedEntities: [],
+            selectedFields: [],
+            tableTitle: '',
+            tableDescription: '',
+            fullData: [],
+            allColumns: [],
+            currentPage: 1,
+            pageSize: 25,
+            columnWidths: {}
+        };
+    }
+
+    let tableStates = [defaultTableState()];
+    let currentTableIndex = 0;
+    let entitiesList = [];
+    let fieldsCache = {};
+
+    const entityTablesContainer = document.getElementById('entityTablesContainer');
+    isReadOnly = isDashboardSlug();
+    if (isReadOnly) applyReadOnlyMode();
+    const modalEntity = new bootstrap.Modal(document.getElementById('modalEntity'));
+    const modalEntityBody = document.getElementById('modalEntityBody');
+    const modalEntitySave = document.getElementById('modalEntitySave');
+    const modalFields = new bootstrap.Modal(document.getElementById('modalFields'));
+    const fieldsList = document.getElementById('fieldsList');
+    const modalFieldsSave = document.getElementById('modalFieldsSave');
+    const nestedCheckboxesRow = document.getElementById('nestedCheckboxesRow');
+
+    function getSectionEls(tableIndex) {
+        var section = entityTablesContainer && entityTablesContainer.querySelector('.entity-table-section[data-table-index="' + tableIndex + '"]');
+        if (!section) return {};
+        return {
+            section: section,
+            loadingBlock: section.querySelector('.loadingBlockInSection'),
+            loadingText: section.querySelector('.loadingTextInSection'),
+            gridTopRow: section.querySelector('.gridTopRowInSection'),
+            gridBlock: section.querySelector('.gridBlockInSection'),
+            emptyBlock: section.querySelector('.emptyBlockInSection'),
+            gridHead: section.querySelector('.entity-table-grid-head'),
+            gridBody: section.querySelector('.entity-table-grid-body'),
+            paginationBlock: section.querySelector('.paginationBlockInSection'),
+            pageSizeSelect: section.querySelector('.pageSizeInSection'),
+            paginationInfo: section.querySelector('.paginationInfoInSection'),
+            paginationNav: section.querySelector('.paginationNavInSection'),
+            selectedEntitiesLabel: section.querySelector('.selectedEntitiesLabelInSection'),
+            btnFields: section.querySelector('.btnFieldsInSection'),
+            tableTitleBlock: section.querySelector('.tableTitleBlockInSection'),
+            tableTitleText: section.querySelector('.tableTitleTextInSection'),
+            tableDescriptionText: section.querySelector('.tableDescriptionTextInSection')
+        };
+    }
+
+    let entityRadioName = 0;
+
+    /** Делегирование: при клике по кнопке/чекбоксу вложенности показывать/скрывать рубрику и поля в реальном времени. */
+    if (nestedCheckboxesRow && fieldsList) {
+        nestedCheckboxesRow.addEventListener('click', function(e) {
+            var target = e.target.closest && e.target.closest('.nested-toggle') ? e.target.closest('.nested-toggle') : (e.target.classList && e.target.classList.contains('nested-toggle') ? e.target : null);
+            if (!target) return;
+            e.preventDefault();
+            var ek = target.getAttribute('data-entitykey');
+            var typ = target.getAttribute('data-type');
+            if (!ek || !typ) return;
+            var isButton = target.tagName === 'BUTTON' || target.getAttribute('role') === 'button';
+            var show;
+            if (isButton) {
+                show = !target.classList.contains('active');
+                target.classList.toggle('active', show);
+                target.setAttribute('data-active', show ? 'true' : 'false');
+            } else {
+                show = target.checked;
+            }
+            fieldsList.querySelectorAll('[data-entitykey="' + ek + '"][data-nested-type="' + typ + '"]').forEach(function(el) {
+                el.style.display = show ? '' : 'none';
+            });
+            filterFieldsBySearch();
+        });
+    }
+
+    function showLoading(tableIndex, show, text) {
+        var els = getSectionEls(tableIndex);
+        if (!els.loadingBlock) return;
+        if (show) {
+            els.loadingBlock.classList.remove('d-none');
+            if (els.loadingText) els.loadingText.textContent = text || 'Загрузка...';
+        } else {
+            els.loadingBlock.classList.add('d-none');
+        }
+    }
+
+    function entityKey(e) {
+        return (e.entity_key || e.type) + (e.category_id != null ? '_' + e.category_id : '');
+    }
+
+    /** Служебные колонки не показываем и не сохраняем в настройках. */
+    function isSystemColumn(key) {
+        if (!key) return true;
+        if (key === '_entityKey') return true;
+        var i = key.indexOf('::');
+        if (i >= 0 && key.slice(i + 2) === '_entityKey') return true;
+        return false;
+    }
+
+    /** Убирает дубли сущностей и объединяет поля по entityKey (одна запись полей на сущность). */
+    function normalizeEntitiesAndFields(entities, fields) {
+        var seen = {};
+        var dedupEntities = [];
+        var fieldsByKey = {};
+        (fields || []).forEach(function(f) {
+            var k = f.entityKey;
+            if (!k) return;
+            if (!fieldsByKey[k]) fieldsByKey[k] = { entityKey: k, human_titles: [], activeNestedTypes: [], nestedFields: {} };
+            if (f.human_titles && f.human_titles.length) {
+                f.human_titles.forEach(function(t) {
+                    if (fieldsByKey[k].human_titles.indexOf(t) < 0) fieldsByKey[k].human_titles.push(t);
+                });
+            }
+            if (f.activeNestedTypes && f.activeNestedTypes.length) {
+                f.activeNestedTypes.forEach(function(typ) {
+                    if (fieldsByKey[k].activeNestedTypes.indexOf(typ) < 0) fieldsByKey[k].activeNestedTypes.push(typ);
+                });
+            }
+            if (f.nestedFields && typeof f.nestedFields === 'object') {
+                Object.keys(f.nestedFields).forEach(function(typ) {
+                    if (!fieldsByKey[k].nestedFields[typ]) fieldsByKey[k].nestedFields[typ] = [];
+                    (f.nestedFields[typ] || []).forEach(function(t) {
+                        if (fieldsByKey[k].nestedFields[typ].indexOf(t) < 0) fieldsByKey[k].nestedFields[typ].push(t);
+                    });
+                });
+            }
+        });
+        (entities || []).forEach(function(e) {
+            var k = entityKey(e);
+            if (seen[k]) return;
+            seen[k] = true;
+            dedupEntities.push(e);
+        });
+        return {
+            entities: dedupEntities,
+            fields: dedupEntities.map(function(e) {
+                var base = fieldsByKey[entityKey(e)] || { entityKey: entityKey(e), human_titles: [], activeNestedTypes: [], nestedFields: {} };
+                if (!base.nestedFields) base.nestedFields = {};
+                return base;
+            })
+        };
+    }
+
+    function updateUI(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st) return;
+        var els = getSectionEls(tableIndex);
+        var hasEntities = st.selectedEntities.length > 0;
+        if (els.btnFields) els.btnFields.classList.toggle('d-none', !hasEntities);
+        if (els.selectedEntitiesLabel) els.selectedEntitiesLabel.textContent = hasEntities
+            ? 'Сущности: ' + st.selectedEntities.map(function(e) { return e.title || e.type; }).join(', ')
+            : '';
+        var plusBtn = els.section && els.section.querySelector('.btnAddEntityInSection');
+        if (plusBtn) plusBtn.classList.toggle('d-none', !hasEntities);
+    }
+
+    function getPageSlug() {
+        return (PAGE_SLUG && String(PAGE_SLUG).trim()) ? String(PAGE_SLUG).trim() : 'entity-table';
+    }
+
+    var STORAGE_KEY_PREFIX = 'entity_table_config_';
+    var COLUMN_ORDER_KEY_PREFIX = 'entity_table_column_order_';
+
+    function getColumnOrderStorageKey() {
+        return COLUMN_ORDER_KEY_PREFIX + getPageSlug();
+    }
+
+    function saveColumnOrder() {
+        try {
+            var obj = {};
+            tableStates.forEach(function(st, i) {
+                if (st.allColumns && st.allColumns.length) obj[i] = st.allColumns.map(function(c) { return c.key; });
+            });
+            localStorage.setItem(getColumnOrderStorageKey(), JSON.stringify(obj));
+        } catch (e) {}
+    }
+
+    function loadColumnOrder(tableIndex) {
+        try {
+            var raw = localStorage.getItem(getColumnOrderStorageKey());
+            if (!raw) return null;
+            var obj = JSON.parse(raw);
+            return (obj && obj[tableIndex]) ? obj[tableIndex] : null;
+        } catch (e) { return null; }
+    }
+
+    /** Порядок колонок: приоритет у локального (localStorage после перетаскивания), иначе с сервера. */
+    function getColumnOrderForTable(tableIndex) {
+        var local = loadColumnOrder(tableIndex);
+        if (local && local.length) return local;
+        var st = tableStates[tableIndex];
+        if (st && st.columnOrderFromServer && st.columnOrderFromServer.length) return st.columnOrderFromServer;
+        return null;
+    }
+
+    /** Сбросить сохранённый порядок колонок для одной таблицы (после смены полей удалённые колонки не должны влиять на порядок). */
+    function clearColumnOrderForTable(tableIndex) {
+        try {
+            var raw = localStorage.getItem(getColumnOrderStorageKey());
+            if (!raw) return;
+            var obj = JSON.parse(raw);
+            if (obj && obj[tableIndex] !== undefined) { delete obj[tableIndex]; localStorage.setItem(getColumnOrderStorageKey(), JSON.stringify(obj)); }
+        } catch (e) {}
+    }
+
+    /** По selectedFields строит множество ключей колонок (key::title), которые реально выбраны (базовые + вложенные). _entityKey не включается ни для каких сущностей. */
+    function getValidColumnKeysFromSelectedFields(st) {
+        if (!st || !st.selectedEntities || !st.selectedFields) return {};
+        var valid = {};
+        st.selectedEntities.forEach(function(ent) {
+            var key = entityKey(ent);
+            var sel = st.selectedFields.find(function(f) { return f.entityKey === key; });
+            if (!sel) return;
+            (sel.human_titles || []).forEach(function(t) {
+                var colKey = key + '::' + t;
+                if (!isSystemColumn(colKey)) valid[colKey] = true;
+            });
+            if (sel.nestedFields && typeof sel.nestedFields === 'object') {
+                Object.keys(sel.nestedFields).forEach(function(typ) {
+                    (sel.nestedFields[typ] || []).forEach(function(t) {
+                        var colKey = key + '::' + t;
+                        if (!isSystemColumn(colKey)) valid[colKey] = true;
+                    });
+                });
+            }
+        });
+        return valid;
+    }
+
+    /** Стандартный порядок колонок при первой загрузке (по названию поля). Остальные — после в текущем порядке. */
+    var DEFAULT_COLUMN_ORDER = [
+        'Воронка', 'Название', 'Кем создана', 'Ответственный', 'Валюта',
+        'Дата создания', 'Дата изменения', 'Стадия', 'Стадия сделки', 'Источник',
+        'Сумма', 'ID', 'Тип'
+    ];
+    function applyDefaultColumnOrder(columns) {
+        if (!columns || !columns.length) return columns;
+        var order = DEFAULT_COLUMN_ORDER;
+        return columns.slice().sort(function(a, b) {
+            var ia = order.indexOf(a.label);
+            var ib = order.indexOf(b.label);
+            if (ia === -1 && ib === -1) return 0;
+            if (ia === -1) return 1;
+            if (ib === -1) return -1;
+            return ia - ib;
+        });
+    }
+
+    function applyColumnOrder(columns, orderKeys) {
+        /* Без сохранённого порядка оставляем порядок из конфига (selectedFields), чтобы дашборд совпадал с настройками. */
+        if (!orderKeys || !orderKeys.length) return columns.slice();
+        var byKey = {};
+        columns.forEach(function(c) { byKey[c.key] = c; });
+        var result = [];
+        var added = {};
+        orderKeys.forEach(function(k) {
+            if (byKey[k] && !added[k]) { result.push(byKey[k]); added[k] = true; }
+        });
+        columns.forEach(function(c) {
+            if (!added[c.key]) result.push(c);
+        });
+        return result;
+    }
+
+    var COLUMN_WIDTH_KEY_PREFIX = 'entity_table_column_widths_';
+    var MIN_COL_WIDTH = 40;
+    /** Минимальная ширина (px), при которой применяем сохранённую ширину; иначе колонка подстраивается под содержимое (даты, заголовки не обрезаются). */
+    var MIN_CONTENT_SAFE_WIDTH = 180;
+
+    function getColumnWidthStorageKey() {
+        return COLUMN_WIDTH_KEY_PREFIX + getPageSlug();
+    }
+
+    function saveColumnWidths() {
+        try {
+            var obj = {};
+            tableStates.forEach(function(st, i) {
+                if (st.columnWidths && Object.keys(st.columnWidths).length) obj[i] = st.columnWidths;
+            });
+            localStorage.setItem(getColumnWidthStorageKey(), JSON.stringify(obj));
+        } catch (e) {}
+    }
+
+    function loadColumnWidths(tableIndex) {
+        try {
+            var raw = localStorage.getItem(getColumnWidthStorageKey());
+            if (!raw) return {};
+            var obj = JSON.parse(raw);
+            var t = obj && obj[tableIndex] ? obj[tableIndex] : {};
+            return typeof t === 'object' ? t : {};
+        } catch (e) { return {}; }
+    }
+
+    function saveConfigToStorage() {
+        try {
+            var key = STORAGE_KEY_PREFIX + getPageSlug();
+            var tables = tableStates.map(function(st, i) {
+                var keys = getColumnKeysFromSection(i);
+                if (!keys.length && st.allColumns && st.allColumns.length) keys = st.allColumns.map(function(c) { return c.key; });
+                return {
+                    table_title: st.tableTitle,
+                    table_description: st.tableDescription,
+                    entities: st.selectedEntities,
+                    fields: st.selectedFields,
+                    column_order: keys.length ? keys : null,
+                    column_widths: (st.columnWidths && Object.keys(st.columnWidths).length) ? st.columnWidths : null
+                };
+            });
+            localStorage.setItem(key, JSON.stringify({ tables: tables }));
+        } catch (e) {}
+    }
+
+    function loadConfigFromStorage() {
+        try {
+            var key = STORAGE_KEY_PREFIX + getPageSlug();
+            var raw = localStorage.getItem(key);
+            if (!raw) return null;
+            var data = JSON.parse(raw);
+            return data;
+        } catch (e) { return null; }
+    }
+
+    function applyConfig(data, openModalIfNoFields) {
+        if (openModalIfNoFields === undefined) openModalIfNoFields = true;
+        if (data.tables && Array.isArray(data.tables) && data.tables.length > 0) {
+            tableStates = data.tables.map(function(t) {
+                var norm = normalizeEntitiesAndFields(t.entities || [], t.fields || []);
+                var orderFromServer = (t.column_order && Array.isArray(t.column_order)) ? t.column_order : null;
+                var widthsFromServer = (t.column_widths && typeof t.column_widths === 'object') ? t.column_widths : {};
+                return {
+                    selectedEntities: norm.entities,
+                    selectedFields: norm.fields,
+                    tableTitle: (t.table_title != null) ? String(t.table_title) : '',
+                    tableDescription: (t.table_description != null) ? String(t.table_description) : '',
+                    fullData: [],
+                    allColumns: [],
+                    currentPage: 1,
+                    pageSize: 25,
+                    columnOrderFromServer: orderFromServer,
+                    columnWidths: Object.keys(widthsFromServer).length ? widthsFromServer : {}
+                };
+            });
+            ensureSections();
+            tableStates.forEach(function(st, i) {
+                if (!st.columnWidths || !Object.keys(st.columnWidths).length) st.columnWidths = loadColumnWidths(i);
+                updateUI(i);
+                loadFieldsThenData(i, openModalIfNoFields);
+            });
+            return;
+        }
+        if (data.entities && Array.isArray(data.entities) && data.entities.length > 0) {
+            var norm = normalizeEntitiesAndFields(data.entities, data.fields || []);
+            var orderFromServer = (data.column_order && Array.isArray(data.column_order)) ? data.column_order : null;
+            var widthsFromServer = (data.column_widths && typeof data.column_widths === 'object') ? data.column_widths : {};
+            tableStates = [{
+                selectedEntities: norm.entities,
+                selectedFields: norm.fields,
+                tableTitle: (data.table_title != null) ? String(data.table_title) : '',
+                tableDescription: (data.table_description != null) ? String(data.table_description) : '',
+                fullData: [],
+                allColumns: [],
+                currentPage: 1,
+                pageSize: 25,
+                columnOrderFromServer: orderFromServer,
+                columnWidths: Object.keys(widthsFromServer).length ? widthsFromServer : loadColumnWidths(0)
+            }];
+            ensureSections();
+            updateUI(0);
+            loadFieldsThenData(0, openModalIfNoFields);
+        }
+    }
+
+    function createSectionHtml(tableIndex) {
+        return '<div class="entity-table-section" data-table-index="' + tableIndex + '">' +
+            '<div class="entity-table-toolbar d-flex align-items-center flex-wrap">' +
+            '<button type="button" class="btn btn-primary btn-plus-content btnAddEntityInSection" title="Добавить сущность / настройки таблицы"><i class="iconoir-plus"></i></button>' +
+            '<span class="text-muted small selectedEntitiesLabelInSection ms-2"></span></div>' +
+            '<div class="entity-table-loading loadingBlockInSection d-none"><div class="spinner-border text-primary" role="status"></div><p class="mb-0 mt-2 loadingTextInSection">Загрузка...</p></div>' +
+            '<div class="d-flex align-items-start mb-3 gridTopRowInSection d-none"><div class="tableTitleBlockInSection d-none flex-grow-1"><h4 class="mb-1 tableTitleTextInSection" data-placeholder="Название таблицы"></h4><p class="text-muted small mb-0 tableDescriptionTextInSection" data-placeholder="Описание"></p></div>' +
+            '<button type="button" class="btn btn-outline-secondary btn-gear btnFieldsInSection d-none ms-auto flex-shrink-0" title="Настроить поля"><i class="iconoir-settings"></i></button></div>' +
+            '<div class="entity-table-grid-wrap table-responsive gridBlockInSection d-none"><table class="table table-sm border-dashed datatable datatable-table mb-0 entityTableInSection entity-table-section-table">' +
+            '<thead class="table-light entity-table-grid-head"></thead><tbody class="entity-table-grid-body"></tbody></table></div>' +
+            '<div class="entity-table-loading emptyBlockInSection" role="button" tabindex="0" title="Нажмите, чтобы выбрать сущности и поля"><p class="text-muted mb-0">Нажмите, чтобы выбрать сущности и поля</p></div>' +
+            '<div class="datatable-bottom paginationBlockInSection d-none"><div class="pagination-left-in-section d-flex align-items-center flex-wrap gap-2"><span class="datatable-info small text-muted paginationInfoInSection">Показано 0 — 0 из 0 записей</span><span class="small text-muted">На странице:</span><select class="datatable-input pageSizeInSection" style="width:70px;"><option value="10">10</option><option value="25" selected>25</option><option value="50">50</option></select></div><nav class="datatable-pagination paginationNavInSection" aria-label="Пагинация таблицы"></nav></div></div>';
+    }
+
+    function ensureSections() {
+        if (!entityTablesContainer) return;
+        var existing = entityTablesContainer.querySelectorAll('.entity-table-section').length;
+        for (var i = existing; i < tableStates.length; i++) {
+            var div = document.createElement('div');
+            div.innerHTML = createSectionHtml(i);
+            entityTablesContainer.appendChild(div.firstElementChild);
+        }
+        var n = tableStates.length;
+        entityTablesContainer.style.gridTemplateColumns = n === 1 ? '1fr' : 'repeat(' + n + ', 1fr)';
+        bindSectionListeners();
+    }
+
+    function bindSectionListeners() {
+        if (!entityTablesContainer) return;
+        entityTablesContainer.querySelectorAll('.btnAddEntityInSection').forEach(function(btn) {
+            var section = btn.closest('.entity-table-section');
+            var idx = parseInt(section.getAttribute('data-table-index'), 10);
+            btn.onclick = function() { currentTableIndex = idx; openEntityModal(); };
+        });
+        entityTablesContainer.querySelectorAll('.emptyBlockInSection').forEach(function(block) {
+            var section = block.closest('.entity-table-section');
+            if (!section) return;
+            var idx = parseInt(section.getAttribute('data-table-index'), 10);
+            block.onclick = function() { currentTableIndex = idx; openEntityModal(); };
+        });
+        entityTablesContainer.querySelectorAll('.btnFieldsInSection').forEach(function(btn) {
+            var section = btn.closest('.entity-table-section');
+            var idx = parseInt(section.getAttribute('data-table-index'), 10);
+            btn.onclick = function() { currentTableIndex = idx; openFieldsModal(); };
+        });
+        entityTablesContainer.querySelectorAll('.pageSizeInSection').forEach(function(sel) {
+            var section = sel.closest('.entity-table-section');
+            var idx = parseInt(section.getAttribute('data-table-index'), 10);
+            sel.onchange = function() {
+                tableStates[idx].pageSize = parseInt(this.value, 10) || 25;
+                tableStates[idx].currentPage = 1;
+                renderGrid(idx);
+            };
+        });
+    }
+
+    /** Делегирование: клики по кнопкам пагинации (prev/next/номер страницы) — привязывается один раз. */
+    if (entityTablesContainer && !entityTablesContainer._paginationDelegationBound) {
+        entityTablesContainer._paginationDelegationBound = true;
+        entityTablesContainer.addEventListener('click', function(e) {
+            var btn = e.target && e.target.closest && e.target.closest('[data-page]');
+            if (!btn || !btn.closest('.paginationNavInSection')) return;
+            var section = btn.closest('.entity-table-section');
+            if (!section) return;
+            var idx = parseInt(section.getAttribute('data-table-index'), 10);
+            if (isNaN(idx) || !tableStates[idx]) return;
+            var st = tableStates[idx];
+            var page = btn.getAttribute('data-page');
+            var totalPages = st.fullData.length ? Math.ceil(st.fullData.length / st.pageSize) : 0;
+            if (page === 'prev' && st.currentPage > 1) { st.currentPage--; renderGrid(idx); }
+            else if (page === 'next' && st.currentPage < totalPages) { st.currentPage++; renderGrid(idx); }
+            else if (page !== 'prev' && page !== 'next') { var p = parseInt(page, 10); if (p >= 1 && p <= totalPages) { st.currentPage = p; renderGrid(idx); } }
+        });
+    }
+
+    /** Загрузка конфига: сначала с сервера; если пусто или ошибка — восстанавливаем из localStorage. */
+    function loadConfig() {
+        var slug = getPageSlug();
+        if (!isDashboardSlug()) { try { localStorage.removeItem(STORAGE_KEY_PREFIX + slug); } catch (e) {} }
+        fetch(API.config + '?page_slug=' + encodeURIComponent(slug))
+            .then(function(r) {
+                if (!r.ok) return Promise.reject(new Error(r.status));
+                return r.json();
+            })
+            .then(function(data) {
+                if (!data || !data.ok) { if (isDashboardSlug()) showDashboardLoadError(); else tryApplyStored(); return; }
+                if (data.tables && Array.isArray(data.tables) && data.tables.length > 0) {
+                    var isDashboard = !!(data.read_only || isDashboardSlug());
+                    tableStates = data.tables.map(function(t) {
+                        var norm = normalizeEntitiesAndFields(t.entities || [], t.fields || []);
+                        var orderFromServer = (t.column_order && Array.isArray(t.column_order)) ? t.column_order : null;
+                        var widthsFromServer = (t.column_widths && typeof t.column_widths === 'object') ? t.column_widths : {};
+                        return {
+                            selectedEntities: norm.entities,
+                            selectedFields: norm.fields,
+                            tableTitle: (t.table_title != null) ? String(t.table_title) : '',
+                            tableDescription: (t.table_description != null) ? String(t.table_description) : '',
+                            fullData: [],
+                            allColumns: [],
+                            currentPage: 1,
+                            pageSize: 25,
+                            columnOrderFromServer: orderFromServer,
+                            columnWidths: isDashboard ? {} : (Object.keys(widthsFromServer).length ? widthsFromServer : {})
+                        };
+                    });
+                    ensureSections();
+                    tableStates.forEach(function(st, i) {
+                        if (!isDashboard && (!st.columnWidths || !Object.keys(st.columnWidths).length)) st.columnWidths = loadColumnWidths(i);
+                        updateUI(i);
+                        loadFieldsThenData(i, false);
+                    });
+                    saveConfigToStorage();
+                    isReadOnly = !!(data.read_only || isDashboardSlug());
+                    applyReadOnlyMode();
+                    return;
+                }
+                if (data.entities && Array.isArray(data.entities) && data.entities.length > 0) {
+                    var norm = normalizeEntitiesAndFields(data.entities, data.fields || []);
+                    tableStates = [{
+                        selectedEntities: norm.entities,
+                        selectedFields: norm.fields,
+                        tableTitle: (data.table_title != null) ? String(data.table_title) : '',
+                        tableDescription: (data.table_description != null) ? String(data.table_description) : '',
+                        fullData: [],
+                        allColumns: [],
+                        currentPage: 1,
+                        pageSize: 25,
+                        columnWidths: loadColumnWidths(0)
+                    }];
+                    ensureSections();
+                    updateUI(0);
+                    loadFieldsThenData(0, false);
+                    saveConfigToStorage();
+                    isReadOnly = !!(data.read_only || isDashboardSlug());
+                    applyReadOnlyMode();
+                    return;
+                }
+                if (isDashboardSlug()) {
+                    showDashboardLoadError();
+                    return;
+                }
+                tableStates = [defaultTableState()];
+                ensureSections();
+                updateUI(0);
+                isReadOnly = !!(data.read_only || isDashboardSlug());
+                applyReadOnlyMode();
+                try { localStorage.removeItem(STORAGE_KEY_PREFIX + getPageSlug()); } catch (e) {}
+                return;
+            })
+            .catch(function() { if (isDashboardSlug()) showDashboardLoadError(); else tryApplyStored(); });
+
+        function showDashboardLoadError() {
+            tableStates = [defaultTableState()];
+            ensureSections();
+            updateUI(0);
+            isReadOnly = true;
+            applyReadOnlyMode();
+            var msg = document.querySelector('.emptyBlockInSection p');
+            if (msg) msg.textContent = 'Не удалось загрузить дэшборд. Проверьте подключение или обновите страницу.';
+        }
+
+        function tryApplyStored() {
+            var stored = loadConfigFromStorage();
+            if (stored && stored.tables && Array.isArray(stored.tables) && stored.tables.length > 0) {
+                applyConfig(stored, false);
+            } else if (stored) {
+                applyConfig(stored, false);
+            } else {
+                tableStates = [defaultTableState()];
+                ensureSections();
+                updateUI(0);
+            }
+            isReadOnly = isDashboardSlug();
+            applyReadOnlyMode();
+        }
+    }
+
+    function saveConfig(opts) {
+        opts = opts || {};
+        var slug = getPageSlug();
+        var tables = tableStates.map(function(st, i) {
+            var keys = getColumnKeysFromSection(i);
+            if (!keys.length && st.allColumns && st.allColumns.length) keys = st.allColumns.map(function(c) { return c.key; });
+            return {
+                table_title: st.tableTitle,
+                table_description: st.tableDescription,
+                entities: st.selectedEntities,
+                fields: st.selectedFields,
+                column_order: keys.length ? keys : null,
+                column_widths: (st.columnWidths && Object.keys(st.columnWidths).length) ? st.columnWidths : null
+            };
+        });
+        var payload = { page_slug: slug, tables: tables };
+        var fetchOpts = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        };
+        if (opts.keepalive) fetchOpts.keepalive = true;
+        return fetch(API.config, fetchOpts)
+            .then(function(r) {
+                if (!r.ok) throw new Error('Save failed: ' + r.status);
+                return r.json();
+            })
+            .then(function(data) {
+                if (data && !data.ok) throw new Error(data.error || 'Save failed');
+            })
+            .catch(function(err) {
+                if (typeof console !== 'undefined' && console.error) console.error('Entity table config save:', err);
+            });
+    }
+
+    function saveConfigBeforeUnload() {
+        if (!tableStates.some(function(st) { return st.selectedEntities.length > 0; })) return;
+        saveConfigToStorage();
+        saveConfig({ keepalive: true });
+    }
+
+    function updateTableTitleBlock(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st) return;
+        var els = getSectionEls(tableIndex);
+        if (!els.tableTitleBlock) return;
+        var titleText = (st.tableTitle && String(st.tableTitle).trim()) || '';
+        var descText = (st.tableDescription && String(st.tableDescription).trim()) || '';
+        if (els.tableTitleText) {
+            els.tableTitleText.textContent = titleText || els.tableTitleText.getAttribute('data-placeholder') || 'Название таблицы';
+            els.tableTitleText.classList.toggle('text-muted', !titleText);
+        }
+        if (els.tableDescriptionText) {
+            els.tableDescriptionText.textContent = descText || els.tableDescriptionText.getAttribute('data-placeholder') || 'Описание';
+            els.tableDescriptionText.classList.toggle('text-muted', !descText);
+        }
+        var gridHidden = !els.gridBlock || els.gridBlock.classList.contains('d-none');
+        els.tableTitleBlock.classList.toggle('d-none', gridHidden);
+    }
+
+    /** API может возвращать type: "entity" или "crm_entity" — оба считаем смарт-процессами. */
+    function normalizeEntityType(e) {
+        var t = (e && e.type) ? e.type : '';
+        if (t === 'entity' || t === 'crm_entity') return Object.assign({}, e, { type: 'smart_process' });
+        return e;
+    }
+    function loadEntitiesList() {
+        return fetch(API.processesDeals).then(function(r) { return r.json(); }).then(function(data) {
+            var raw = (data && data.entities) ? data.entities : [];
+            entitiesList = raw.map(normalizeEntityType);
+            return entitiesList;
+        });
+    }
+
+    function openEntityModal() {
+        var st = tableStates[currentTableIndex];
+        if (!st) return;
+        var nameInput = document.getElementById('tableNameInput');
+        var descInput = document.getElementById('tableDescriptionInput');
+        if (nameInput) nameInput.value = (st.tableTitle && String(st.tableTitle).trim()) ? st.tableTitle.trim() : '';
+        if (descInput) descInput.value = (st.tableDescription && String(st.tableDescription).trim()) ? st.tableDescription.trim() : '';
+
+        Promise.all([
+            loadEntitiesList(),
+            fetch(API.dealCategories).then(function(r) { return r.json(); }).then(function(d) { return (d && d.categories) ? d.categories : []; }).catch(function() { return []; })
+        ]).then(function(results) {
+            var entities = results[0];
+            var dealCategories = results[1];
+            entityRadioName++;
+            var name = 'entity_radio_' + entityRadioName;
+            var contact = entities.filter(function(e) { return e.type === 'contact'; })[0];
+            var lead = entities.filter(function(e) { return e.type === 'lead'; })[0];
+            var deal = entities.filter(function(e) { return e.type === 'deal'; })[0];
+            var smartList = entities.filter(function(e) { return e.type === 'smart_process'; });
+
+            var leftCol = '';
+            var rightCol = '';
+            if (contact) {
+                leftCol += '<div class="entity-group"><div class="entity-group-title">Контакты</div>';
+                leftCol += '<div class="form-check"><input class="form-check-input" type="radio" name="' + name + '" value="contact" data-entity=\'' + JSON.stringify({ type: 'contact', entity_key: 'contact', title: contact.title || 'Контакты' }) + '\'><label class="form-check-label">' + (contact.title || 'Контакты') + '</label></div></div>';
+            }
+            if (deal) {
+                leftCol += '<div class="entity-group"><div class="entity-group-title"><strong>Сделки</strong></div>';
+                if (dealCategories.length) {
+                    dealCategories.forEach(function(c) {
+                        var ent = { type: 'deal', entity_key: 'deal', category_id: c.id, title: c.title || 'Сделки (' + c.id + ')' };
+                        leftCol += '<div class="form-check"><input class="form-check-input" type="radio" name="' + name + '" value="deal" data-entity=\'' + JSON.stringify(ent) + '\'><label class="form-check-label">' + (c.title || c.id) + '</label></div>';
+                    });
+                } else {
+                    leftCol += '<div class="form-check"><input class="form-check-input" type="radio" name="' + name + '" value="deal" data-entity=\'' + JSON.stringify({ type: 'deal', entity_key: 'deal', title: deal.title || 'Сделки' }) + '\'><label class="form-check-label">' + (deal.title || 'Сделки') + '</label></div>';
+                }
+                leftCol += '</div>';
+            }
+            if (lead) {
+                rightCol += '<div class="entity-group"><div class="entity-group-title">Лиды</div>';
+                rightCol += '<div class="form-check"><input class="form-check-input" type="radio" name="' + name + '" value="lead" data-entity=\'' + JSON.stringify({ type: 'lead', entity_key: 'lead', title: lead.title || 'Лиды' }) + '\'><label class="form-check-label">' + (lead.title || 'Лиды') + '</label></div></div>';
+            }
+            if (smartList.length) {
+                rightCol += '<div class="entity-group"><div class="entity-group-title"><strong>Смарт-процессы</strong></div>';
+                smartList.forEach(function(e) {
+                    var ent = { type: 'smart_process', entity_key: e.entity_key, title: e.title || e.entity_key };
+                    rightCol += '<div class="form-check"><input class="form-check-input" type="radio" name="' + name + '" value="smart" data-entity=\'' + JSON.stringify(ent) + '\'><label class="form-check-label">' + (e.title || e.entity_key) + '</label></div>';
+                });
+                rightCol += '</div>';
+            }
+            var html = (leftCol || rightCol) ? ('<div class="entity-list-col">' + (leftCol || '<p class="text-muted small">—</p>') + '</div><div class="entity-list-col">' + (rightCol || '<p class="text-muted small">—</p>') + '</div>') : '<p class="text-muted">Нет сущностей.</p>';
+            modalEntityBody.innerHTML = html;
+            modalEntity.show();
+        });
+    }
+
+    modalEntitySave.addEventListener('click', function() {
+        var st = tableStates[currentTableIndex];
+        if (!st) return;
+        var nameInput = document.getElementById('tableNameInput');
+        var descInput = document.getElementById('tableDescriptionInput');
+        var title = nameInput ? nameInput.value.trim() : '';
+        var desc = descInput ? descInput.value.trim() : '';
+        if (!title) { alert('Введите название таблицы.'); if (nameInput) nameInput.focus(); return; }
+        if (!desc) { alert('Введите описание.'); if (descInput) descInput.focus(); return; }
+        st.tableTitle = title;
+        st.tableDescription = desc;
+        // Не сохраняем конфиг на сервер в первом модальном — только после выбора полей во втором
+        saveConfigToStorage();
+        updateTableTitleBlock(currentTableIndex);
+
+        var radio = modalEntityBody.querySelector('input[type="radio"]:checked');
+        if (radio) {
+            var entity = JSON.parse(radio.getAttribute('data-entity') || '{}');
+            if (entity.type && !st.selectedEntities.some(function(e) { return entityKey(e) === entityKey(entity); })) {
+                st.selectedEntities.push(entity);
+                st.selectedFields.push({ entityKey: entityKey(entity), human_titles: [], activeNestedTypes: [], nestedFields: {} });
+                updateUI(currentTableIndex);
+                saveConfigToStorage();
+                loadFieldsThenData(currentTableIndex);
+            }
+        }
+        modalEntity.hide();
+    });
+
+    function loadFieldsForEntity(ent, callback) {
+        const key = entityKey(ent);
+        if (fieldsCache[key]) {
+            if (callback) callback(fieldsCache[key]);
+            return Promise.resolve(fieldsCache[key]);
+        }
+        var url = API.metaFields + '?type=' + encodeURIComponent(ent.type);
+        if (ent.entity_key && ent.type === 'smart_process') url += '&entity_key=' + encodeURIComponent(ent.entity_key);
+        if (ent.category_id != null && ent.category_id !== '') url += '&category_id=' + encodeURIComponent(ent.category_id);
+        return fetch(url).then(function(r) { return r.json(); }).then(function(data) {
+            var result = { fields: (data && data.fields) ? data.fields : [], nested: [] };
+            if (result.fields) {
+                result.fields.forEach(function(f) {
+                    if (f.nested_fields && f.nested_fields.length) result.nested.push(f);
+                });
+            }
+            fieldsCache[key] = result;
+            if (callback) callback(result);
+            return result;
+        });
+    }
+
+    var NESTED_TYPE_LABELS = {
+        contact: 'Контакт',
+        company: 'Компания',
+        lead: 'Лид',
+        deal: 'Сделка',
+        entity: 'Смарт-Процесс',
+        smart_process: 'Смарт-Процесс'
+    };
+    var ENTITY_TYPE_TITLES = {
+        contact: 'Контакты',
+        lead: 'Лиды',
+        deal: 'Сделки',
+        smart_process: 'Смарт-процесс'
+    };
+    function nestedTypeLabel(type) {
+        return NESTED_TYPE_LABELS[type] || type;
+    }
+    function entityTitleForNested(ent) {
+        return ENTITY_TYPE_TITLES[ent.type] || ent.title || entityKey(ent);
+    }
+
+    /** В API поле field_type может быть entity или crm_entity — оба отображаем как Смарт-Процесс. */
+    function nestedTypeKey(apiType) {
+        var t = ((apiType || '').replace('crm_', '') || 'entity').toLowerCase();
+        if (t === 'entity') t = 'smart_process';
+        return t;
+    }
+
+    function openFieldsModal() {
+        var st = tableStates[currentTableIndex];
+        if (!st || !st.selectedEntities.length) return;
+        var nestedRow = document.getElementById('nestedCheckboxesRow');
+        if (nestedRow) nestedRow.innerHTML = '';
+        fieldsList.innerHTML = '';
+        st.selectedEntities.forEach(function(ent) {
+            var key = entityKey(ent);
+            var sel = st.selectedFields.find(function(f) { return f.entityKey === key; });
+            var titles = (sel && sel.human_titles) ? sel.human_titles : [];
+            loadFieldsForEntity(ent).then(function(res) {
+                var mainFields = [];
+                var nestedByGroup = {};
+                (res.fields || []).forEach(function(f) {
+                    if (f.nested_fields && f.nested_fields.length) {
+                        var t = nestedTypeKey(f.field_type);
+                        var slug = (f.human_title || f.column_name || String(f.id || '')).replace(/\s/g, '_').replace(/[^a-zA-Z0-9_-]/g, '_') || t;
+                        var groupKey = t + '::' + slug;
+                        if (!nestedByGroup[groupKey]) nestedByGroup[groupKey] = { label: f.human_title || f.column_name || nestedTypeLabel(t), fields: [] };
+                        f.nested_fields.forEach(function(n) {
+                            nestedByGroup[groupKey].fields.push({ human_title: n.human_title, column_name: n.column_name, id: n.id });
+                        });
+                    } else {
+                        mainFields.push(f);
+                    }
+                });
+
+                if (Object.keys(nestedByGroup).length && nestedRow) {
+                    var wrap = document.createElement('div');
+                    wrap.className = 'd-flex flex-wrap gap-2 align-items-center';
+                    var activeNestedRaw = (sel && sel.activeNestedTypes && Array.isArray(sel.activeNestedTypes)) ? sel.activeNestedTypes : [];
+                    var activeNested = activeNestedRaw.filter(function(typ) { return Object.prototype.hasOwnProperty.call(nestedByGroup, typ); });
+                    Object.keys(nestedByGroup).forEach(function(typ) {
+                        var group = nestedByGroup[typ];
+                        var hasSelected = activeNested.indexOf(typ) >= 0;
+                        var safeId = (key + '_' + typ).replace(/[^a-zA-Z0-9_]/g, '_');
+                        var labelEsc = (group.label || typ).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                        var btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'btn btn-sm btn-outline-primary nested-toggle' + (hasSelected ? ' active' : '');
+                        btn.setAttribute('data-entitykey', key);
+                        btn.setAttribute('data-type', typ);
+                        btn.setAttribute('data-active', hasSelected ? 'true' : 'false');
+                        btn.id = 'nested_cb_' + safeId;
+                        btn.textContent = group.label || typ;
+                        wrap.appendChild(btn);
+                    });
+                    nestedRow.appendChild(wrap);
+                }
+
+                mainFields.forEach(function(f) {
+                    var div = document.createElement('div');
+                    div.className = 'form-check field-row';
+                    div.setAttribute('data-entitykey', key);
+                    div.setAttribute('data-nested-type', '');
+                    div.setAttribute('data-search-text', ((f.human_title || f.column_name || '') + '').toLowerCase());
+                    var id = 'f_' + key + '_main_' + (f.human_title || f.column_name || f.id).replace(/\s/g, '_');
+                    var checked = titles.indexOf(f.human_title) >= 0 ? ' checked' : '';
+                    var nestAttr = ' data-nested-type=""';
+                    div.innerHTML = '<input class="form-check-input field-cb" type="checkbox" id="' + id + '" data-entitykey="' + key + '" data-human-title="' + (f.human_title || '').replace(/"/g, '&quot;') + '"' + nestAttr + checked + '><label class="form-check-label" for="' + id + '">' + (f.human_title || f.column_name || '') + '</label>';
+                    fieldsList.appendChild(div);
+                });
+
+                var activeNestedForLabels = activeNested.slice();
+                Object.keys(nestedByGroup).forEach(function(typ) {
+                    var group = nestedByGroup[typ];
+                    var hasSelectedLabel = activeNestedForLabels.indexOf(typ) >= 0;
+                    var titlesNested = (sel && sel.nestedFields && sel.nestedFields[typ] && Array.isArray(sel.nestedFields[typ])) ? sel.nestedFields[typ] : [];
+                    var groupLabel = document.createElement('div');
+                    groupLabel.className = 'form-check fields-modal-group-label field-row';
+                    groupLabel.setAttribute('data-entitykey', key);
+                    groupLabel.setAttribute('data-nested-type', typ);
+                    groupLabel.setAttribute('data-search-text', (group.label || typ).toLowerCase());
+                    groupLabel.style.display = hasSelectedLabel ? '' : 'none';
+                    groupLabel.style.gridColumn = '1 / -1';
+                    groupLabel.innerHTML = '<span class="fw-bold text-dark">Поля: ' + (group.label || typ) + '</span>';
+                    fieldsList.appendChild(groupLabel);
+                    group.fields.forEach(function(n) {
+                        var div = document.createElement('div');
+                        div.className = 'form-check field-row';
+                        div.setAttribute('data-entitykey', key);
+                        div.setAttribute('data-nested-type', typ);
+                        div.style.display = hasSelectedLabel ? '' : 'none';
+                        div.setAttribute('data-search-text', ((n.human_title || n.column_name || '') + '').toLowerCase());
+                        var id = 'f_' + key + '_' + typ.replace(/[^a-zA-Z0-9_]/g, '_') + '_' + (n.human_title || n.column_name || n.id).replace(/\s/g, '_');
+                        var checked = titlesNested.indexOf(n.human_title) >= 0 ? ' checked' : '';
+                        var nestAttr = ' data-nested-type="' + String(typ).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;') + '"';
+                        div.innerHTML = '<input class="form-check-input field-cb" type="checkbox" id="' + id + '" data-entitykey="' + key + '" data-human-title="' + (n.human_title || '').replace(/"/g, '&quot;') + '"' + nestAttr + checked + '><label class="form-check-label" for="' + id + '">' + (n.human_title || n.column_name || '') + '</label>';
+                        fieldsList.appendChild(div);
+                    });
+                });
+                filterFieldsBySearch();
+            });
+        });
+        var searchEl = document.getElementById('fieldsSearchInput');
+        if (searchEl) {
+            searchEl.value = '';
+            searchEl.oninput = filterFieldsBySearch;
+        }
+        modalFields.show();
+    }
+
+    function filterFieldsBySearch() {
+        var q = (document.getElementById('fieldsSearchInput') && document.getElementById('fieldsSearchInput').value || '').trim().toLowerCase();
+        fieldsList.querySelectorAll('.field-row').forEach(function(row) {
+            var text = row.getAttribute('data-search-text') || '';
+            var passesSearch = !q || text.indexOf(q) >= 0;
+            var nestedType = row.getAttribute('data-nested-type');
+            var entityKeyVal = row.getAttribute('data-entitykey');
+            var nestedVisible = true;
+            if (nestedType && entityKeyVal) {
+                var safeId = (entityKeyVal + '_' + nestedType).replace(/[^a-zA-Z0-9_]/g, '_');
+                var toggleEl = document.getElementById('nested_cb_' + safeId);
+                nestedVisible = toggleEl && (toggleEl.checked === true || toggleEl.getAttribute('data-active') === 'true');
+            }
+            row.style.display = (passesSearch && nestedVisible) ? '' : 'none';
+        });
+    }
+
+    modalFieldsSave.addEventListener('click', function() {
+        var st = tableStates[currentTableIndex];
+        if (!st) return;
+        var byKey = {};
+        var activeNestedByKey = {};
+        var nestedFieldsByKey = {};
+        st.selectedEntities.forEach(function(e) {
+            var k = entityKey(e);
+            byKey[k] = [];
+            activeNestedByKey[k] = [];
+            nestedFieldsByKey[k] = {};
+        });
+        fieldsList.querySelectorAll('.field-cb:checked').forEach(function(cb) {
+            var k = cb.getAttribute('data-entitykey');
+            var ht = cb.getAttribute('data-human-title');
+            var nt = (cb.getAttribute('data-nested-type') || '').trim();
+            if (k && ht && byKey[k]) byKey[k].push(ht);
+            if (k && nt && activeNestedByKey[k] && activeNestedByKey[k].indexOf(nt) < 0) activeNestedByKey[k].push(nt);
+            if (k && nt && ht && nestedFieldsByKey[k]) {
+                if (!nestedFieldsByKey[k][nt]) nestedFieldsByKey[k][nt] = [];
+                if (nestedFieldsByKey[k][nt].indexOf(ht) < 0) nestedFieldsByKey[k][nt].push(ht);
+            }
+        });
+        st.selectedFields = st.selectedEntities.map(function(e) {
+            var k = entityKey(e);
+            return { entityKey: k, human_titles: byKey[k] || [], activeNestedTypes: activeNestedByKey[k] || [], nestedFields: nestedFieldsByKey[k] || {} };
+        });
+        clearColumnOrderForTable(currentTableIndex);
+        saveConfig();
+        saveConfigToStorage();
+        loadData(currentTableIndex);
+        modalFields.hide();
+        // Автосохранение шаблона на сервере (общий для всех пользователей) после выбора полей
+        var tablesPayload = tableStates.map(function(t) {
+            return { table_title: t.tableTitle || '', table_description: t.tableDescription || '', entities: t.selectedEntities || [], fields: t.selectedFields || [] };
+        });
+        if (tablesPayload.some(function(t) { return t.entities && t.entities.length > 0 && t.fields && t.fields.length > 0; })) {
+            var templateName = (st.tableTitle && String(st.tableTitle).trim()) || ('Шаблон ' + new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }));
+            fetch(API.templates, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: templateName, tables: tablesPayload })
+            }).then(function(r) { return r.json(); }).then(function(data) { if (data && data.ok) loadTemplates(); }).catch(function() {});
+        }
+    });
+
+    function loadFieldsThenData(tableIndex, openModalIfNoFields) {
+        if (openModalIfNoFields === undefined) openModalIfNoFields = true;
+        var st = tableStates[tableIndex];
+        if (!st) return;
+        var els = getSectionEls(tableIndex);
+        if (!st.selectedEntities.length) {
+            if (els.emptyBlock) els.emptyBlock.classList.remove('d-none');
+            if (els.gridBlock) els.gridBlock.classList.add('d-none');
+            if (els.gridTopRow) els.gridTopRow.classList.add('d-none');
+            return;
+        }
+        var hasAnyFields = st.selectedFields.some(function(f) { return f.human_titles && f.human_titles.length; });
+        if (!hasAnyFields) {
+            if (openModalIfNoFields) { currentTableIndex = tableIndex; openFieldsModal(); }
+            else {
+                if (els.emptyBlock) els.emptyBlock.classList.remove('d-none');
+                if (els.gridBlock) els.gridBlock.classList.add('d-none');
+                if (els.gridTopRow) els.gridTopRow.classList.add('d-none');
+            }
+            return;
+        }
+        loadData(tableIndex);
+    }
+
+    var FIRST_BATCH_SIZE = 2000;
+    function fetchPage(ent, titles, key, offset, limit) {
+        var url = API.metaData + '?type=' + encodeURIComponent(ent.type) + '&limit=' + limit + '&offset=' + offset;
+        if (ent.entity_key && ent.type === 'smart_process') url += '&entity_key=' + encodeURIComponent(ent.entity_key);
+        if (ent.category_id != null && ent.category_id !== '') url += '&category_id=' + encodeURIComponent(String(ent.category_id));
+        if (titles && titles.length) url += '&fields=' + titles.map(function(t) { return encodeURIComponent(t); }).join(',');
+        return fetch(url).then(function(r) { return r.json(); }).then(function(data) {
+            var list = (data && data.data) ? data.data : [];
+            var total = (data && data.total) != null ? data.total : 0;
+            var out = [];
+            list.forEach(function(row) {
+                var o = { _entityKey: key };
+                titles.forEach(function(t) {
+                    var val = row[t];
+                    if (val !== null && typeof val === 'object' && !Array.isArray(val)) val = JSON.stringify(val);
+                    o[key + '::' + t] = val != null ? val : '';
+                });
+                out.push(o);
+            });
+            return { rows: out, total: total };
+        });
+    }
+
+    function loadData(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st || !st.selectedEntities.length) return;
+        var els = getSectionEls(tableIndex);
+        st.fullData = [];
+        st.allColumns = [];
+        showLoading(tableIndex, true, 'Загрузка данных...');
+        var columnsByKey = [];
+        var FUNNEL_FIELD = 'Воронка';
+        st.selectedEntities.forEach(function(ent) {
+            var key = entityKey(ent);
+            var sel = st.selectedFields.find(function(f) { return f.entityKey === key; });
+            var displayTitles = (sel && sel.human_titles) ? sel.human_titles : [];
+            if (!displayTitles.length) return;
+            var fetchTitles = displayTitles.slice();
+            if (ent.type === 'deal' && ent.category_id != null && displayTitles.indexOf(FUNNEL_FIELD) < 0) {
+                fetchTitles.push(FUNNEL_FIELD);
+            }
+            displayTitles.forEach(function(t) {
+                st.allColumns.push({ key: key + '::' + t, label: t, entityKey: key, entityTitle: ent.title || entityTitleForNested(ent) });
+            });
+            columnsByKey.push({ ent: ent, titles: fetchTitles, key: key, displayTitles: displayTitles });
+        });
+        if (columnsByKey.length === 0) {
+            showLoading(tableIndex, false);
+            st.fullData = [];
+            st.allColumns = [];
+            if (els.emptyBlock) els.emptyBlock.classList.remove('d-none');
+            if (els.gridBlock) els.gridBlock.classList.add('d-none');
+            if (els.gridTopRow) els.gridTopRow.classList.add('d-none');
+            if (els.paginationBlock) els.paginationBlock.classList.add('d-none');
+            renderGrid(tableIndex);
+            return;
+        }
+        var seenKey = {};
+        st.allColumns = st.allColumns.filter(function(c) {
+            if (seenKey[c.key]) return false;
+            seenKey[c.key] = true;
+            return true;
+        });
+        var validKeys = getValidColumnKeysFromSelectedFields(st);
+        st.allColumns = st.allColumns.filter(function(c) { return !isSystemColumn(c.key) && validKeys[c.key]; });
+        var labelCount = {};
+        st.allColumns.forEach(function(c) {
+            labelCount[c.label] = (labelCount[c.label] || 0) + 1;
+        });
+        st.allColumns.forEach(function(c) {
+            if (labelCount[c.label] > 1) c.label = c.label + ' (' + (c.entityTitle || c.entityKey) + ')';
+        });
+        st.allColumns = applyColumnOrder(st.allColumns, getColumnOrderForTable(tableIndex));
+        if (!st.columnWidths || !Object.keys(st.columnWidths).length) st.columnWidths = loadColumnWidths(tableIndex);
+
+        var firstBatchPromises = columnsByKey.map(function(obj) {
+            return fetchPage(obj.ent, obj.titles, obj.key, 0, FIRST_BATCH_SIZE);
+        });
+        Promise.all(firstBatchPromises).then(function(firstResults) {
+            if (firstResults.length === 1) {
+                firstResults[0].rows.forEach(function(row) { st.fullData.push(row); });
+                var obj = columnsByKey[0];
+                if (obj.ent.type === 'deal' && obj.ent.category_id != null) {
+                    var funnelKey = obj.key + '::' + FUNNEL_FIELD;
+                    var funnelTitle = String(obj.ent.title || '').trim();
+                    var funnelCatId = String(obj.ent.category_id).trim();
+                    st.fullData = st.fullData.filter(function(row) {
+                        var v = row[funnelKey];
+                        if (v == null || v === '') return false;
+                        var s = String(v).trim();
+                        return s === funnelTitle || s === funnelCatId;
+                    });
+                }
+            } else if (firstResults.length > 1) {
+                var primaryRows = firstResults[0].rows;
+                var primaryObj = columnsByKey[0];
+                primaryRows.forEach(function(baseRow, idx) {
+                    var merged = Object.assign({}, baseRow);
+                    for (var j = 1; j < firstResults.length; j++) {
+                        if (firstResults[j].rows && firstResults[j].rows[idx]) {
+                            Object.assign(merged, firstResults[j].rows[idx]);
+                        }
+                    }
+                    st.fullData.push(merged);
+                });
+                if (primaryObj.ent.type === 'deal' && primaryObj.ent.category_id != null) {
+                    var funnelKeyM = primaryObj.key + '::' + FUNNEL_FIELD;
+                    var funnelTitleM = String(primaryObj.ent.title || '').trim();
+                    var funnelCatIdM = String(primaryObj.ent.category_id).trim();
+                    st.fullData = st.fullData.filter(function(row) {
+                        var v = row[funnelKeyM];
+                        if (v == null || v === '') return false;
+                        var s = String(v).trim();
+                        return s === funnelTitleM || s === funnelCatIdM;
+                    });
+                }
+            }
+            showLoading(tableIndex, false);
+            st.currentPage = 1;
+            st.pageSize = parseInt(els.pageSizeSelect && els.pageSizeSelect.value ? els.pageSizeSelect.value : 25, 10) || 25;
+            renderGrid(tableIndex);
+            if (els.emptyBlock) els.emptyBlock.classList.add('d-none');
+            if (els.gridTopRow) els.gridTopRow.classList.remove('d-none');
+            if (els.gridBlock) els.gridBlock.classList.remove('d-none');
+            if (els.paginationBlock) els.paginationBlock.classList.remove('d-none');
+            updateTableTitleBlock(tableIndex);
+
+            /* На дашборде (режим только просмотр) не догружаем все записи — только первая порция по настройке таблицы */
+            var isDashboard = isReadOnly || isDashboardSlug();
+            if (!isDashboard && firstResults.length === 1) {
+                columnsByKey.forEach(function(obj, idx) {
+                    var res = firstResults[idx];
+                    var total = res.total;
+                    var offset = res.rows.length;
+                    if (offset >= total) return;
+                    var funnelKeyF = (obj.ent.type === 'deal' && obj.ent.category_id != null) ? (obj.key + '::' + FUNNEL_FIELD) : null;
+                    var funnelTitleF = funnelKeyF ? String(obj.ent.title || '').trim() : '';
+                    var funnelCatIdF = funnelKeyF ? String(obj.ent.category_id).trim() : '';
+                    function fetchMore() {
+                        fetchPage(obj.ent, obj.titles, obj.key, offset, 10000).then(function(nextRes) {
+                            var rows = nextRes.rows;
+                            if (funnelKeyF) {
+                                rows = rows.filter(function(row) {
+                                    var v = row[funnelKeyF];
+                                    if (v == null || v === '') return false;
+                                    var s = String(v).trim();
+                                    return s === funnelTitleF || s === funnelCatIdF;
+                                });
+                            }
+                            rows.forEach(function(row) { st.fullData.push(row); });
+                            offset += nextRes.rows.length;
+                            renderGrid(tableIndex);
+                            if (offset < nextRes.total) fetchMore();
+                        }).catch(function() {});
+                    }
+                    fetchMore();
+                });
+            } else if (!isDashboard && firstResults.length > 1) {
+                var primaryTotal = firstResults[0].total;
+                function fetchMoreMerged() {
+                    var nextOffset = st.fullData.length;
+                    if (nextOffset >= primaryTotal) return;
+                    Promise.all(columnsByKey.map(function(obj, idx) {
+                        return fetchPage(obj.ent, obj.titles, obj.key, nextOffset, 10000);
+                    })).then(function(nextResults) {
+                        var primaryRows = nextResults[0].rows;
+                        if (!primaryRows.length) return;
+                        primaryRows.forEach(function(baseRow, i) {
+                            var merged = Object.assign({}, baseRow);
+                            for (var j = 1; j < nextResults.length; j++) {
+                                if (nextResults[j].rows && nextResults[j].rows[i]) Object.assign(merged, nextResults[j].rows[i]);
+                            }
+                            st.fullData.push(merged);
+                        });
+                        renderGrid(tableIndex);
+                        if (st.fullData.length < primaryTotal) fetchMoreMerged();
+                    }).catch(function() {});
+                }
+                fetchMoreMerged();
+            }
+        }).catch(function(err) {
+            showLoading(tableIndex, false);
+            console.error(err);
+        });
+    }
+
+    /** Восстанавливает allColumns из selectedEntities/selectedFields, если колонки потеряны. */
+    function rebuildAllColumnsFromSelectedFields(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st || !st.selectedEntities || !st.selectedEntities.length || !st.selectedFields) return;
+        var cols = [];
+        st.selectedEntities.forEach(function(ent) {
+            var key = entityKey(ent);
+            var sel = st.selectedFields.find(function(f) { return f.entityKey === key; });
+            var displayTitles = (sel && sel.human_titles) ? sel.human_titles : [];
+            displayTitles.forEach(function(t) {
+                cols.push({ key: key + '::' + t, label: t, entityKey: key, entityTitle: ent.title || entityTitleForNested(ent) });
+            });
+            if (sel && sel.nestedFields && typeof sel.nestedFields === 'object') {
+                Object.keys(sel.nestedFields).forEach(function(typ) {
+                    (sel.nestedFields[typ] || []).forEach(function(t) {
+                        cols.push({ key: key + '::' + t, label: t, entityKey: key, entityTitle: ent.title || entityTitleForNested(ent) });
+                    });
+                });
+            }
+        });
+        var seenKey = {};
+        cols = cols.filter(function(c) { if (seenKey[c.key]) return false; seenKey[c.key] = true; return true; });
+        cols = cols.filter(function(c) { return !isSystemColumn(c.key); });
+        var validKeys = getValidColumnKeysFromSelectedFields(st);
+        cols = cols.filter(function(c) { return validKeys[c.key]; });
+        var labelCount = {};
+        cols.forEach(function(c) { labelCount[c.label] = (labelCount[c.label] || 0) + 1; });
+        cols.forEach(function(c) { if (labelCount[c.label] > 1) c.label = c.label + ' (' + (c.entityTitle || c.entityKey) + ')'; });
+        st.allColumns = applyColumnOrder(cols, getColumnOrderForTable(tableIndex));
+    }
+
+    /** Дополняет selectedFields из allColumns (для текущей страницы). */
+    function syncSelectedFieldsFromAllColumns(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st || !st.allColumns || !st.allColumns.length || !st.selectedFields) return;
+        st.allColumns.forEach(function(c) {
+            var idx = (c.key || '').indexOf('::');
+            if (idx <= 0) return;
+            var entityKey = c.key.slice(0, idx);
+            var title = c.key.slice(idx + 2);
+            var sel = st.selectedFields.find(function(f) { return f.entityKey === entityKey; });
+            if (sel) {
+                if (!sel.human_titles) sel.human_titles = [];
+                if (sel.human_titles.indexOf(title) < 0) sel.human_titles.push(title);
+            }
+        });
+    }
+
+    /** Строит массив fields для сохранения дэшборда только из allColumns — без опоры на selectedFields. */
+    function buildFieldsFromAllColumns(st) {
+        if (!st || !st.allColumns || !st.allColumns.length) return (st && st.selectedFields) ? st.selectedFields : [];
+        return buildFieldsFromColumnKeys(st.allColumns.map(function(c) { return c.key; }));
+    }
+
+    /** По списку ключей колонок (entityKey::title) строит массив fields для сохранения. */
+    function buildFieldsFromColumnKeys(columnKeys) {
+        if (!columnKeys || !columnKeys.length) return [];
+        var byKey = {};
+        columnKeys.forEach(function(key) {
+            if (isSystemColumn(key)) return;
+            var idx = (key || '').indexOf('::');
+            if (idx <= 0) return;
+            var entityKey = key.slice(0, idx);
+            var title = key.slice(idx + 2);
+            if (!byKey[entityKey]) byKey[entityKey] = { entityKey: entityKey, human_titles: [] };
+            if (byKey[entityKey].human_titles.indexOf(title) < 0) byKey[entityKey].human_titles.push(title);
+        });
+        return Object.keys(byKey).map(function(k) {
+            var b = byKey[k];
+            return { entityKey: b.entityKey, human_titles: b.human_titles.slice(), activeNestedTypes: [], nestedFields: {} };
+        });
+    }
+
+    /** Берёт ключи колонок из DOM (то, что реально отрисовано в настройках) — так в дэшборд попадает точная копия. */
+    function getColumnKeysFromSection(tableIndex) {
+        var els = getSectionEls(tableIndex);
+        if (!els.gridHead) return [];
+        var keys = [];
+        els.gridHead.querySelectorAll('th[data-column-key]').forEach(function(th) {
+            var k = th.getAttribute('data-column-key');
+            if (k) keys.push(k);
+        });
+        return keys;
+    }
+
+    /** Восстанавливает allColumns из ключей первой строки fullData, если в данных больше полей, чем в allColumns. */
+    function rebuildAllColumnsFromData(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st || !st.fullData || !st.fullData.length) return;
+        var firstRow = st.fullData[0];
+        var dataKeys = Object.keys(firstRow || {}).filter(function(k) { return !isSystemColumn(k); });
+        if (!dataKeys.length) return;
+        var cols = dataKeys.map(function(k) {
+            var label = k;
+            var idx = k.indexOf('::');
+            if (idx >= 0) label = k.slice(idx + 2);
+            return { key: k, label: label, entityKey: k.slice(0, idx >= 0 ? idx : 0), entityTitle: '' };
+        });
+        st.allColumns = applyColumnOrder(cols, getColumnOrderForTable(tableIndex));
+    }
+
+    function renderGrid(tableIndex) {
+        var st = tableStates[tableIndex];
+        if (!st) return;
+        if (st.fullData && st.fullData.length > 0) {
+            var dataKeys = Object.keys(st.fullData[0] || {});
+            if (!st.allColumns || st.allColumns.length === 0 || st.allColumns.length < dataKeys.length) {
+                rebuildAllColumnsFromSelectedFields(tableIndex);
+                if (st.allColumns.length < dataKeys.length) rebuildAllColumnsFromData(tableIndex);
+            }
+        }
+        var els = getSectionEls(tableIndex);
+        if (!els.gridHead || !els.gridBody) return;
+        var start = (st.currentPage - 1) * st.pageSize;
+        var slice = st.fullData.slice(start, start + st.pageSize);
+        var totalRows = st.fullData.length;
+        els.gridHead.innerHTML = '<tr>' + st.allColumns.map(function(c, i) {
+            var labelEsc = (c.label || c.key).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+            var keyEsc = (c.key || '').replace(/"/g, '&quot;');
+            var w = st.columnWidths[c.key];
+            var style = (w && w >= MIN_CONTENT_SAFE_WIDTH) ? ' style="width:' + w + 'px;min-width:' + w + 'px;"' : '';
+            return '<th class="entity-table-th-draggable entity-table-th-wrap" draggable="true" data-column-index="' + i + '" data-column-key="' + keyEsc + '"' + style + '>' + labelEsc + '<span class="entity-table-col-resize" title="Изменить ширину"></span></th>';
+        }).join('') + '</tr>';
+        els.gridBody.innerHTML = slice.map(function(row) {
+            return '<tr>' + st.allColumns.map(function(c) {
+                var val = row[c.key];
+                if (val !== null && typeof val === 'object') val = JSON.stringify(val);
+                var str = val != null ? String(val).trim() : '';
+                var cellHtml = '';
+                if (str && (str.indexOf('http://') === 0 || str.indexOf('https://') === 0)) {
+                    var hrefEsc = str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    var textEsc = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    cellHtml = '<a href="' + hrefEsc + '" target="_blank" rel="noopener noreferrer" class="entity-table-cell-link">' + textEsc + '</a>';
+                } else {
+                    cellHtml = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                }
+                return '<td>' + cellHtml + '</td>';
+            }).join('') + '</tr>';
+        }).join('');
+        var totalPages = totalRows ? Math.ceil(totalRows / st.pageSize) : 0;
+        if (els.paginationInfo) els.paginationInfo.textContent = 'Показано ' + (totalRows ? (start + 1) : 0) + ' — ' + (start + slice.length) + ' из ' + totalRows + ' записей';
+        if (els.paginationNav) {
+            var ul = document.createElement('ul');
+            if (totalPages > 0) {
+                var prevDisabled = st.currentPage <= 1;
+                var prevLi = document.createElement('li');
+                if (prevDisabled) prevLi.className = 'datatable-disabled';
+                var prevBtn = document.createElement('button');
+                prevBtn.type = 'button';
+                prevBtn.setAttribute('data-page', 'prev');
+                prevBtn.textContent = '‹';
+                prevBtn.disabled = prevDisabled;
+                prevLi.appendChild(prevBtn);
+                ul.appendChild(prevLi);
+                var maxPages = Math.min(totalPages, 10);
+                for (var p = 1; p <= maxPages; p++) {
+                    var li = document.createElement('li');
+                    if (p === st.currentPage) li.className = 'datatable-active';
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.setAttribute('data-page', String(p));
+                    btn.textContent = String(p);
+                    li.appendChild(btn);
+                    ul.appendChild(li);
+                }
+                var nextDisabled = st.currentPage >= totalPages;
+                var nextLi = document.createElement('li');
+                if (nextDisabled) nextLi.className = 'datatable-disabled';
+                var nextBtn = document.createElement('button');
+                nextBtn.type = 'button';
+                nextBtn.setAttribute('data-page', 'next');
+                nextBtn.textContent = '›';
+                nextBtn.disabled = nextDisabled;
+                nextLi.appendChild(nextBtn);
+                ul.appendChild(nextLi);
+            }
+            els.paginationNav.innerHTML = '';
+            els.paginationNav.appendChild(ul);
+        }
+        updateTableTitleBlock(tableIndex);
+
+        els.gridHead.querySelectorAll('.entity-table-col-resize').forEach(function(handle) {
+            handle.onmousedown = null;
+            handle.onmousedown = function(e) {
+                e.preventDefault();
+                var th = handle.closest('th');
+                if (!th) return;
+                var columnKey = th.getAttribute('data-column-key');
+                if (!columnKey) return;
+                var startX = e.clientX;
+                var startWidth = th.offsetWidth;
+                function onMove(e2) {
+                    var dx = e2.clientX - startX;
+                    var newWidth = Math.max(MIN_COL_WIDTH, startWidth + dx);
+                    th.style.width = newWidth + 'px';
+                    th.style.minWidth = newWidth + 'px';
+                    st.columnWidths[columnKey] = newWidth;
+                }
+                function onUp() {
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                    document.body.style.userSelect = '';
+                    document.body.style.cursor = '';
+                    saveColumnWidths();
+                }
+                document.body.style.userSelect = 'none';
+                document.body.style.cursor = 'col-resize';
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', onUp);
+            };
+        });
+        setupColumnDragDropForSection(tableIndex);
+    }
+
+    function setupColumnDragDropForSection(tableIndex) {
+        var els = getSectionEls(tableIndex);
+        var gridHead = els.gridHead;
+        if (!gridHead || gridHead._dragDropBound) return;
+        gridHead._dragDropBound = true;
+        var columnDropTargetIndex = null;
+
+        gridHead.addEventListener('dragstart', function(e) {
+            if (e.target.closest('.entity-table-col-resize')) { e.preventDefault(); return; }
+            var th = e.target.closest('th');
+            if (!th || !th.classList.contains('entity-table-th-draggable')) return;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', th.getAttribute('data-column-index'));
+            e.dataTransfer.setData('text/html', th.innerHTML);
+            th.classList.add('dragging');
+            columnDropTargetIndex = null;
+        });
+        gridHead.addEventListener('dragend', function(e) {
+            gridHead.querySelectorAll('th').forEach(function(el) {
+                el.classList.remove('dragging', 'drag-over');
+            });
+            columnDropTargetIndex = null;
+        });
+        gridHead.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            var th = document.elementFromPoint(e.clientX, e.clientY);
+            if (th) th = th.closest('th');
+            if (!th || !th.classList.contains('entity-table-th-draggable')) {
+                gridHead.querySelectorAll('th').forEach(function(el) { el.classList.remove('drag-over'); });
+                columnDropTargetIndex = null;
+                return;
+            }
+            var toIdx = parseInt(th.getAttribute('data-column-index'), 10);
+            if (!isNaN(toIdx)) columnDropTargetIndex = toIdx;
+            gridHead.querySelectorAll('th').forEach(function(el) { el.classList.remove('drag-over'); });
+            th.classList.add('drag-over');
+        });
+        gridHead.addEventListener('dragleave', function(e) {
+            if (!gridHead.contains(e.relatedTarget)) {
+                gridHead.querySelectorAll('th').forEach(function(el) { el.classList.remove('drag-over'); });
+                columnDropTargetIndex = null;
+            }
+        });
+        gridHead.addEventListener('drop', function(e) {
+            e.preventDefault();
+            gridHead.querySelectorAll('th').forEach(function(el) { el.classList.remove('drag-over'); });
+            var toIdx = columnDropTargetIndex;
+            if (toIdx == null || isNaN(toIdx)) {
+                var th = document.elementFromPoint(e.clientX, e.clientY);
+                if (th) th = th.closest('th');
+                if (th && th.classList.contains('entity-table-th-draggable')) {
+                    toIdx = parseInt(th.getAttribute('data-column-index'), 10);
+                }
+            }
+            if (toIdx == null || isNaN(toIdx)) return;
+            var fromIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+            if (isNaN(fromIdx) || fromIdx === toIdx) return;
+            var st = tableStates[tableIndex];
+            if (!st) return;
+            var cols = st.allColumns;
+            var a = cols[fromIdx];
+            var b = cols[toIdx];
+            cols[fromIdx] = b;
+            cols[toIdx] = a;
+            st.columnOrderFromServer = cols.map(function(c) { return c.key; });
+            saveColumnOrder();
+            renderGrid(tableIndex);
+            columnDropTargetIndex = null;
+        });
+    }
+
+    (function setupAddTableGrid() {
+        var btn = document.getElementById('btnAddTableBlock');
+        var modalEl = document.getElementById('modalInsertTableGrid');
+        var gridEl = document.getElementById('insertTableGrid');
+        if (!btn || !modalEl || !gridEl) return;
+        var modal = new bootstrap.Modal(modalEl);
+        var GRID_ROWS = 3;
+        var GRID_COLS = 3;
+        var MAX_CELLS = GRID_ROWS * GRID_COLS;
+
+        function renderInsertModalGrid() {
+            var n = tableStates.length;
+            gridEl.innerHTML = '';
+            for (var i = 0; i < GRID_ROWS; i++) {
+                for (var j = 0; j < GRID_COLS; j++) {
+                    var idx = i * GRID_COLS + j;
+                    var isOccupied = idx < n;
+                    var isAddSlot = idx === n && n < MAX_CELLS;
+                    var disabled = !isOccupied && !isAddSlot;
+                    var div = document.createElement('div');
+                    div.className = 'col-4';
+                    var cell = document.createElement('div');
+                    cell.className = 'insert-grid-cell' + (isOccupied ? ' insert-grid-cell-occupied' : '') + (disabled ? ' disabled' : '');
+                    cell.setAttribute('data-insert-index', String(idx));
+                    cell.setAttribute('role', 'button');
+                    cell.setAttribute('tabindex', disabled ? '-1' : '0');
+                    if (isOccupied) {
+                        var st = tableStates[idx];
+                        var label = (st && st.tableTitle && st.tableTitle.trim()) ? st.tableTitle.trim() : (st && st.selectedEntities && st.selectedEntities[0]) ? (st.selectedEntities[0].title || st.selectedEntities[0].type || '') : '';
+                        if (label.length > 20) label = label.slice(0, 17) + '…';
+                        cell.setAttribute('title', label ? ('Таблица ' + (idx + 1) + ': ' + label) : ('Таблица ' + (idx + 1)));
+                        cell.innerHTML = '<span class="cell-placeholder cell-occupied">' + (idx + 1) + '</span>';
+                    } else {
+                        cell.innerHTML = '<span class="cell-placeholder">' + (disabled ? '—' : '+') + '</span>';
+                    }
+                    if (!disabled) {
+                        cell.addEventListener('click', function() {
+                            var index = parseInt(this.getAttribute('data-insert-index'), 10);
+                            modal.hide();
+                            tableStates.splice(index, 0, defaultTableState());
+                            ensureSections();
+                            for (var i = 0; i < tableStates.length; i++) {
+                                var s = tableStates[i];
+                                if (s.fullData && s.fullData.length > 0) {
+                                    var dk = Object.keys(s.fullData[0] || {});
+                                    if (!s.allColumns || s.allColumns.length < dk.length) {
+                                        rebuildAllColumnsFromSelectedFields(i);
+                                        if (s.allColumns.length < dk.length) rebuildAllColumnsFromData(i);
+                                    }
+                                }
+                                renderGrid(i);
+                            }
+                            updateUI(index);
+                            currentTableIndex = index;
+                            var nameInput = document.getElementById('tableNameInput');
+                            var descInput = document.getElementById('tableDescriptionInput');
+                            if (nameInput) nameInput.value = '';
+                            if (descInput) descInput.value = '';
+                            openEntityModal();
+                        });
+                    }
+                    div.appendChild(cell);
+                    gridEl.appendChild(div);
+                }
+            }
+        }
+
+        btn.addEventListener('click', function() {
+            if (tableStates.length >= MAX_CELLS) {
+                alert('Достигнут максимум таблиц на странице (' + MAX_CELLS + ').');
+                return;
+            }
+            renderInsertModalGrid();
+            modal.show();
+        });
+    })();
+
+    (function setupSaveDashboard() {
+        var btn = document.getElementById('btnSaveDashboard');
+        var modalEl = document.getElementById('modalSaveDashboard');
+        var inputEl = document.getElementById('dashboardNameInput');
+        var createBtn = document.getElementById('modalSaveDashboardCreate');
+        if (!btn || !modalEl || !createBtn) return;
+        var modal = new bootstrap.Modal(modalEl);
+        btn.addEventListener('click', function() {
+            if (inputEl) inputEl.value = '';
+            modal.show();
+        });
+        createBtn.addEventListener('click', function() {
+            var name = (inputEl && inputEl.value || '').trim();
+            if (!name) { alert('Введите имя.'); return; }
+            var slug = getPageSlug();
+            for (var i = 0; i < tableStates.length; i++) {
+                var st = tableStates[i];
+                if (st.fullData && st.fullData.length > 0) {
+                    var dk = Object.keys(st.fullData[0] || {});
+                    if (!st.allColumns || st.allColumns.length < dk.length) {
+                        rebuildAllColumnsFromSelectedFields(i);
+                        if (st.allColumns.length < dk.length) rebuildAllColumnsFromData(i);
+                    }
+                    rebuildAllColumnsFromData(i);
+                }
+            }
+            for (var i = 0; i < tableStates.length; i++) { renderGrid(i); }
+            var tablesPayload = tableStates.map(function(st, i) {
+                var keysFromDom = getColumnKeysFromSection(i);
+                if (!keysFromDom.length && st.allColumns && st.allColumns.length) keysFromDom = st.allColumns.map(function(c) { return c.key; });
+                var fieldsToSave = keysFromDom.length ? buildFieldsFromColumnKeys(keysFromDom) : buildFieldsFromAllColumns(st);
+                if (!fieldsToSave.length) fieldsToSave = st.selectedFields || [];
+                return {
+                    table_title: st.tableTitle,
+                    table_description: st.tableDescription,
+                    entities: st.selectedEntities,
+                    fields: fieldsToSave,
+                    column_order: keysFromDom.length ? keysFromDom : null,
+                    column_widths: (st.columnWidths && Object.keys(st.columnWidths).length) ? st.columnWidths : null
+                };
+            });
+            if (!tablesPayload.length || !tablesPayload[0].entities || !tablesPayload[0].entities.length) {
+                alert('Сначала добавьте таблицу и выберите сущности.');
+                return;
+            }
+            createBtn.disabled = true;
+            saveConfig()
+                .then(function() {
+                    return fetch(API.saveDashboard, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: name, source_page_slug: slug, tables: tablesPayload })
+                    });
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    modal.hide();
+                    if (data && data.ok && data.url) {
+                        window.dispatchEvent(new Event('pages-updated'));
+                        alert('Дэшборд «' + (data.title || name) + '» создан. Он появится в меню. Откройте: ' + data.url);
+                    } else {
+                        alert('Ошибка: ' + (data && data.error ? data.error : 'не удалось создать'));
+                    }
+                })
+                .catch(function(err) {
+                    alert('Ошибка: ' + (err && err.message ? err.message : 'не удалось создать дэшборд. Сохраните настройки таблицы.'));
+                })
+                .finally(function() { createBtn.disabled = false; });
+        });
+    })();
+
+    // --- Шаблоны: с сервера (общие для всех), выпадающий список по кнопке «Шаблоны» ---
+    function loadTemplates() {
+        var modalDropdown = document.getElementById('templatesDropdown');
+        var modalFieldsDropdown = document.getElementById('templatesDropdownFields');
+        var emptyLi = '<li><span class="dropdown-item text-muted">Нет шаблонов</span></li>';
+        if (!modalDropdown && !modalFieldsDropdown) return;
+        if (modalDropdown) modalDropdown.innerHTML = emptyLi;
+        if (modalFieldsDropdown) modalFieldsDropdown.innerHTML = emptyLi;
+
+        fetch(API.templates)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var list = (data && data.templates && Array.isArray(data.templates)) ? data.templates : [];
+                renderTemplatesList(list);
+            })
+            .catch(function() {
+                renderTemplatesList([]);
+            });
+
+        function renderTemplatesList(list) {
+            var itemHtml = list.length
+                ? list.map(function(t) {
+                    var nameEsc = (t.name || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                    var dataTables = (t.tables && t.tables.length) ? (JSON.stringify(t.tables).replace(/'/g, '&#39;')) : '';
+                    var dataEntities = (JSON.stringify(t.entities || []).replace(/'/g, '&#39;'));
+                    var dataFields = (JSON.stringify(t.fields || []).replace(/'/g, '&#39;'));
+                    return '<li class="d-flex align-items-center dropdown-item-wrap">' +
+                        '<a class="dropdown-item flex-grow-1 text-truncate" href="#" data-id="' + (t.id || '') + '" data-entities=\'' + dataEntities + '\' data-fields=\'' + dataFields + '\'' + (dataTables ? ' data-tables=\'' + dataTables + '\'' : '') + '>' + nameEsc + '</a>' +
+                        '<button type="button" class="btn btn-link btn-sm text-danger p-1 ms-1" title="Удалить шаблон" data-delete-id="' + (t.id || '') + '" aria-label="Удалить">&times;</button>' +
+                        '</li>';
+                }).join('')
+                : emptyLi;
+
+            function bindDropdown(dropdownEl, onApply) {
+                if (!dropdownEl) return;
+                dropdownEl.innerHTML = itemHtml;
+                dropdownEl.querySelectorAll('a[data-id]').forEach(function(a) {
+                    a.addEventListener('click', function(e) {
+                        if (e.target.closest('button[data-delete-id]')) return;
+                        e.preventDefault();
+                        var idx = currentTableIndex;
+                        var tablesStr = this.getAttribute('data-tables');
+                        if (tablesStr && tablesStr.length) {
+                            try {
+                                var tables = JSON.parse(tablesStr);
+                                if (tables && tables.length) {
+                                    applyConfig({ tables: tables });
+                                    ensureSections();
+                                    tableStates.forEach(function(_, i) { loadFieldsThenData(i); });
+                                    if (onApply) onApply();
+                                    return;
+                                }
+                            } catch (err) {}
+                        }
+                        var entities = [];
+                        var fields = [];
+                        try {
+                            entities = JSON.parse(this.getAttribute('data-entities') || '[]');
+                            fields = JSON.parse(this.getAttribute('data-fields') || '[]');
+                        } catch (err) {}
+                        var norm = normalizeEntitiesAndFields(entities, fields);
+                        tableStates[idx].selectedEntities = norm.entities;
+                        tableStates[idx].selectedFields = norm.fields;
+                        updateUI(idx);
+                        saveConfig();
+                        saveConfigToStorage();
+                        loadFieldsThenData(idx);
+                        if (onApply) onApply();
+                    });
+                });
+                dropdownEl.querySelectorAll('button[data-delete-id]').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var id = this.getAttribute('data-delete-id');
+                        if (!id) return;
+                        if (!confirm('Удалить этот шаблон?')) return;
+                        fetch(API.templates + '/' + id, { method: 'DELETE' })
+                            .then(function(r) { return r.json(); })
+                            .then(function(res) { if (res && res.ok) loadTemplates(); })
+                            .catch(function() {});
+                    });
+                });
+            }
+            bindDropdown(modalDropdown, function() { modalEntity.hide(); });
+            bindDropdown(modalFieldsDropdown, function() { modalFields.hide(); });
+        }
+    }
+
+    (function setupTemplates() {
+        var dd = document.getElementById('templatesDropdown');
+        if (dd && dd.closest('.dropdown')) dd.closest('.dropdown').addEventListener('show.bs.dropdown', loadTemplates);
+        var dd2 = document.getElementById('templatesDropdownFields');
+        if (dd2 && dd2.closest('.dropdown')) dd2.closest('.dropdown').addEventListener('show.bs.dropdown', loadTemplates);
+        var modalEntityEl = document.getElementById('modalEntity');
+        var modalFieldsEl = document.getElementById('modalFields');
+        if (modalEntityEl) modalEntityEl.addEventListener('shown.bs.modal', loadTemplates);
+        if (modalFieldsEl) modalFieldsEl.addEventListener('shown.bs.modal', loadTemplates);
+    })();
+
+    if (isDashboardSlug()) { isReadOnly = true; applyReadOnlyMode(); }
+    loadConfig();
+    ensureSections();
+
+    window.addEventListener('beforeunload', saveConfigBeforeUnload);
+});
+</script>
+{% endblock %}
