@@ -1,7 +1,7 @@
 // Система локализации для Carento
 const Locale = {
     currentLang: 'ro', // По умолчанию румынский
-    
+
     // Словарь переводов
     translations: {
         ro: {
@@ -9,15 +9,15 @@ const Locale = {
             'nav.home': 'Acasă',
             'nav.about': 'Despre noi',
             'nav.contact': 'Contact',
-            
+
             // Баннер
             'banner.subtitle': 'Găsește mașina perfectă pentru tine',
-            'banner.title': 'Cauți un vehicul?',
+            'banner.title': 'Cauți un vehicul???',
             'banner.title2': 'Ești în locul perfect.',
             'banner.item1': 'Calitate înaltă la un preț redus.',
             'banner.item2': 'Servicii premium',
             'banner.item3': 'Asistență rutieră 24/7.',
-            
+
             // Секция "О нас"
             'section.badge': 'Cel mai bun sistem de închiriere auto',
             'section.title': 'Închiriezi simplu.<br>Conduci cu încredere.',
@@ -27,7 +27,7 @@ const Locale = {
             'section.item3': 'First Class Service',
             'section.item4': 'Gamă variată de automobile',
             'section.subtitle': 'Găsește mașina perfectă pentru orice ocazie',
-            
+
             // Контакты
             'contact.title': 'Contact Us',
             'contact.address': '4517 Washington Ave. <br />Manchester, Kentucky 39495',
@@ -47,7 +47,7 @@ const Locale = {
             'contact.privacyPolicy': 'Politica de confidențialitate',
             'contact.sendMessage': 'Trimite mesaj',
             'faq.contactUs': 'Contactează-ne',
-            
+
             // About Us
             'about.title': 'Despre noi',
             'about.subtitle': 'Obțineți cele mai recente <br />știri, actualizări și sfaturi',
@@ -55,7 +55,7 @@ const Locale = {
             'about.description': 'La CarsLine, clienții se bucură de închirieri auto rapide, sigure și accesibile. Flota noastră modernă și variată de automobile le oferă confortul și libertatea de care au nevoie. Cu noi, călătoria începe relaxată și plină de încredere.',
             'about.assistance': 'Asistență',
             'about.cars': 'Mașini',
-            
+
             // Футер
             'footer.follow': 'Urmărește-ne',
             'footer.address': 'Adresă: or. Chișinău, str. Ion Creanga 10/1',
@@ -63,28 +63,28 @@ const Locale = {
             'footer.email': 'info@carsline.md',
             'footer.needHelp': '',
             'footer.phone': '+373 60 411 444',
-            
+
             // Кнопки
             'btn.rezerva': 'Rezervă acum',
             'btn.explore': 'Explore Our Fleet',
             'btn.contact': 'Contact Us',
-            
+
             // Другие тексты
             'title.marcile': 'Mărcile noastre',
             'title.whyChoose': 'De ce să alegi închirierea auto?',
             'title.whyDescription': 'Închirierea unei mașini îți oferă libertatea de a te deplasa oricând și oriunde, fără grija întreținerii sau a costurilor suplimentare. Alegi modelul potrivit nevoilor tale, plătești doar pentru perioada dorită și te bucuri de confort, siguranță și flexibilitate maximă.',
-            
+
             // Популярные автомобили
             'popular.title': 'Cele mai căutate vehicule',
             'popular.subtitle': 'Cele mai renumite mărci auto din lume',
             'popular.found': 'Au fost găsite',
             'popular.vehicule': 'de vehicule',
-            
+
             // Валюта (всегда Lei, не переводится)
             'price.perDay': '/zi',
             'price.fromDays': 'De la 30 de zile',
             'price.onRequest': 'La cerere',
-            
+
             // Фильтры
             'filter.price': 'Filtrează după preț',
             'filter.currency': 'Lei',
@@ -93,31 +93,31 @@ const Locale = {
             'filter.category': 'Categorie',
             'filter.fuel': 'Combustibil',
             'filter.transmission': 'Transmisie',
-            
+
             // Секция преимуществ
             'section.item5': 'Flexibilitate în bugete și condiții',
             'section.item6': 'Mașini verificate și curate',
             'section.browse': 'Răsfoiește după tip',
-            
+
             // Как это работает
             'how.title': 'CUM FUNCȚIONEAZĂ',
             'how.subtitle': 'Prezentăm Noua Ta Experiență Preferată',
             'how.subtitle2': 'De Închiriere Auto',
-            
+
             // Карточки машин
             'car.seats': 'locuri',
             'car.book': 'Rezervă acum',
-            
+
             // Топливо
             'fuel.benzina95': 'Benzina 95',
             'fuel.motorina': 'Motorina',
             'fuel.hybrid': 'Hybrid/Benzina',
-            
+
             // Трансмиссия
             'transmission.automatic': 'Automatic',
             'transmission.manual': 'Manual',
             'transmission.variator': 'Variator',
-            
+
             // Как это работает - шаги
             'how.step1.title': 'Alege o Locație',
             'how.step1.desc': 'Selectează destinația ideală pentru a-ți începe călătoria cu ușurință',
@@ -127,7 +127,7 @@ const Locale = {
             'how.step3.desc': 'Revizuiește informațiile și confirmă rezervarea ta',
             'how.step4.title': 'Începe-ți Călătoria',
             'how.step4.desc': 'Pornește în aventură cu încredere și ușurință',
-            
+
             // Почему выбирают нас
             'why.location.title': 'Alege o Locație',
             'why.location.desc': 'Selectează destinația ideală pentru a-ți începe călătoria cu ușurință',
@@ -137,14 +137,14 @@ const Locale = {
             'why.booking.desc': 'Beneficiază de o varietate de opțiuni de închiriere, inclusiv pe termen scurt, pe termen lung și oferte speciale pentru weekend.',
             'why.support.title': 'Suport Clienți 24/7',
             'why.support.desc': 'Obține asistență oricând ai nevoie cu echipa noastră dedicată de suport disponibilă non-stop.',
-            
+
             // Миссия
             'mission.button': 'Misiunea noastră',
             'mission.title': 'O închiriere auto trebuie să fie simplă, rapidă și de încredere. <br /> Astfel, oferim servicii transparente, fără taxe ascunse.',
             'mission.item1': 'Contract clar și proces rapid de rezervare',
             'mission.item2': 'Mașini verificate tehnic și curate',
             'mission.item3': 'Personal profesionist și prețuri competitive',
-            
+
             // Статистика
             'stats.branches.line1': 'Filiale în Moldova',
             'stats.branches.line2': 'în Moldova',
@@ -156,14 +156,14 @@ const Locale = {
             'stats.km.value': '1Milion+',
             'stats.km.line1': 'Parcurși de clienții noștri',
             'stats.km.line2': 'clienții noștri',
-            
+
             // Мы предлагаем
             'offer.button': 'Noi oferim',
             'offer.description': 'Închirierea automobilelor pentru orice necesitate – de la călătorii zilnice până la evenimente speciale. Cu o rețea de 7 filiale în întreaga țară și un parc auto diversificat.',
             'offer.item1': '7 filiale în toată Moldova',
             'offer.item2': 'Gamă variată de automobile',
             'offer.item3': 'First Class Service',
-            
+
             // FAQ
             'faq.support': 'Suportul nostru',
             'faq.title': 'Întrebări frecvente',
@@ -176,7 +176,7 @@ const Locale = {
             'faq.a2': 'Cash, card(orice banca cu metoda de plata internationala), transfer bancar.',
             'faq.a3': 'Buletin, permis de conducere original!',
             'faq.a4': 'Cu CarsLine ai suport 24/7, raspuns imediat la solicitare!',
-            
+
             // Партнеры
             'partner.benefit.title': 'Beneficiază de ofertă.',
             'partner.benefit.desc': 'Fă un apel către partenerii noștri.',
@@ -185,7 +185,7 @@ const Locale = {
             'partner.garage.button': 'Începe Acum',
             'partner.nobil.question': 'Ai dorința de a face o achiziție auto?',
             'partner.nobil.desc': 'Nobil Auto este locul unde, cu siguranță, vei primi oferte de mașini pe placul tău.',
-            
+
             // Отзывы и видео
             'review.title': 'Recenzie Mașină',
             'review.subtitle': 'Sfaturi de la experți și evaluări oneste pentru a te ajuta să alegi mașina perfectă',
@@ -195,7 +195,7 @@ const Locale = {
             'review.credit.desc': 'Cu ajutorul partenerilor noștri de la Iute Credit, ai posibilitatea unică de a lua mașina în chirie în credit. Extinde perioada de închiriere fără griji și bucură-te de confortul condusului.',
             'review.worry.title': 'Conduce fără griji!',
             'review.worry.desc': 'Închiriind o mașină de la noi, te bucuri de libertate totală fără să-ți faci griji pentru întreținere, reparații sau alte costuri neașteptate. Tu te concentrezi doar pe drum și confort, noi ne ocupăm de restul.',
-            
+
             // Детали автомобиля
             'details.rental': 'Închiriere auto',
             'details.included': 'Inclus în preț',
@@ -210,7 +210,7 @@ const Locale = {
             'details.faq2.answer': 'Mâncarea și băuturile din exterior nu sunt permise pe High Roller. Cu toate acestea, există opțiuni de alimentație în apropiere la The LINQ Promenade unde vă puteți bucura de o masă înainte sau după plimbare.',
             'details.faq3.question': 'Este High Roller accesibil pentru scaunele cu rotile?',
             'details.faq3.answer': 'Da, cabinele High Roller sunt accesibile pentru scaunele cu rotile, permițând tuturor să se bucure de priveliștile uimitoare ale Las Vegas-ului.',
-            
+
             // Калькулятор кредита
             'loan.calculator': 'Calculator de împrumut auto',
             'loan.vehiclePrice': 'Prețul vehiculului',
@@ -221,7 +221,7 @@ const Locale = {
             'loan.financedAmount': 'Suma finanțată',
             'loan.monthlyPayment': 'Plata lunară',
             'loan.request': 'Solicită un împrumut',
-            
+
             // Форма бронирования
             'booking.title': 'Închiriază acest vehicul',
             'booking.pickup': 'Preluare',
@@ -239,7 +239,7 @@ const Locale = {
             'booking.discount': 'Reducere',
             'booking.total': 'Total de plată',
             'booking.reserve': 'Rezervă acum',
-            
+
             // Поля формы (шаг 2)
             'booking.lastName': 'Nume',
             'booking.firstName': 'Prenume',
@@ -253,13 +253,13 @@ const Locale = {
             'booking.placeholder.email': 'exemplu@email.com',
             'booking.submit': 'Trimite'
         },
-        
+
         en: {
             // Навигация
             'nav.home': 'Home',
             'nav.about': 'About Us',
             'nav.contact': 'Contact',
-            
+
             // Баннер
             'banner.subtitle': 'Find the perfect car for you',
             'banner.title': 'Looking for a vehicle?',
@@ -267,7 +267,7 @@ const Locale = {
             'banner.item1': 'High quality at a reduced price.',
             'banner.item2': 'Premium services',
             'banner.item3': '24/7 roadside assistance.',
-            
+
             // Секция "О нас"
             'section.badge': 'The best car rental system',
             'section.title': 'Rent simply.<br>Drive with confidence.',
@@ -277,7 +277,7 @@ const Locale = {
             'section.item3': 'First Class Service',
             'section.item4': 'Wide range of vehicles',
             'section.subtitle': 'Find the perfect car for any occasion',
-            
+
             // Контакты
             'contact.title': 'Contact Us',
             'contact.address': '4517 Washington Ave. <br />Manchester, Kentucky 39495',
@@ -297,7 +297,7 @@ const Locale = {
             'contact.privacyPolicy': 'Privacy Policy',
             'contact.sendMessage': 'Send message',
             'faq.contactUs': 'Contact Us',
-            
+
             // About Us
             'about.title': 'About Us',
             'about.subtitle': 'Get the latest <br />news, updates and tips',
@@ -305,7 +305,7 @@ const Locale = {
             'about.description': 'At CarsLine, customers enjoy fast, safe and affordable car rentals. Our modern and varied fleet of vehicles provides the comfort and freedom they need. With us, the journey begins relaxed and full of confidence.',
             'about.assistance': 'Assistance',
             'about.cars': 'Cars',
-            
+
             // Футер
             'footer.follow': 'Follow us',
             'footer.address': 'Address: Chișinău, str. Ion Creanga 10/1',
@@ -313,28 +313,28 @@ const Locale = {
             'footer.email': 'info@carsline.md',
             'footer.needHelp': '',
             'footer.phone': '+373 60 411 444',
-            
+
             // Кнопки
             'btn.rezerva': 'Book now',
             'btn.explore': 'Explore Our Fleet',
             'btn.contact': 'Contact Us',
-            
+
             // Другие тексты
             'title.marcile': 'Our Brands',
             'title.whyChoose': 'Why choose car rental?',
             'title.whyDescription': 'Renting a car gives you the freedom to travel anytime and anywhere, without the worry of maintenance or additional costs. You choose the model that suits your needs, pay only for the desired period and enjoy maximum comfort, safety and flexibility.',
-            
+
             // Популярные автомобили
             'popular.title': 'Most Popular Vehicles',
             'popular.subtitle': 'The Most Renowned Car Brands in the World',
             'popular.found': 'Found',
             'popular.vehicule': 'vehicles',
-            
+
             // Валюта (всегда Lei, не переводится)
             'price.perDay': '/day',
             'price.fromDays': 'From 30 days',
             'price.onRequest': 'On request',
-            
+
             // Фильтры
             'filter.price': 'Filter by Price',
             'filter.currency': 'Lei',
@@ -343,31 +343,31 @@ const Locale = {
             'filter.category': 'Category',
             'filter.fuel': 'Fuel',
             'filter.transmission': 'Transmission',
-            
+
             // Секция преимуществ
             'section.item5': 'Flexibility in budgets and conditions',
             'section.item6': 'Verified and clean cars',
             'section.browse': 'Browse by Type',
-            
+
             // Как это работает
             'how.title': 'HOW IT WORKS',
             'how.subtitle': 'Presenting Your New Preferred',
             'how.subtitle2': 'Car Rental Experience',
-            
+
             // Карточки машин
             'car.seats': 'seats',
             'car.book': 'Book now',
-            
+
             // Топливо
             'fuel.benzina95': 'Gasoline 95',
             'fuel.motorina': 'Diesel',
             'fuel.hybrid': 'Hybrid/Gasoline',
-            
+
             // Трансмиссия
             'transmission.automatic': 'Automatic',
             'transmission.manual': 'Manual',
             'transmission.variator': 'CVT',
-            
+
             // Как это работает - шаги
             'how.step1.title': 'Choose a Location',
             'how.step1.desc': 'Select the ideal destination to start your journey with ease',
@@ -377,7 +377,7 @@ const Locale = {
             'how.step3.desc': 'Review the information and confirm your reservation',
             'how.step4.title': 'Start Your Journey',
             'how.step4.desc': 'Embark on an adventure with confidence and ease',
-            
+
             // Why Choose Us
             'why.location.title': 'Choose a Location',
             'why.location.desc': 'Select the ideal destination to begin your journey with ease',
@@ -387,14 +387,14 @@ const Locale = {
             'why.booking.desc': 'Benefit from a variety of rental options, including short-term, long-term, and weekend specials',
             'why.support.title': '24/7 Customer Support',
             'why.support.desc': 'Get assistance whenever you need it with our dedicated support team available around the clock.',
-            
+
             // Mission
             'mission.button': 'Our Mission',
             'mission.title': 'Car rental should be simple, fast and reliable. <br /> Therefore, we offer transparent services, with no hidden fees.',
             'mission.item1': 'Clear contract and fast booking process',
             'mission.item2': 'Technically verified and clean cars',
             'mission.item3': 'Professional staff and competitive prices',
-            
+
             // Статистика
             'stats.branches.line1': 'Branches in Moldova',
             'stats.branches.line2': 'in Moldova',
@@ -406,14 +406,14 @@ const Locale = {
             'stats.km.value': '1Million+',
             'stats.km.line1': 'Traveled by our clients',
             'stats.km.line2': 'our clients',
-            
+
             // We offer
             'offer.button': 'We offer',
             'offer.description': 'Car rental for any need - from daily trips to special events. With a network of 7 branches throughout the country and a diverse car fleet.',
             'offer.item1': '7 branches throughout Moldova',
             'offer.item2': 'Wide range of vehicles',
             'offer.item3': 'First Class Service',
-            
+
             // FAQ
             'faq.support': 'Our Support',
             'faq.title': 'Frequently Asked Questions',
@@ -426,7 +426,7 @@ const Locale = {
             'faq.a2': 'Cash, card (any bank with international payment method), bank transfer.',
             'faq.a3': 'ID card, original driver\'s license!',
             'faq.a4': 'With CarsLine you have 24/7 support, immediate response to requests!',
-            
+
             // Партнеры
             'partner.benefit.title': 'Benefit from offers.',
             'partner.benefit.desc': 'Make a call to our partners.',
@@ -435,7 +435,7 @@ const Locale = {
             'partner.garage.button': 'Start Now',
             'partner.nobil.question': 'Want to make a car purchase?',
             'partner.nobil.desc': 'Nobil Auto is the place where you will definitely receive car offers to your liking.',
-            
+
             // Отзывы и видео
             'review.title': 'Car Review',
             'review.subtitle': 'Expert advice and honest reviews to help you choose the perfect car',
@@ -445,7 +445,7 @@ const Locale = {
             'review.credit.desc': 'With the help of our partners from Iute Credit, you have the unique opportunity to rent a car on credit. Extend the rental period without worries and enjoy the comfort of driving.',
             'review.worry.title': 'Drive without worries!',
             'review.worry.desc': 'Renting a car from us, you enjoy complete freedom without worrying about maintenance, repairs or other unexpected costs. You focus only on the road and comfort, we take care of the rest.',
-            
+
             // Car details
             'details.rental': 'Car Rental',
             'details.included': 'Included in Price',
@@ -460,7 +460,7 @@ const Locale = {
             'details.faq2.answer': 'Outside food and drinks are not permitted on High Roller. However, there are dining options nearby at The LINQ Promenade where you can enjoy a meal before or after your ride.',
             'details.faq3.question': 'Is High Roller accessible for wheelchairs?',
             'details.faq3.answer': 'Yes, High Roller cabins are accessible for wheelchairs, allowing everyone to enjoy the amazing views of Las Vegas.',
-            
+
             // Loan calculator
             'loan.calculator': 'Auto Loan Calculator',
             'loan.vehiclePrice': 'Vehicle Price',
@@ -471,7 +471,7 @@ const Locale = {
             'loan.financedAmount': 'Financed Amount',
             'loan.monthlyPayment': 'Monthly Payment',
             'loan.request': 'Request a Loan',
-            
+
             // Booking form
             'booking.title': 'Rent This Vehicle',
             'booking.pickup': 'Pickup',
@@ -489,7 +489,7 @@ const Locale = {
             'booking.discount': 'Discount',
             'booking.total': 'Total Payment',
             'booking.reserve': 'Book Now',
-            
+
             // Form fields (step 2)
             'booking.lastName': 'Last Name',
             'booking.firstName': 'First Name',
@@ -503,13 +503,13 @@ const Locale = {
             'booking.placeholder.email': 'example@email.com',
             'booking.submit': 'Submit'
         },
-        
+
         ru: {
             // Навигация
             'nav.home': 'Главная',
             'nav.about': 'О нас',
             'nav.contact': 'Контакты',
-            
+
             // Баннер
             'banner.subtitle': 'Найди идеальную машину для себя',
             'banner.title': 'Ищешь автомобиль?',
@@ -517,7 +517,7 @@ const Locale = {
             'banner.item1': 'Высокое качество по доступной цене.',
             'banner.item2': 'Премиум услуги',
             'banner.item3': 'Круглосуточная помощь на дороге.',
-            
+
             // Секция "О нас"
             'section.badge': 'Лучшая система аренды автомобилей',
             'section.title': 'Арендуй просто.<br>Езжай с уверенностью.',
@@ -527,7 +527,7 @@ const Locale = {
             'section.item3': 'Сервис первого класса',
             'section.item4': 'Широкий выбор автомобилей',
             'section.subtitle': 'Найди идеальную машину для любого случая',
-            
+
             // Контакты
             'contact.title': 'Свяжитесь с нами',
             'contact.address': '4517 Washington Ave. <br />Manchester, Kentucky 39495',
@@ -547,7 +547,7 @@ const Locale = {
             'contact.privacyPolicy': 'Политикой конфиденциальности',
             'contact.sendMessage': 'Отправить сообщение',
             'faq.contactUs': 'Свяжитесь с нами',
-            
+
             // Футер
             'footer.follow': 'Следите за нами',
             'footer.address': 'Адрес: г. Кишинёв, ул. Ион Крянгэ 10/1',
@@ -555,28 +555,28 @@ const Locale = {
             'footer.email': 'info@carsline.md',
             'footer.needHelp': '',
             'footer.phone': '+373 60 411 444',
-            
+
             // Кнопки
             'btn.rezerva': 'Выбор',
             'btn.explore': 'Посмотреть наш автопарк',
             'btn.contact': 'Связаться с нами',
-            
+
             // Другие тексты
             'title.marcile': 'Наши бренды',
             'title.whyChoose': 'Почему стоит выбрать аренду автомобиля?',
             'title.whyDescription': 'Аренда автомобиля даёт вам свободу передвигаться в любое время и в любом месте, без забот об обслуживании или дополнительных расходах. Вы выбираете модель, подходящую вашим потребностям, платите только за желаемый период и наслаждаетесь максимальным комфортом, безопасностью и гибкостью.',
-            
+
             // Популярные автомобили
             'popular.title': 'Самые популярные автомобили',
             'popular.subtitle': 'Самые известные автомобильные бренды в мире',
             'popular.found': 'Найдено',
             'popular.vehicule': 'автомобилей',
-            
+
             // Валюта (всегда Lei, не переводится)
             'price.perDay': '/день',
             'price.fromDays': 'От 30 дней',
             'price.onRequest': 'По запросу',
-            
+
             // Фильтры
             'filter.price': 'Фильтр по цене',
             'filter.currency': 'Лей',
@@ -585,31 +585,31 @@ const Locale = {
             'filter.category': 'Категория',
             'filter.fuel': 'Топливо',
             'filter.transmission': 'Трансмиссия',
-            
+
             // Секция преимуществ
             'section.item5': 'Гибкость в бюджетах и условиях',
             'section.item6': 'Проверенные и чистые машины',
             'section.browse': 'Просмотр по типу',
-            
+
             // Как это работает
             'how.title': 'КАК ЭТО РАБОТАЕТ',
             'how.subtitle': 'Представляем ваш новый любимый',
             'how.subtitle2': 'Опыт аренды автомобилей',
-            
+
             // Карточки машин
             'car.seats': 'мест',
             'car.book': 'Выбор',
-            
+
             // Топливо
             'fuel.benzina95': 'Бензин 95',
             'fuel.motorina': 'Дизель',
             'fuel.hybrid': 'Гибрид/Бензин',
-            
+
             // Трансмиссия
             'transmission.automatic': 'Автомат',
             'transmission.manual': 'Механическая',
             'transmission.variator': 'Вариатор',
-            
+
             // Как это работает - шаги
             'how.step1.title': 'Выберите локацию',
             'how.step1.desc': 'Выберите идеальное место назначения, чтобы начать ваше путешествие с легкостью',
@@ -619,7 +619,7 @@ const Locale = {
             'how.step3.desc': 'Проверьте информацию и подтвердите вашу бронь',
             'how.step4.title': 'Начните ваше путешествие',
             'how.step4.desc': 'Отправляйтесь в приключение с уверенностью и легкостью',
-            
+
             // Почему выбирают нас
             'why.location.title': 'Выберите локацию',
             'why.location.desc': 'Выберите идеальное место назначения, чтобы начать ваше путешествие с легкостью',
@@ -629,14 +629,14 @@ const Locale = {
             'why.booking.desc': 'Воспользуйтесь разнообразием вариантов аренды, включая краткосрочную, долгосрочную аренду и специальные предложения на выходные.',
             'why.support.title': 'Поддержка клиентов 24/7',
             'why.support.desc': 'Получите помощь в любое время, когда она вам нужна, с нашей преданной командой поддержки, доступной круглосуточно.',
-            
+
             // Миссия
             'mission.button': 'Наша миссия',
             'mission.title': 'Аренда автомобиля должна быть простой, быстрой и надежной. <br /> Поэтому мы предлагаем прозрачные услуги, без скрытых платежей.',
             'mission.item1': 'Прозрачный договор и быстрый процесс бронирования',
             'mission.item2': 'Технически проверенные и чистые автомобили',
             'mission.item3': 'Профессиональный персонал и конкурентоспособные цены',
-            
+
             // Статистика
             'stats.branches.line1': 'Филиалы в Молдове',
             'stats.branches.line2': 'в Молдове',
@@ -648,14 +648,14 @@ const Locale = {
             'stats.km.value': '1Млн+',
             'stats.km.line1': 'Пройдено нашими клиентами',
             'stats.km.line2': 'нашими клиентами',
-            
+
             // Мы предлагаем
             'offer.button': 'Мы предлагаем',
             'offer.description': 'Аренда автомобилей для любых нужд - от ежедневных поездок до специальных мероприятий. С сетью из 7 филиалов по всей стране и разнообразным автопарком.',
             'offer.item1': '7 филиалов по всей Молдове',
             'offer.item2': 'Широкий выбор автомобилей',
             'offer.item3': 'Сервис первого класса',
-            
+
             // FAQ
             'faq.support': 'Наша поддержка',
             'faq.title': 'Часто задаваемые вопросы',
@@ -668,7 +668,7 @@ const Locale = {
             'faq.a2': 'Наличные, карта (любой банк с международным методом оплаты), банковский перевод.',
             'faq.a3': 'Удостоверение личности, оригинальные водительские права!',
             'faq.a4': 'С CarsLine у вас есть поддержка 24/7, немедленный ответ на запросы!',
-            
+
             // Партнеры
             'partner.benefit.title': 'Получите предложение.',
             'partner.benefit.desc': 'Позвоните нашим партнерам.',
@@ -677,7 +677,7 @@ const Locale = {
             'partner.garage.button': 'Начать сейчас',
             'partner.nobil.question': 'Хотите купить автомобиль?',
             'partner.nobil.desc': 'Nobil Auto — это место, где вы обязательно получите предложения автомобилей по вашему вкусу.',
-            
+
             // Отзывы и видео
             'review.title': 'Обзор автомобиля',
             'review.subtitle': 'Советы экспертов и честные обзоры, чтобы помочь вам выбрать идеальный автомобиль',
@@ -687,7 +687,7 @@ const Locale = {
             'review.credit.desc': 'С помощью наших партнеров из Iute Credit, у вас есть уникальная возможность арендовать автомобиль в кредит. Продлите период аренды без забот и наслаждайтесь комфортом вождения.',
             'review.worry.title': 'Ездите без забот!',
             'review.worry.desc': 'Арендуя автомобиль у нас, вы наслаждаетесь полной свободой, не беспокоясь об обслуживании, ремонте или других неожиданных расходах. Вы сосредотачиваетесь только на дороге и комфорте, мы заботимся обо всем остальном.',
-            
+
             // Детали автомобиля
             'details.rental': 'Аренда автомобиля',
             'details.included': 'Включено в цену',
@@ -702,7 +702,7 @@ const Locale = {
             'details.faq2.answer': 'Еда и напитки извне не разрешены на High Roller. Однако поблизости есть варианты питания в The LINQ Promenade, где вы можете насладиться едой до или после поездки.',
             'details.faq3.question': 'Доступен ли High Roller для инвалидных колясок?',
             'details.faq3.answer': 'Да, кабины High Roller доступны для инвалидных колясок, позволяя всем наслаждаться удивительными видами Лас-Вегаса.',
-            
+
             // Калькулятор кредита
             'loan.calculator': 'Калькулятор автокредита',
             'loan.vehiclePrice': 'Цена автомобиля',
@@ -713,7 +713,7 @@ const Locale = {
             'loan.financedAmount': 'Сумма финансирования',
             'loan.monthlyPayment': 'Ежемесячный платеж',
             'loan.request': 'Запросить кредит',
-            
+
             // Форма бронирования
             'booking.title': 'Арендовать этот автомобиль',
             'booking.pickup': 'Получение',
@@ -731,7 +731,7 @@ const Locale = {
             'booking.discount': 'Скидка',
             'booking.total': 'Итого к оплате',
             'booking.reserve': 'Забронировать',
-            
+
             // Поля формы (шаг 2)
             'booking.lastName': 'Фамилия',
             'booking.firstName': 'Имя',
@@ -744,7 +744,7 @@ const Locale = {
             'booking.placeholder.phone': 'Пример: +373 60 000 000',
             'booking.placeholder.email': 'example@email.com',
             'booking.submit': 'Отправить',
-            
+
             // About Us
             'about.title': 'О нас',
             'about.subtitle': 'Получайте последние <br />новости, обновления и советы',
@@ -754,23 +754,23 @@ const Locale = {
             'about.cars': 'Автомобили'
         }
     },
-    
+
     // Инициализация
     init() {
         // Загружаем сохраненный язык из localStorage или используем RO по умолчанию
         const savedLang = localStorage.getItem('carento_lang') || 'ro';
         this.setLanguage(savedLang);
-        
+
         // Добавляем обработчики кликов на переключатель языка
         this.initLanguageSwitcher();
     },
-    
+
     // Инициализация переключателя языка
     initLanguageSwitcher() {
         // Находим все переключатели языков (десктопный и мобильный)
         const langSwitchers = document.querySelectorAll('.head-lang');
         if (!langSwitchers || langSwitchers.length === 0) return;
-        
+
         // Добавляем обработчики ко всем переключателям
         langSwitchers.forEach(langSwitcher => {
             const langLinks = langSwitcher.querySelectorAll('.dropdown-account a');
@@ -778,7 +778,7 @@ const Locale = {
                 // Удаляем старые обработчики, если они есть
                 const newLink = link.cloneNode(true);
                 link.parentNode.replaceChild(newLink, link);
-                
+
                 // Добавляем новый обработчик
                 newLink.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -799,46 +799,46 @@ const Locale = {
             });
         });
     },
-    
+
     // Установка языка
     setLanguage(lang) {
         if (!this.translations[lang]) {
             // console.error(`Language ${lang} not found`);
             return;
         }
-        
+
         this.currentLang = lang;
         localStorage.setItem('carento_lang', lang);
-        
+
         // Добавляем data-lang атрибут к body для CSS селекторов
         if (document.body) {
             document.body.setAttribute('data-lang', lang);
         }
-        
+
         // Обновляем отображение текущего языка
         // Обновляем индикатор языка во всех переключателях (десктопный и мобильный)
         const langIndicators = document.querySelectorAll('.head-lang .arrow-down');
         langIndicators.forEach(indicator => {
             indicator.textContent = lang.toUpperCase();
         });
-        
+
         // Применяем переводы
         this.translatePage();
-        
+
         // Отправляем событие о смене языка для других модулей
         window.dispatchEvent(new CustomEvent('localeChanged', { detail: { lang: lang } }));
     },
-    
+
     // Перевод страницы
     translatePage() {
         const translations = this.translations[this.currentLang];
-        
+
         // Находим все элементы с data-lang-key
         document.querySelectorAll('[data-lang-key]').forEach(element => {
             const key = element.getAttribute('data-lang-key');
             if (translations[key]) {
                 const translation = translations[key];
-                
+
                 // Для input и textarea
                 if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     if (element.type === 'button' || element.type === 'submit') {
@@ -870,7 +870,7 @@ const Locale = {
                 }
             }
         });
-        
+
         // Обновляем tooltip для элементов с data-lang-key-tooltip
         document.querySelectorAll('[data-lang-key-tooltip]').forEach(element => {
             const key = element.getAttribute('data-lang-key-tooltip');
@@ -878,11 +878,11 @@ const Locale = {
                 element.setAttribute('data-tooltip', translations[key]);
             }
         });
-        
+
         // Сохраняем текущий язык для следующего переключения
         localStorage.setItem('carento_prev_lang', this.currentLang);
     },
-    
+
     // Получить перевод по ключу
     t(key) {
         return this.translations[this.currentLang][key] || key;
