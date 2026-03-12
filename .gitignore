@@ -2,7 +2,6 @@
 **/.DS_Store
 
 frontend/node_modules/
-frontend/dist/
 frontend/dist_backup.zip
 
 admin/venv/

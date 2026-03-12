@@ -12,7 +12,7 @@ const Locale = {
 
             // Баннер
             'banner.subtitle': 'Găsește mașina perfectă pentru tine',
-            'banner.title': 'Cauți un vehicul??',
+            'banner.title': 'Cauți un vehicul?',
             'banner.title2': 'Ești în locul perfect.',
             'banner.item1': 'Calitate înaltă la un preț redus.',
             'banner.item2': 'Servicii premium',
