@@ -48,11 +48,8 @@ class Config(object):
     if USE_SQLITE:
 
         # This will create a file in <app> FOLDER
-        SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3')
-
-    # CRM API для таблицы сущностей (позже вынести в .env)
-    CRM_API_BASE_URL = 'http://194.33.40.197:7070'
-
+        SQLALCHEMY_DATABASE_URI = 'postgresql://carento:carento@194.33.40.197:5432/carento'
+    
 class ProductionConfig(Config):
     DEBUG = False
 
@@ -69,3 +66,6 @@ config_dict = {
     'Production': ProductionConfig,
     'Debug'     : DebugConfig
 }
+# --- FORCE PostgreSQL for admin ---
+SQLALCHEMY_DATABASE_URI = "postgresql://carento:carento@194.33.40.197:5432/carento"
+USE_SQLITE = False

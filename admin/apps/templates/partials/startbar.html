@@ -1,32 +1,5 @@
+<!-- -*- coding: utf-8 -*- -->
 <div class="startbar d-print-none">
-    <style>
-    .startbar-guest .startbar-auth-only { display: none !important; }
-    .startbar-guest .custom-page-item { display: none !important; }
-    /* Гость: скрыть весь startbar и растянуть контент на всю ширину */
-    body.startbar-guest .startbar { display: none !important; }
-    body.startbar-guest .topbar { width: 100% !important; }
-    body.startbar-guest .page-wrapper .page-content { margin-left: 0 !important; }
-    @media (max-width: 1199.98px) {
-        .startbar {
-            transform: translateX(-100%);
-            transition: transform 0.2s ease;
-            z-index: 1062;
-        }
-        .startbar.startbar-open {
-            transform: translateX(0);
-        }
-        .startbar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 1061;
-        }
-        .startbar-overlay.active {
-            display: block;
-        }
-    }
-    </style>
     <!--start brand-->
     <div class="brand">
         <a href="/" class="logo">
@@ -44,35 +17,19 @@
     <div class="startbar-menu" >
         <div class="startbar-collapse" id="startbarCollapse" data-simplebar>
             <div class="d-flex align-items-start flex-column w-100">
-                <div class="w-100 px-3 pt-3 pb-2 startbar-auth-only">
-                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createPageModal">
-                        <i class="iconoir-plus"></i> Добавить страницу
-                    </button>
-                </div>
                 <!-- Navigation -->
-                <ul class="navbar-nav mb-auto w-100" id="startbarNavList">
-                    <li class="menu-label mt-2 startbar-auth-only">
+                <ul class="navbar-nav mb-auto w-100">
+                    <li class="menu-label mt-2 d-none">
                         <span>Navigation</span>
                     </li>
-                    <li class="menu-label mt-2 startbar-auth-only" id="createDashboardsLabel">
-                        <span>Create Dashboards</span>
-                    </li>
-                    <li class="nav-item d-none startbar-auth-only" id="customPagesPlaceholder" aria-hidden="true">
-                        <a class="nav-link text-muted" href="javascript:void(0);">
-                            <i class="iconoir-info-empty menu-icon"></i>
-                            <span>Пока нет страниц</span>
-                        </a>
-                    </li>
-                    <li class="menu-label mt-2" id="templatesLabel">
-                        <span>Templates</span>
-                    </li>
-                    <li class="nav-item">
+
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarDashboards"> 
                             <i class="iconoir-report-columns menu-icon"></i>                                       
                             <span>Dashboards</span>
                         </a>
-                        <div class="collapse " id="sidebarDashboards">
+                        <div class="collapse" id="sidebarDashboards">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="/" class="nav-link ">Analytics</a>
@@ -85,13 +42,13 @@
                     </li><!--end nav-item-->
 
                                                    
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarEcommerce" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarEcommerce"> 
                             <i class="iconoir-cart-alt menu-icon"></i>                                        
                             <span>Ecommerce</span>
                         </a>
-                        <div class="collapse " id="sidebarEcommerce">
+                        <div class="collapse" id="sidebarEcommerce">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/ecommerce-products">Products</a>
@@ -114,13 +71,13 @@
                             </ul><!--end nav-->
                         </div>
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarProjects" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarProjects"> 
                             <i class="iconoir-asana menu-icon"></i>                                       
                             <span>Projects</span>
                         </a>
-                        <div class="collapse " id="sidebarProjects">
+                        <div class="collapse" id="sidebarProjects">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="/projects-overview" class="nav-link ">Overview</a>
@@ -143,13 +100,13 @@
                             </ul><!--end nav-->
                         </div>
                     </li><!--end nav-item--> 
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarAnalytics" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarAnalytics"> 
                             <i class="iconoir-reports menu-icon"></i>                                       
                             <span>Analytics</span>
                         </a>
-                        <div class="collapse " id="sidebarAnalytics">
+                        <div class="collapse" id="sidebarAnalytics">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a href="/analytics-customers" class="nav-link ">Customers</a>
@@ -160,45 +117,45 @@
                             </ul><!--end nav-->
                         </div>
                     </li><!--end nav-item--> 
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="/apps-chat">
                             <i class="iconoir-chat-bubble menu-icon"></i> 
                             <span>Chat</span>
                         </a>
                     </li><!--end nav-item--> 
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="/apps-contact-list">
                             <i class="iconoir-community menu-icon"></i> 
                             <span>Contact List</span>
                         </a>
                     </li><!--end nav-item--> 
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="/apps-calendar">
                             <i class="iconoir-calendar menu-icon"></i> 
                             <span>Calendar</span>
                         </a>
                     </li><!--end nav-item-->  
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="/apps-invoice">
                             <i class="iconoir-paste-clipboard menu-icon"></i> 
                             <span>Invoice</span>
                         </a>
                     </li><!--end nav-item-->
                     
-                    <li class="menu-label mt-2">
+                    <li class="menu-label mt-2 d-none">
                         <small class="label-border">
                             <div class="border_left hidden-xs"></div>
                             <div class="border_right"></div>
                         </small>
                         <span>Components</span>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarElements" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarElements">
                             <i class="iconoir-compact-disc menu-icon"></i>
                             <span>UI Elements</span>
                         </a>
-                        <div class="collapse " id="sidebarElements">
+                        <div class="collapse" id="sidebarElements">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/ui-alerts">Alerts</a>
@@ -266,13 +223,13 @@
                             </ul><!--end nav-->
                         </div><!--end startbarElements-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarAdvancedUI" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarAdvancedUI">
                             <i class="iconoir-peace-hand menu-icon"></i>
                             <span>Advanced UI</span><span class="badge rounded text-success bg-success-subtle ms-1">New</span>
                         </a>
-                        <div class="collapse " id="sidebarAdvancedUI">
+                        <div class="collapse" id="sidebarAdvancedUI">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/advanced-animation">Animation</a>
@@ -307,13 +264,13 @@
                             </ul><!--end nav-->
                         </div><!--end startbarAdvancedUI-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarForms">
                             <i class="iconoir-cube-hole menu-icon"></i>
                             <span>Forms</span>
                         </a>
-                        <div class="collapse " id="sidebarForms">
+                        <div class="collapse" id="sidebarForms">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/forms-elements">Basic Elements</a>
@@ -339,13 +296,13 @@
                             </ul><!--end nav-->
                         </div><!--end startbarForms-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarCharts" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarCharts">
                             <i class="iconoir-candlestick-chart menu-icon"></i>
                             <span>Charts</span>
                         </a>
-                        <div class="collapse " id="sidebarCharts">
+                        <div class="collapse" id="sidebarCharts">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/charts-apex">Apex</a>
@@ -362,13 +319,14 @@
                             </ul><!--end nav-->
                         </div><!--end startbarCharts-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+					
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarTables" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarTables">
                             <i class="iconoir-list menu-icon"></i>
                             <span>Tables</span>
                         </a>
-                        <div class="collapse " id="sidebarTables">
+                        <div class="collapse" id="sidebarTables">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/tables-basic">Basic</a>
@@ -383,12 +341,35 @@
                         </div><!--end startbarTables-->
                     </li><!--end nav-item-->
                     <li class="nav-item">
+                        <a class="nav-link" href="#sidebarTables2" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarTables2">
+                            <i class="iconoir-list menu-icon"></i>
+                            <span>Carento</span>
+                        </a>
+                        <div class="collapse show" id="sidebarTables2">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/admin-embed">
+                                        <i class="fas fa-car menu-icon"></i>
+                                        <span>Cars</span>
+                                    </a>
+                                </li><!--end nav-item-->
+                                <li class="nav-item d-none">
+                                    <a class="nav-link" href="/banner-editor">
+                                        <i class="iconoir-edit menu-icon"></i>
+                                        <span>Edit Banner</span>
+                                    </a>
+                                </li><!--end nav-item--> 
+                            </ul><!--end nav-->
+                        </div><!--end startbarTables2-->
+                    </li><!--end nav-item-->
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarIcons" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarIcons">
                             <i class="iconoir-fire-flame menu-icon"></i>
                             <span>Icons</span>
                         </a>
-                        <div class="collapse " id="sidebarIcons">
+                        <div class="collapse" id="sidebarIcons">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/icons-fontawesome">Font Awesome</a>
@@ -405,13 +386,13 @@
                             </ul><!--end nav-->
                         </div><!--end startbarIcons-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarMaps" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarMaps">
                             <i class="iconoir-map-pin menu-icon"></i>
                             <span>Maps</span>
                         </a>
-                        <div class="collapse " id="sidebarMaps">
+                        <div class="collapse" id="sidebarMaps">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/maps-google">Google Maps</a>
@@ -425,13 +406,13 @@
                             </ul><!--end nav-->
                         </div><!--end startbarMaps-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarEmailTemplates" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarEmailTemplates">
                             <i class="iconoir-send-mail menu-icon"></i>
                             <span>Email Templates</span>
                         </a>
-                        <div class="collapse " id="sidebarEmailTemplates">
+                        <div class="collapse" id="sidebarEmailTemplates">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/email-templates-basic">Basic Action Email</a>
@@ -445,20 +426,20 @@
                             </ul><!--end nav-->
                         </div><!--end startbarEmailTemplates-->
                     </li><!--end nav-item-->
-                    <li class="menu-label mt-2">
+                    <li class="menu-label mt-2 d-none">
                         <small class="label-border">
                             <div class="border_left hidden-xs"></div>
                             <div class="border_right"></div>
                         </small>
                         <span>Crafted</span>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarPages">
                             <i class="iconoir-page-star menu-icon"></i>
                             <span>Pages</span>
                         </a>
-                        <div class="collapse " id="sidebarPages">
+                        <div class="collapse" id="sidebarPages">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/pages-profile">Profile</a>
@@ -490,13 +471,13 @@
                             </ul><!--end nav-->
                         </div><!--end startbarPages-->
                     </li><!--end nav-item-->
-                    <li class="nav-item">
+                    <li class="nav-item d-none">
                         <a class="nav-link" href="#sidebarAuthentication" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarAuthentication">
                             <i class="iconoir-fingerprint-lock-circle menu-icon"></i>
                             <span>Authentication</span>
                         </a>
-                        <div class="collapse " id="sidebarAuthentication">
+                        <div class="collapse" id="sidebarAuthentication">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/auth-login">Log in</a>
@@ -535,238 +516,4 @@
         </div><!--end startbar-collapse-->
     </div><!--end startbar-menu-->    
 </div><!--end startbar-->
-
-<!-- Modal: Create Page -->
-<div class="modal fade" id="createPageModal" tabindex="-1" aria-labelledby="createPageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form id="createPageForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createPageModalLabel">Новая страница</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="newPageName" class="form-label">Название страницы</label>
-                        <input type="text" class="form-control" id="newPageName" name="name" placeholder="Например: Отчеты" required>
-                        <div class="form-text">Допустимы буквы, цифры, дефис и нижнее подчеркивание.</div>
-                    </div>
-                    <div id="createPageAlert" class="alert d-none mb-0" role="alert"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="submit" class="btn btn-primary" id="createPageSubmit">Создать</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-(function() {
-    var AUTH_USER_ID_KEY = 'auth_user_id';
-    function isLoggedIn() { return !!localStorage.getItem(AUTH_USER_ID_KEY); }
-    if (!isLoggedIn()) document.body.classList.add('startbar-guest');
-    function applyStartbarAuthMode() {
-        var startbar = document.querySelector('.startbar');
-        var templatesLabel = document.getElementById('templatesLabel');
-        if (isLoggedIn()) {
-            document.body.classList.remove('startbar-guest');
-            if (startbar) startbar.classList.remove('startbar-guest');
-            if (templatesLabel) {
-                templatesLabel.classList.remove('startbar-auth-only');
-                var el = templatesLabel.nextElementSibling;
-                while (el) { el.classList.remove('startbar-auth-only'); el = el.nextElementSibling; }
-            }
-        } else {
-            document.body.classList.add('startbar-guest');
-            if (startbar) startbar.classList.add('startbar-guest');
-            if (templatesLabel) {
-                templatesLabel.classList.add('startbar-auth-only');
-                var el = templatesLabel.nextElementSibling;
-                while (el) { el.classList.add('startbar-auth-only'); el = el.nextElementSibling; }
-            }
-        }
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        applyStartbarAuthMode();
-        window.addEventListener('auth-changed', applyStartbarAuthMode);
-    });
-})();
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('createPageForm');
-    const input = document.getElementById('newPageName');
-    const alertBox = document.getElementById('createPageAlert');
-    const submitBtn = document.getElementById('createPageSubmit');
-    const modalEl = document.getElementById('createPageModal');
-    const modalInstance = modalEl ? bootstrap.Modal.getOrCreateInstance(modalEl) : null;
-
-    if (!form || !input) return;
-
-    function showMessage(message, type = 'info') {
-        if (!alertBox) return;
-        alertBox.className = `alert alert-${type}`;
-        alertBox.textContent = message;
-        alertBox.classList.remove('d-none');
-    }
-
-    function clearMessage() {
-        if (alertBox) {
-            alertBox.classList.add('d-none');
-            alertBox.textContent = '';
-        }
-    }
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        clearMessage();
-        const name = input.value.trim();
-        if (!name) {
-            showMessage('Введите название страницы', 'warning');
-            return;
-        }
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Создание...';
-        }
-        try {
-            const resp = await fetch('/api/pages/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
-            });
-            const data = await resp.json();
-            if (!resp.ok || !data.ok) {
-                throw new Error(data.error || 'Не удалось создать страницу');
-            }
-            showMessage('Страница создана, открываю...', 'success');
-            setTimeout(() => {
-                if (modalInstance) modalInstance.hide();
-                window.location.href = data.url || '/';
-            }, 500);
-        } catch (err) {
-            showMessage(err.message, 'danger');
-        } finally {
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Создать';
-            }
-        }
-    });
-
-    if (modalEl) {
-        modalEl.addEventListener('shown.bs.modal', () => {
-            clearMessage();
-            input.value = '';
-            input.focus();
-        });
-    }
-
-    // load custom pages into menu
-    const pagesPlaceholder = document.getElementById('customPagesPlaceholder');
-    const navList = document.querySelector('.navbar-nav.mb-auto.w-100');
-    async function deletePage(slug) {
-        try {
-            const resp = await fetch(`/api/pages/${slug}`, { method: 'DELETE' });
-            const data = await resp.json();
-            if (!resp.ok || !data.ok) throw new Error(data.error || 'Не удалось удалить страницу');
-            await loadPages();
-            window.location.href = '/';
-        } catch (err) {
-            console.error(err);
-            alert(err.message || 'Ошибка удаления страницы');
-        }
-    }
-    function createPageLi(page) {
-        const li = document.createElement('li');
-        li.className = 'nav-item custom-page-item';
-        const isGuest = !localStorage.getItem('auth_user_id');
-        const a = document.createElement('a');
-        a.className = 'nav-link flex-grow-1';
-        a.href = page.url || `/${page.slug}`;
-        a.innerHTML = `<i class="iconoir-page menu-icon"></i> <span>${escapeHtml(page.title || page.slug)}</span>`;
-        if (isGuest) {
-            li.appendChild(a);
-        } else {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'd-flex align-items-center justify-content-between';
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'btn btn-sm btn-link text-danger delete-page-btn';
-            btn.innerHTML = '&times;';
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (confirm('Удалить эту страницу?')) {
-                    deletePage(page.slug);
-                }
-            });
-            wrapper.appendChild(a);
-            wrapper.appendChild(btn);
-            li.appendChild(wrapper);
-        }
-        return li;
-    }
-    function escapeHtml(s) {
-        var div = document.createElement('div');
-        div.textContent = s;
-        return div.innerHTML;
-    }
-    async function loadPages() {
-        try {
-            const resp = await fetch('/api/pages/list');
-            const data = await resp.json();
-            if (!resp.ok || !data.ok) throw new Error(data.error || 'Не удалось получить список страниц');
-            const pages = Array.isArray(data.pages) ? data.pages : [];
-            if (!navList) return;
-
-            const customPages = pages.filter(p => !(String(p.slug || '').toLowerCase().startsWith('dash-')));
-
-            navList.querySelectorAll('.custom-page-item').forEach(n => n.remove());
-            let insertRef = pagesPlaceholder || navList.querySelector('.menu-label');
-            customPages.forEach(page => {
-                const li = createPageLi(page);
-                if (insertRef) {
-                    insertRef.insertAdjacentElement('afterend', li);
-                    insertRef = li;
-                } else {
-                    navList.prepend(li);
-                }
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    }
-    loadPages();
-    window.addEventListener('pages-updated', () => loadPages());
-});
-
-// Кнопка меню: показ/скрытие startbar
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('togglemenu');
-    const startbar = document.querySelector('.startbar');
-    const overlay = document.querySelector('.startbar-overlay');
-    const close = () => {
-        if (startbar) startbar.classList.remove('startbar-open');
-        if (overlay) overlay.classList.remove('active');
-        document.body.classList.remove('startbar-open');
-    };
-    const toggle = () => {
-        if (!startbar) return;
-        const isOpen = startbar.classList.toggle('startbar-open');
-        if (overlay) overlay.classList.toggle('active', isOpen);
-        document.body.classList.toggle('startbar-open', isOpen);
-    };
-    if (btn) {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggle();
-        });
-    }
-    if (overlay) {
-        overlay.addEventListener('click', () => close());
-    }
-});
-</script>
 <div class="startbar-overlay d-print-none"></div>

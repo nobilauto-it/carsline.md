@@ -1,0 +1,456 @@
+# -*- coding: utf-8 -*-
+from flask import Blueprint, render_template, request, jsonify, Response
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
+from jinja2 import Template
+import os
+from werkzeug.utils import secure_filename
+import base64
+
+# Create blueprint
+blueprint = Blueprint('pages', __name__, url_prefix='/')
+
+# Database instance (will be set by app)
+db = None
+
+def init_db(database):
+    """Initialize database instance"""
+    global db
+    db = database
+
+# Routes
+@blueprint.route('/')
+def index():
+    return render_template('pages/index.html', segment='index')
+
+@blueprint.route('/banner-editor')
+def banner_editor():
+    """Banner editor page in Dastone style"""
+    return render_template('pages/banner-editor.html', segment='banner-editor')
+
+@blueprint.route('/admin-embed')
+def admin_embed():
+    """Admin embed page for car management"""
+    return render_template('pages/admin-embed.html', segment='admin-embed')
+
+@blueprint.route('/images/<int:img_id>')
+def serve_image_base64(img_id):
+    """Serve car images from database as base64"""
+    try:
+        with db.engine.connect() as conn:
+            # Get image data from database (url column contains base64 data)
+            result = conn.execute(text('SELECT url FROM img WHERE id = :img_id'), {'img_id': img_id})
+            row = result.fetchone()
+            
+            if row and row[0]:
+                # Get base64 data from url column
+                base64_data = row[0]
+                
+                # Remove data URI prefix if present (e.g., "data:image/jpeg;base64,")
+                if ',' in base64_data:
+                    base64_data = base64_data.split(',')[1]
+                
+                # Decode base64 data
+                image_data = base64.b64decode(base64_data)
+                
+                # Determine mimetype based on base64 prefix
+                mimetype = 'image/jpeg'  # default
+                if base64_data.startswith('/9j/'):  # JPEG
+                    mimetype = 'image/jpeg'
+                elif base64_data.startswith('iVBORw0KGgo'):  # PNG
+                    mimetype = 'image/png'
+                elif base64_data.startswith('R0lGOD'):  # GIF
+                    mimetype = 'image/gif'
+                
+                # Return image with proper headers
+                return Response(
+                    image_data,
+                    mimetype=mimetype,
+                    headers={'Content-Type': mimetype}
+                )
+            else:
+                # Return 404 if image not found
+                return Response('Image not found', status=404)
+                
+    except Exception as e:
+        print(f"Error serving image {img_id}: {e}")
+        return Response(f'Error loading image: {str(e)}', status=500)
+
+# API endpoints for cars
+@blueprint.route('/api/cars')
+def cars_list():
+    """Get cars list with pagination"""
+    try:
+        limit = int(request.args.get('limit', 12))
+        offset = int(request.args.get('offset', 0))
+        source = request.args.get('source', 'db')  # 'db' or 'api'
+        
+        if source == 'db':
+            return cars_list_db(limit, offset)
+        else:
+            return cars_list_api(limit, offset)
+    except Exception as e:
+        print(f"Error fetching cars: {e}")
+        return jsonify({'error': str(e)}), 500
+
+def cars_list_api(limit=12, offset=0):
+    """Get cars from external API"""
+    try:
+        import requests
+        
+        # External API URL
+        api_url = "http://194.33.40.197:8000/cars"
+        params = {
+            'limit': limit,
+            'offset': offset
+        }
+        
+        response = requests.get(api_url, params=params, timeout=10)
+        response.raise_for_status()
+        
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching cars from API: {e}")
+        return jsonify({'error': str(e)}), 500
+
+def cars_list_db(limit=12, offset=0):
+    """Get cars from local database"""
+    try:
+        with db.engine.connect() as conn:
+            # Get total count
+            count_result = conn.execute(text('SELECT COUNT(*) FROM car'))
+            total = count_result.fetchone()[0]
+            
+            # Get cars with pagination
+            query = text('''
+                SELECT c.*, 
+                       p.base_value, p.currency,
+                       m.name as marca_name,
+                       mod.name as model_name
+                FROM car c
+                LEFT JOIN price p ON c.price_id = p.id
+                LEFT JOIN marca m ON c.marca_id = m.id
+                LEFT JOIN model mod ON c.model_id = mod.id
+                ORDER BY c.created_date DESC
+                LIMIT :limit OFFSET :offset
+            ''')
+            
+            result = conn.execute(query, {'limit': limit, 'offset': offset})
+            rows = result.fetchall()
+            
+            # Convert to list of dictionaries
+            items = []
+            for row in rows:
+                item = {
+                    'id': row.id,
+                    'created_date': row.created_date.isoformat() if row.created_date else None,
+                    'fuel': row.fuel,
+                    'transmission': row.transmission,
+                    'category': row.category,
+                    'drive_type': row.drive_type,
+                    'seats': row.seats,
+                    'luggage_capacity': row.luggage_capacity,
+                    'img_id': row.img_id,
+                    'img_cover': row.img_cover,
+                    'marca_id': row.marca_id,
+                    'model_id': row.model_id,
+                    'price_id': row.price_id,
+                    'marca': row.marca_name,
+                    'model': row.model_name,
+                    'base_value': str(row.base_value) if row.base_value else None,
+                    'currency': row.currency or 'â‚¬'
+                }
+                items.append(item)
+            
+            return jsonify({
+                'items': items,
+                'total': total,
+                'limit': limit,
+                'offset': offset
+            })
+    except Exception as e:
+        print(f"Error fetching cars from database: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@blueprint.route('/api/cars', methods=['POST'])
+def cars_create():
+    """Create new car"""
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['marca_id', 'model_id', 'category', 'fuel', 'transmission']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({'error': f'Field {field} is required'}), 400
+        
+        with db.engine.connect() as conn:
+            # Create price record first
+            price_result = conn.execute(text('''
+                INSERT INTO price (base_value, currency) 
+                VALUES (:base_value, :currency) 
+                RETURNING id
+            '''), {
+                'base_value': data.get('base_value'),
+                'currency': data.get('currency', 'ˆ')
+            })
+            price_id = price_result.fetchone()[0]
+            
+            # Create car record
+            car_result = conn.execute(text('''
+                INSERT INTO car (marca_id, model_id, price_id, category, fuel, transmission, 
+                               drive_type, seats, luggage_capacity, img_id, img_cover)
+                VALUES (:marca_id, :model_id, :price_id, :category, :fuel, :transmission,
+                        :drive_type, :seats, :luggage_capacity, :img_id, :img_cover)
+                RETURNING id
+            '''), {
+                'marca_id': data.get('marca_id'),
+                'model_id': data.get('model_id'),
+                'price_id': price_id,
+                'category': data.get('category'),
+                'fuel': data.get('fuel'),
+                'transmission': data.get('transmission'),
+                'drive_type': data.get('drive_type'),
+                'seats': data.get('seats'),
+                'luggage_capacity': data.get('luggage_capacity'),
+                'img_id': data.get('img_id'),
+                'img_cover': data.get('img_cover')
+            })
+            car_id = car_result.fetchone()[0]
+            
+            conn.commit()
+            
+            return jsonify({
+                'success': True,
+                'id': car_id,
+                'message': 'Car created successfully'
+            })
+    except Exception as e:
+        print(f"Error creating car: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@blueprint.route('/api/cars/<int:car_id>', methods=['PUT'])
+def cars_update(car_id):
+    """Update car"""
+    try:
+        data = request.get_json()
+        
+        with db.engine.connect() as conn:
+            # Update price if base_value or currency changed
+            if 'base_value' in data or 'currency' in data:
+                conn.execute(text('''
+                    UPDATE price SET 
+                        base_value = :base_value, 
+                        currency = :currency 
+                    WHERE id = (SELECT price_id FROM car WHERE id = :car_id)
+                '''), {
+                    'base_value': data.get('base_value'),
+                    'currency': data.get('currency', 'ˆ'),
+                    'car_id': car_id
+                })
+            
+            # Update car record
+            updatable = {
+                'marca_id': data.get('marca_id'),
+                'model_id': data.get('model_id'),
+                'category': data.get('category'),
+                'fuel': data.get('fuel'),
+                'transmission': data.get('transmission'),
+                'drive_type': data.get('drive_type'),
+                'seats': data.get('seats'),
+                'luggage_capacity': data.get('luggage_capacity')
+            }
+            
+            # Remove None values
+            updatable = {k: v for k, v in updatable.items() if v is not None}
+            
+            if updatable:
+                set_clause = ', '.join([f"{k} = :{k}" for k in updatable.keys()])
+                conn.execute(text(f'''
+                    UPDATE car SET {set_clause} WHERE id = :car_id
+                '''), {**updatable, 'car_id': car_id})
+            
+            conn.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Car updated successfully'
+            })
+    except Exception as e:
+        print(f"Error updating car: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@blueprint.route('/api/cars/<int:car_id>', methods=['DELETE'])
+def cars_delete(car_id):
+    """Delete car"""
+    try:
+        with db.engine.connect() as conn:
+            # Delete car record
+            conn.execute(text('DELETE FROM car WHERE id = :car_id'), {'car_id': car_id})
+            conn.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Car deleted successfully'
+            })
+    except Exception as e:
+        print(f"Error deleting car: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# API endpoints for marcas and models
+@blueprint.route('/api/marcas')
+def marcas_list():
+    """Get marcas list"""
+    try:
+        with db.engine.connect() as conn:
+            result = conn.execute(text('SELECT id, name FROM marca ORDER BY name'))
+            marcas = [{'id': row.id, 'name': row.name} for row in result.fetchall()]
+            return jsonify(marcas)
+    except Exception as e:
+        print(f"Error fetching marcas: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@blueprint.route('/api/models')
+def models_list():
+    """Get models list"""
+    try:
+        marca_id = request.args.get('marca_id')
+        if not marca_id:
+            return jsonify({'error': 'marca_id is required'}), 400
+        
+        with db.engine.connect() as conn:
+            result = conn.execute(text('SELECT id, name FROM model WHERE marca_id = :marca_id ORDER BY name'), 
+                                {'marca_id': marca_id})
+            models = [{'id': row.id, 'name': row.name} for row in result.fetchall()]
+            return jsonify(models)
+    except Exception as e:
+        print(f"Error fetching models: {e}")
+        return jsonify({'error': str(e)}), 500
+
+# Banner editor functions
+def update_index_html(title, subtitle):
+    """Update banner content in index.html"""
+    try:
+        index_path = "/usr/Projects/Carento_v2.0.0_Unzip-First/2.Carento_Development_SourceCode/index.html"
+        
+        if os.path.exists(index_path):
+            with open(index_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Update banner title and subtitle
+            import re
+            # Update title
+            content = re.sub(r'<h1[^>]*>.*?</h1>', f'<h1 class="hero-title">{title}</h1>', content)
+            # Update subtitle  
+            content = re.sub(r'<p[^>]*class="[^"]*hero[^"]*"[^>]*>.*?</p>', f'<p class="hero-subtitle">{subtitle}</p>', content)
+            
+            with open(index_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            return True
+    except Exception as e:
+        print(f"Error updating index.html: {e}")
+        return False
+
+def update_background_image_in_css(image_path):
+    """Update background image in CSS"""
+    try:
+        css_path = "/usr/Projects/Carento_v2.0.0_Unzip-First/2.Carento_Development_SourceCode/style.css"
+        
+        if os.path.exists(css_path):
+            with open(css_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Update background image
+            import re
+            # Find and replace background-image in hero section
+            pattern = r'\.hero\s*\{[^}]*background-image:\s*url\([^)]*\)[^}]*\}'
+            replacement = f'.hero {{\n    background-image: url({image_path});\n    background-size: cover;\n    background-position: center;\n}}'
+            
+            content = re.sub(pattern, replacement, content, flags=re.MULTILINE | re.DOTALL)
+            
+            with open(css_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            return True
+    except Exception as e:
+        print(f"Error updating CSS: {e}")
+        return False
+
+@blueprint.route('/api/banner-upload', methods=['POST'])
+def upload_banner_image():
+    """Upload banner image"""
+    try:
+        if 'image' not in request.files:
+            return jsonify({'error': 'No image file provided'}), 400
+        
+        file = request.files['image']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+        
+        # Set upload folder
+        upload_folder = "/usr/Projects/Carento_v2.0.0_Unzip-First/2.Carento_Development_SourceCode/dist/assets/imgs/hero/hero-1"
+        
+        def allowed_file(filename):
+            return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+        
+        if file and allowed_file(file.filename):
+            # Set upload folder 
+            os.makedirs(upload_folder, exist_ok=True)
+            
+            # Write updated content
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(upload_folder, filename)
+            file.save(filepath)
+            
+            # Return relative path for CSS
+            relative_path = f"../imgs/hero/hero-1/{filename}"
+            
+            # Update CSS with new background image
+            update_background_image_in_css(relative_path)
+            
+            return jsonify({
+                'success': True, 
+                'filename': filename,
+                'relative_path': relative_path,
+                'message': 'Image uploaded successfully'
+            })
+        else:
+            return jsonify({'error': 'No image file provided'}), 400
+            
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@blueprint.route('/api/banner-update', methods=['POST'])
+def update_banner():
+    """Update banner data"""
+    try:
+        data = request.get_json()
+        
+        # Update HTML content
+        title = data.get('title', '')
+        subtitle = data.get('subtitle', '')
+        
+        if title or subtitle:
+            update_index_html(title, subtitle)
+        
+        # Update background image if provided
+        image_path = data.get('image_path', '')
+        if image_path:
+            update_background_image_in_css(image_path)
+        
+        return jsonify({
+            'success': True,
+            'message': 'Banner updated successfully'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Generic route for other templates (must be last)
+@blueprint.route('/<template>')
+def route_template(template):
+    """Generic route for other templates"""
+    try:
+        return render_template(f'pages/{template}.html', segment=template)
+    except Exception as e:
+        return render_template('pages/404.html', segment='404'), 404

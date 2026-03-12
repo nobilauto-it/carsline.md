@@ -1,0 +1,449 @@
+<!-- -*- coding: utf-8 -*- -->
+{% extends 'layouts/vertical.html' %}
+
+{% block title %}Редактор баннера Carento{% endblock %}
+
+{% block styles %}
+<style>
+.banner-preview {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    padding: 40px;
+    color: white;
+    margin-bottom: 30px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1;
+}
+
+.banner-preview .content {
+    position: relative;
+    z-index: 2;
+}
+
+.banner-preview .description {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.banner-preview .title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.banner-preview .features {
+    list-style: none;
+    padding: 0;
+}
+
+.banner-preview .features li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.banner-preview .features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.feature-input-group {
+    margin-bottom: 10px;
+}
+
+.image-preview {
+    max-width: 200px;
+    max-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.current-image-info {
+    background: #e3f2fd;
+    border: 1px solid #2196f3;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.current-image-info strong {
+    color: #1976d2;
+}
+</style>
+{% endblock styles %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box d-md-flex justify-content-md-between align-items-center">
+            <h4 class="page-title">Редактор баннера Carento</h4>
+            <div class="">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="#">Dastone</a></li>
+                    <li class="breadcrumb-item"><a href="#">Carento</a></li>
+                    <li class="breadcrumb-item active">Редактор баннера</li>
+                </ol>
+            </div>
+        </div><!--end page-title-box-->
+    </div><!--end col-->
+</div><!--end row-->
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Настройки баннера</h4>
+            </div>
+            <div class="card-body">
+                <div id="loading" class="text-center" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Загрузка...</span>
+                    </div>
+                </div>
+                
+                <div id="editor-content" style="display: none;">
+                    <form id="banner-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="description" class="form-label">Описание (маленький текст сверху):</label>
+                                    <input type="text" class="form-control" id="description" name="description" placeholder="Например: Find Your Perfect Car">
+                                </div>
+                                
+                                <div class="form-group mb-3">
+                                    <label for="title" class="form-label">Заголовок (первая строка):</label>
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="Например: Looking for a vehicle?">
+                                </div>
+                                
+                                <div class="form-group mb-3">
+                                    <label for="subtitle" class="form-label">Подзаголовок (вторая строка):</label>
+                                    <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="Например: You're in the perfect spot.">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Преимущества:</label>
+                                    <div id="features-list">
+                                        <!-- Динамически добавляемые поля -->
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-success" onclick="addFeature()">
+                                        <i class="fas fa-plus"></i> Добавить преимущество
+                                    </button>
+                                </div>
+                                
+                                <div class="form-group mb-3">
+                                    <label for="background-image" class="form-label">Фоновое изображение:</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="background-image" accept="image/*">
+                                        <button type="button" class="btn btn-primary" onclick="uploadImage()">
+                                            <i class="fas fa-upload"></i> Загрузить
+                                        </button>
+                                    </div>
+                                    <div id="current-image" class="mt-2">
+                                        <!-- Показ текущего изображения -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Сохранить изменения
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="loadBannerData()">
+                                <i class="fas fa-refresh"></i> Обновить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="error-message" class="alert alert-danger" style="display: none;">
+                    <!-- Сообщения об ошибках -->
+                </div>
+                
+                <div id="success-message" class="alert alert-success" style="display: none;">
+                    <!-- Сообщения об успехе -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Предварительный просмотр</h4>
+            </div>
+            <div class="card-body">
+                <div class="banner-preview" id="banner-preview">
+                    <div class="content">
+                        <div class="description" id="preview-description">Find Your Perfect Car</div>
+                        <div class="title" id="preview-title">Looking for a vehicle?<br>You're in the perfect spot.</div>
+                        <ul class="features" id="preview-features">
+                            <li>High quality at a low cost.</li>
+                            <li>Premium services</li>
+                            <li>24/7 roadside support.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+let currentImagePath = '';
+
+// Загружаем данные баннера при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    loadBannerData();
+    
+    // Добавляем обработчики для предварительного просмотра
+    document.getElementById('description').addEventListener('input', updatePreview);
+    document.getElementById('title').addEventListener('input', updatePreview);
+    document.getElementById('subtitle').addEventListener('input', updatePreview);
+});
+
+function loadBannerData() {
+    showLoading(true);
+    hideMessages();
+    
+    fetch('/api/banner-data')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showError(data.error);
+            } else {
+                populateForm(data);
+                showEditor();
+                updatePreview();
+            }
+        })
+        .catch(error => {
+            showError('Ошибка при загрузке данных: ' + error.message);
+        })
+        .finally(() => {
+            showLoading(false);
+        });
+}
+
+function populateForm(data) {
+    document.getElementById('description').value = data.description || '';
+    document.getElementById('title').value = data.title || '';
+    document.getElementById('subtitle').value = data.subtitle || '';
+    
+    // Заполняем преимущества
+    const featuresList = document.getElementById('features-list');
+    featuresList.innerHTML = '';
+    
+    if (data.features && Array.isArray(data.features)) {
+        data.features.forEach((feature, index) => {
+            addFeature(feature);
+        });
+    } else {
+        // Добавляем дефолтные преимущества
+        addFeature('High quality at a low cost.');
+        addFeature('Premium services');
+        addFeature('24/7 roadside support.');
+    }
+    
+    // Показываем текущее изображение
+    if (data.background_image) {
+        currentImagePath = data.background_image;
+        showCurrentImage(data.background_image);
+    }
+}
+
+function addFeature(text = '') {
+    const featuresList = document.getElementById('features-list');
+    const featureDiv = document.createElement('div');
+    featureDiv.className = 'feature-input-group input-group';
+    featureDiv.innerHTML = `
+        <input type="text" class="form-control" value="${text}" placeholder="Введите преимущество" oninput="updatePreview()">
+        <div class="input-group-append">
+            <button type="button" class="btn btn-danger" onclick="removeFeature(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    featuresList.appendChild(featureDiv);
+}
+
+function removeFeature(button) {
+    button.closest('.feature-input-group').remove();
+    updatePreview();
+}
+
+function updatePreview() {
+    // Обновляем описание
+    const description = document.getElementById('description').value || 'Find Your Perfect Car';
+    document.getElementById('preview-description').textContent = description;
+    
+    // Обновляем заголовок
+    const title = document.getElementById('title').value || 'Looking for a vehicle?';
+    const subtitle = document.getElementById('subtitle').value || 'You\'re in the perfect spot.';
+    document.getElementById('preview-title').innerHTML = title + '<br>' + subtitle;
+    
+    // Обновляем преимущества
+    const featuresList = document.getElementById('preview-features');
+    featuresList.innerHTML = '';
+    
+    const featureInputs = document.querySelectorAll('#features-list input[type="text"]');
+    featureInputs.forEach(input => {
+        if (input.value.trim()) {
+            const li = document.createElement('li');
+            li.textContent = input.value.trim();
+            featuresList.appendChild(li);
+        }
+    });
+}
+
+function uploadImage() {
+    const fileInput = document.getElementById('background-image');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        showError('Выберите файл для загрузки');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    showLoading(true);
+    
+    fetch('/api/banner-upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            currentImagePath = data.relative_path;
+            showCurrentImage(data.relative_path);
+            showSuccess('Изображение успешно загружено');
+        } else {
+            showError(data.error || 'Ошибка при загрузке изображения');
+        }
+    })
+    .catch(error => {
+        showError('Ошибка при загрузке изображения: ' + error.message);
+    })
+    .finally(() => {
+        showLoading(false);
+    });
+}
+
+function showCurrentImage(imagePath) {
+    const currentImageDiv = document.getElementById('current-image');
+    if (imagePath) {
+        currentImageDiv.innerHTML = `
+            <div class="current-image-info">
+                <strong>Текущее изображение:</strong><br>
+                <small>${imagePath}</small>
+            </div>
+        `;
+    } else {
+        currentImageDiv.innerHTML = '';
+    }
+}
+
+document.getElementById('banner-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Собираем данные формы
+    const formData = {
+        description: document.getElementById('description').value,
+        title: document.getElementById('title').value,
+        subtitle: document.getElementById('subtitle').value,
+        features: [],
+        background_image: currentImagePath
+    };
+    
+    // Собираем преимущества
+    const featureInputs = document.querySelectorAll('#features-list input[type="text"]');
+    featureInputs.forEach(input => {
+        if (input.value.trim()) {
+            formData.features.push(input.value.trim());
+        }
+    });
+    
+    // Отправляем данные
+    showLoading(true);
+    
+    fetch('/api/banner-update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess('Баннер успешно обновлен!');
+        } else {
+            showError(data.error || 'Ошибка при сохранении');
+        }
+    })
+    .catch(error => {
+        showError('Ошибка при сохранении: ' + error.message);
+    })
+    .finally(() => {
+        showLoading(false);
+    });
+});
+
+function showLoading(show) {
+    document.getElementById('loading').style.display = show ? 'block' : 'none';
+    document.getElementById('editor-content').style.display = show ? 'none' : 'block';
+}
+
+function showEditor() {
+    document.getElementById('editor-content').style.display = 'block';
+}
+
+function showError(message) {
+    const errorDiv = document.getElementById('error-message');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    document.getElementById('success-message').style.display = 'none';
+}
+
+function showSuccess(message) {
+    const successDiv = document.getElementById('success-message');
+    successDiv.textContent = message;
+    successDiv.style.display = 'block';
+    document.getElementById('error-message').style.display = 'none';
+}
+
+function hideMessages() {
+    document.getElementById('error-message').style.display = 'none';
+    document.getElementById('success-message').style.display = 'none';
+}
+</script>
+{% endblock javascripts %}

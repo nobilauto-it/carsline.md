@@ -1,0 +1,1372 @@
+<!-- UTF-8: Г© -->
+{% extends 'layouts/vertical.html' %}
+
+{% block title %}Cars{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h4 class="card-title m-0">Cars</h4>
+        <div class="d-flex align-items-center gap-2">
+          <select id="marcaFilter" class="form-select form-select-sm" style="width:auto"></select>
+          <select id="modelFilter" class="form-select form-select-sm" style="width:auto"></select>
+          <button id="reloadBtn" class="btn btn-sm btn-outline-secondary">Reload</button>
+          <button id="addBtn" class="btn btn-sm btn-success">Add</button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div id="carsAlert" class="alert alert-danger d-none" role="alert"></div>
+        <div id="carsLoading" class="d-flex align-items-center">
+          <div class="spinner-border text-primary me-2" role="status" style="width: 1.5rem; height: 1.5rem;"></div>
+          <span>Loading cars...</span>
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" style="width: 40px;">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="selectAllCheckbox">
+                  </div>
+                </th>
+                <th scope="col">ID</th>
+                <th scope="col">Image</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Category</th>
+                <th scope="col">Fuel</th>
+                <th scope="col">Transmission</th>
+                <th scope="col">Drive Type</th>
+                <th scope="col">Seats</th>
+                <th scope="col">Luggage</th>
+                <th scope="col">Price</th>
+                <th scope="col">Created</th>
+                <th scope="col" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="carsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card-footer d-flex justify-content-between align-items-center">
+        <div>
+          <small id="carsCount" class="text-muted"></small>
+          <button id="bulkSaveBtn" class="btn btn-sm btn-success ms-3 d-none">Save Changes</button>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <button id="prevBtn" class="btn btn-sm btn-outline-primary" disabled>Prev</button>
+          <button id="nextBtn" class="btn btn-sm btn-primary">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="carEditModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Car</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="carEditForm" class="modal-body" enctype="multipart/form-data">
+        <input type="hidden" name="id" />
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Brand</label>
+            <select name="marca_id" id="marcaEdit" class="form-select" required></select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Model</label>
+            <select name="model_id" id="modelEdit" class="form-control" required>
+              <option value="">Select Model</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <select name="category" id="categoryEdit" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Bus | Psg">Bus | Psg</option>
+              <option value="Cabrio">Cabrio</option>
+              <option value="Coupe">Coupe</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Minivan">Minivan</option>
+              <option value="MPV">MPV</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Universal">Universal</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-gas-pump me-1"></i>Fuel</label>
+            <select name="fuel" id="fuelEdit" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Motorina">Motorina</option>
+              <option value="Hybrid/Benzina">Hybrid/Benzina</option>
+              <option value="Benzina 95">Benzina 95</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Transmission</label>
+            <select name="transmission" id="transmissionEdit" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Automatic">Automatic</option>
+              <option value="Manual">Manual</option>
+              <option value="Variator">Variator</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-car me-1"></i>Drive Type</label>
+            <select name="drive_type" id="driveTypeEdit" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Front">Front</option>
+              <option value="Rear">Rear</option>
+              <option value="All">All</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-users me-1"></i>Seats</label>
+            <input type="number" name="seats" id="seatsEdit" class="form-control" min="1" max="9" value="5" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-suitcase me-1"></i>Luggage</label>
+            <input type="number" name="luggage_capacity" id="luggageEdit" class="form-control" min="1" max="5" value="2" required />
+          </div>
+
+          <!-- IMAGE: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ -->
+          <div class="col-md-6">
+            <label class="form-label d-block">Image main</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="replaceImgChk">
+              <label class="form-check-label" for="replaceImgChk">
+                Replace image file
+              </label>
+            </div>
+            <div id="replaceImgWrap" class="mt-2 d-none">
+              <input type="file" name="img_file" id="imgFileEdit" class="form-control" accept="image/*" />
+              <input type="text" name="img_description" id="imgDescEdit" class="form-control mt-2" placeholder="Description for image" />
+            <!--  <div class="form-text">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ img пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ car.img_id.</div>-->
+            </div>
+          </div>
+
+          <!-- COVER: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ -->
+          <div class="col-md-6">
+            <label class="form-label">Cover</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="replaceCoverChk">
+              <label class="form-check-label" for="replaceCoverChk">
+                Replace cover file
+              </label>
+            </div>
+            <div id="replaceCoverWrap" class="mt-2 d-none">
+              <input type="file" name="img_cover_file" id="imgCoverFileEdit" class="form-control" accept="image/*" />
+              <input type="text" name="img_cover_description" id="imgCoverDescEdit" class="form-control mt-2" placeholder="Description for cover" />
+            <!--    <div class="form-text">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ img пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ car.img_cover.</div>-->
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Current Price</label>
+            <input type="text" id="currentPrice" class="form-control" readonly />
+            <!--<div class="form-text">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.</div>-->
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">New Price</label>
+            <div class="input-group">
+              <input type="number" step="0.01" name="base_value" class="form-control" placeholder="New price" />
+              <input type="text" name="currency" class="form-control" value="Lei" style="max-width:90px" />
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" form="carEditForm" id="carSaveBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Modal -->
+<div class="modal fade" id="carCreateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Car</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form id="carCreateForm" class="modal-body" enctype="multipart/form-data">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Brand</label>
+            <select name="marca_id" id="marcaCreate" class="form-select" required></select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Model</label>
+            <select name="model_id" id="modelCreate" class="form-control" required>
+              <option value="">Select Model</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <select name="category" id="categoryCreate" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Bus | Psg">Bus | Psg</option>
+              <option value="Cabrio">Cabrio</option>
+              <option value="Coupe">Coupe</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Minivan">Minivan</option>
+              <option value="MPV">MPV</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Universal">Universal</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-gas-pump me-1"></i>Fuel</label>
+            <select name="fuel" id="fuelCreate" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Motorina">Motorina</option>
+              <option value="Hybrid/Benzina">Hybrid/Benzina</option>
+              <option value="Benzina 95">Benzina 95</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Transmission</label>
+            <select name="transmission" id="transmissionCreate" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Automatic">Automatic</option>
+              <option value="Manual">Manual</option>
+              <option value="Variator">Variator</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-car me-1"></i>Drive Type</label>
+            <select name="drive_type" id="driveTypeCreate" class="form-select" required>
+              <option value="">-- select --</option>
+              <option value="Front">Front</option>
+              <option value="Rear">Rear</option>
+              <option value="All">All</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-users me-1"></i>Seats</label>
+            <input type="number" name="seats" id="seatsCreate" class="form-control" min="1" max="9" value="5" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"><i class="fas fa-suitcase me-1"></i>Luggage</label>
+            <input type="number" name="luggage_capacity" id="luggageCreate" class="form-control" min="1" max="5" value="2" required />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Image main</label>
+            <input type="file" name="img_file" id="imgFile" class="form-control" accept="image/*" required />
+            <input type="text" name="img_description" class="form-control mt-2" placeholder="Description for image"/>
+           <!-- <div class="form-text">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ img (url = base64, description = пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ).</div>-->
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Cover</label>
+            <input type="file" name="img_cover_file" id="imgCoverFile" class="form-control" accept="image/*" required />
+            <input type="text" name="img_cover_description" class="form-control mt-2" placeholder="Description for cover"/>
+          <!--   <div class="form-text">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ img (url = base64, description = пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ).</div>-->
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">New Price</label>
+            <div class="input-group">
+              <input type="number" step="0.01" name="base_value" class="form-control" placeholder="Price" />
+              <input type="text" name="currency" class="form-control" value="Lei" style="max-width:90px" />
+            </div>
+           <!--  <div class="form-text">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ price пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</div>-->
+          </div>
+        </div>
+      </form>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" form="carCreateForm" id="carCreateBtn" class="btn btn-success">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+(function () {
+  // Use DB-backed endpoints
+  const apiBase = '/api/cars';
+  const limit = 12;
+  let offset = 0;
+
+  const tbody = document.getElementById('carsTbody');
+  const loading = document.getElementById('carsLoading');
+  const alertBox = document.getElementById('carsAlert');
+  const countEl = document.getElementById('carsCount');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const reloadBtn = document.getElementById('reloadBtn');
+  const addBtn = document.getElementById('addBtn');
+  const marcaFilter = document.getElementById('marcaFilter');
+  const modelFilter = document.getElementById('modelFilter');
+
+  function formatPrice(currency, value) {
+    if (!value) return '';
+    try {
+      const num = Number(value);
+      return new Intl.NumberFormat(undefined, { style: 'currency', currency: currency || 'Lei' }).format(num);
+    } catch (e) {
+      return `${value} ${currency || ''}`.trim();
+    }
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso.replace(' ', 'T'));
+    return isNaN(d) ? iso : d.toLocaleString();
+  }
+
+  function setLoading(isLoading) {
+    loading.classList.toggle('d-none', !isLoading);
+  }
+
+  function showError(message) {
+    alertBox.textContent = message || 'Failed to load cars.';
+    alertBox.classList.remove('d-none');
+  }
+
+  function clearError() {
+    alertBox.classList.add('d-none');
+    alertBox.textContent = '';
+  }
+
+  // Bulk edit state
+  let selectedCarIds = new Set();
+  let isBulkEditMode = false;
+  let allMarcas = [];
+  let allModels = [];
+
+  function renderRows(items) {
+    tbody.innerHTML = '';
+    if (!items || items.length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 14;
+      td.className = 'text-center text-muted';
+      td.textContent = 'No cars found';
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+      return;
+    }
+
+    for (const car of items) {
+      const tr = document.createElement('tr');
+      const isSelected = selectedCarIds.has(car.id);
+      tr.innerHTML = `
+        <td>
+          <div class="form-check">
+            <input class="form-check-input row-checkbox" type="checkbox" data-car-id="${car.id}" ${isSelected ? 'checked' : ''}>
+          </div>
+        </td>
+        <td>${car.id ?? ''}</td>
+        <td>
+          ${car.img_id ? 
+            `<div class="image-tooltip-container" style="position: relative; display: inline-block;">
+              <img src="/images/${car.img_id}" alt="Car Image" class="img-thumbnail" style="width: 50px; height: 40px; object-fit: cover; cursor: pointer;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+              <div class="image-tooltip" style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: white; border: 2px solid #ddd; border-radius: 8px; padding: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000; display: none; max-width: 300px;">
+                <img src="/images/${car.img_id}" alt="Car Image" style="max-width: 250px; max-height: 200px; object-fit: contain; display: block;">
+              </div>
+            </div>` + 
+            '<span class="text-muted" style="display:none;">No image</span>' : 
+            '<span class="text-muted">No image</span>'
+          }
+        </td>
+        <td data-field="marca_id" data-original="${car.marca_id || ''}">${car.marca_name ?? ''}</td>
+        <td data-field="model_id" data-original="${car.model_id || ''}">${car.model_name ?? ''}</td>
+        <td data-field="category" data-original="${car.category || ''}">${car.category ?? ''}</td>
+        <td data-field="fuel" data-original="${car.fuel || ''}">${car.fuel ?? ''}</td>
+        <td data-field="transmission" data-original="${car.transmission || ''}">${car.transmission ?? ''}</td>
+        <td data-field="drive_type" data-original="${car.drive_type || ''}">${car.drive_type ?? ''}</td>
+        <td data-field="seats" data-original="${car.seats || ''}">${car.seats ?? ''}</td>
+        <td data-field="luggage_capacity" data-original="${car.luggage_capacity || ''}">${car.luggage_capacity ?? ''}</td>
+        <td data-field="price" data-original-price="${car.base_value || car.price_value || ''}" data-original-currency="${car.currency || 'Lei'}">${formatPrice(car.currency, (car.base_value ?? car.price_value))}</td>
+        <td>${formatDate(car.created_date)}</td>
+        <td class="text-end">
+          <button class="btn btn-sm btn-outline-primary me-1" data-action="edit" data-id="${car.id}">Edit</button>
+          <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${car.id}">Delete</button>
+        </td>
+      `;
+      tr.dataset.car = JSON.stringify(car);
+      tr.dataset.carId = car.id;
+      tbody.appendChild(tr);
+    }
+    
+    // Add event listeners for image tooltips
+    addImageTooltipListeners();
+    
+    // Update bulk edit mode if needed
+    updateBulkEditMode();
+  }
+  
+  function addImageTooltipListeners() {
+    const containers = document.querySelectorAll('.image-tooltip-container');
+    containers.forEach(container => {
+      const img = container.querySelector('img');
+      const tooltip = container.querySelector('.image-tooltip');
+      
+      if (img && tooltip) {
+        img.addEventListener('mouseenter', function() {
+          tooltip.style.display = 'block';
+        });
+        
+        img.addEventListener('mouseleave', function() {
+          tooltip.style.display = 'none';
+        });
+        
+        // Also handle mouse events on the tooltip itself
+        tooltip.addEventListener('mouseenter', function() {
+          tooltip.style.display = 'block';
+        });
+        
+        tooltip.addEventListener('mouseleave', function() {
+          tooltip.style.display = 'none';
+        });
+      }
+    });
+  }
+
+  async function load() {
+    clearError();
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({ limit, offset, source: 'db' });
+      const mid = marcaFilter.value;
+      const modid = modelFilter.value;
+      if (mid) params.set('marca_id', mid);
+      if (modid) params.set('model_id', modid);
+      const url = `${apiBase}?${params.toString()}`;
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      renderRows(data.items);
+
+      const total = Number(data.total || 0);
+      const start = Math.min(offset + 1, total === 0 ? 0 : total);
+      const end = Math.min(offset + limit, total);
+      countEl.textContent = total ? `Showing ${start}-${end} of ${total}` : 'No results';
+
+      prevBtn.disabled = offset <= 0;
+      nextBtn.disabled = offset + limit >= total;
+    } catch (err) {
+      let msg = 'Failed to load cars.';
+      if (err && err.message) msg = err.message;
+      showError(msg);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  prevBtn.addEventListener('click', function () {
+    if (offset <= 0) return;
+    offset = Math.max(0, offset - limit);
+    load();
+  });
+
+  nextBtn.addEventListener('click', function () {
+    offset = offset + limit;
+    load();
+  });
+
+  reloadBtn.addEventListener('click', function () {
+    load();
+  });
+
+  async function loadMarcas() {
+    try {
+      const res = await fetch('/api/marcas');
+      const items = await res.json();
+      marcaFilter.innerHTML = '<option value="">All brands</option>' + items.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+    } catch (_) {}
+  }
+
+  async function loadModels(marcaId) {
+    try {
+      if (marcaId) {
+        const res = await fetch(`/api/models?marca_id=${marcaId}`);
+        const items = await res.json();
+        modelFilter.innerHTML = '<option value="">All models</option>' + items.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+      } else {
+        modelFilter.innerHTML = '<option value="">All models</option>';
+      }
+    } catch (_) {}
+  }
+
+  marcaFilter.addEventListener('change', async function () {
+    offset = 0;
+    await loadModels(this.value);
+    load();
+  });
+
+  modelFilter.addEventListener('change', function () {
+    offset = 0;
+    load();
+  });
+
+  // Row actions (edit/delete)
+  tbody.addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const action = btn.getAttribute('data-action');
+    const id = Number(btn.getAttribute('data-id'));
+    const row = btn.closest('tr');
+    const car = row && row.dataset && row.dataset.car ? JSON.parse(row.dataset.car) : null;
+    if (!id || !car) return;
+
+    if (action === 'edit') {
+      openEditModal(car);
+      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+      if (car.category) document.getElementById('categoryEdit').value = String(car.category);
+      if (car.fuel) document.getElementById('fuelEdit').value = String(car.fuel);
+      if (car.transmission) document.getElementById('transmissionEdit').value = String(car.transmission);
+      if (car.drive_type) document.getElementById('driveTypeEdit').value = String(car.drive_type);
+      if (car.seats) document.getElementById('seatsEdit').value = String(car.seats);
+      if (car.luggage_capacity) document.getElementById('luggageEdit').value = String(car.luggage_capacity);
+    //  const currentCoverInfo = document.getElementById('currentCoverInfo');
+   //   currentCoverInfo.textContent = car.img_cover ? `Cover ID: ${car.img_cover}` : 'No cover';
+    } else if (action === 'delete') {
+      await handleDelete(id);
+    }
+  });
+
+  // Edit modal refs
+  let editModal, editForm, saveBtn;
+  let marcaEdit, modelEdit, priceEdit;
+  let replaceImgChk, replaceImgWrap, replaceCoverChk, replaceCoverWrap;
+  function initModalRefs() {
+    editModal = document.getElementById('carEditModal');
+    editForm = document.getElementById('carEditForm');
+    saveBtn = document.getElementById('carSaveBtn');
+    marcaEdit = document.getElementById('marcaEdit');
+    modelEdit = document.getElementById('modelEdit');
+    priceEdit = document.getElementById('priceEdit');
+    replaceImgChk = document.getElementById('replaceImgChk');
+    replaceImgWrap = document.getElementById('replaceImgWrap');
+    replaceCoverChk = document.getElementById('replaceCoverChk');
+    replaceCoverWrap = document.getElementById('replaceCoverWrap');
+
+    // пїЅпїЅпїЅпїЅпїЅпїЅ
+    replaceImgChk?.addEventListener('change', () => {
+      const on = replaceImgChk.checked;
+      replaceImgWrap.classList.toggle('d-none', !on);
+      
+      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ required пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      const imgFile = document.getElementById('imgFileEdit');
+      const imgDesc = document.getElementById('imgDescEdit');
+      if (on) {
+        imgFile?.setAttribute('required', 'required');
+       // imgDesc?.setAttribute('required', 'required');
+      } else {
+        imgFile?.removeAttribute('required');
+      //  imgDesc?.removeAttribute('required');
+      }
+    });
+    replaceCoverChk?.addEventListener('change', () => {
+      const on = replaceCoverChk.checked;
+      replaceCoverWrap.classList.toggle('d-none', !on);
+      
+      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ required пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ cover
+      const coverFile = document.getElementById('imgCoverFileEdit');
+      const coverDesc = document.getElementById('imgCoverDescEdit');
+      if (on) {
+        coverFile?.setAttribute('required', 'required');
+      //  coverDesc?.setAttribute('required', 'required');
+      } else {
+        coverFile?.removeAttribute('required');
+      //  coverDesc?.removeAttribute('required');
+      }
+    });
+
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ Edit
+    marcaEdit?.addEventListener('change', async function () {
+      const marcaId = this.value;
+      
+      if (marcaId) {
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
+        await populateModelEdit(marcaId);
+      } else {
+        modelEdit.innerHTML = '<option value="">Select Model</option>';
+      }
+    });
+  }
+
+  function openEditModal(car) {
+    console.log('openEditModal called with car:', car);
+    
+    if (!editModal) initModalRefs();
+    editForm.reset();
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    if (replaceImgChk) { replaceImgChk.checked = false; replaceImgWrap.classList.add('d-none'); }
+    if (replaceCoverChk) { replaceCoverChk.checked = false; replaceCoverWrap.classList.add('d-none'); }
+
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ required пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    const imgFile = document.getElementById('imgFileEdit');
+    const imgDesc = document.getElementById('imgDescEdit');
+    const coverFile = document.getElementById('imgCoverFileEdit');
+    const coverDesc = document.getElementById('imgCoverDescEdit');
+    
+    if (imgFile) imgFile.removeAttribute('required');
+    if (imgDesc) imgDesc.removeAttribute('required');
+    if (coverFile) coverFile.removeAttribute('required');
+    if (coverDesc) coverDesc.removeAttribute('required');
+
+    editForm.elements['id'].value = car.id ?? '';
+    Promise.all([
+      populateMarcaEdit(car.marca_id, car.marca, car.model_id, car.model),
+      (async () => { try { document.getElementById('currentPrice').value = formatPrice(car.currency, (car.base_value ?? car.price_value)); } catch(_) {} })()
+    ]);
+    editForm.elements['currency'].value = car.currency ?? 'Lei';
+    editForm.elements['base_value'].value = car.base_value ?? '';
+
+    const modal = new bootstrap.Modal(editModal);
+    modal.show();
+    
+    // Set new fields values after modal is shown
+    setTimeout(() => {
+      console.log('Setting new fields:', car.drive_type, car.seats, car.luggage_capacity);
+      
+      // Set drive_type (check for null/undefined)
+      const driveTypeField = document.getElementById('driveTypeEdit');
+      console.log('driveTypeField found:', driveTypeField);
+      if (driveTypeField) {
+        driveTypeField.value = car.drive_type || '';
+        console.log('Set drive_type to:', car.drive_type || '');
+      } else {
+        console.log('driveTypeField not found!');
+      }
+      
+      // Set seats (check for null/undefined)
+      const seatsField = document.getElementById('seatsEdit');
+      console.log('seatsField found:', seatsField);
+      if (seatsField) {
+        seatsField.value = car.seats || '5'; // Default to 5 if null
+        console.log('Set seats to:', car.seats || '5');
+      } else {
+        console.log('seatsField not found!');
+      }
+      
+      // Set luggage_capacity (check for null/undefined)
+      const luggageField = document.getElementById('luggageEdit');
+      console.log('luggageField found:', luggageField);
+      if (luggageField) {
+        luggageField.value = car.luggage_capacity || '2'; // Default to 2 if null
+        console.log('Set luggage_capacity to:', car.luggage_capacity || '2');
+      } else {
+        console.log('luggageField not found!');
+      }
+    }, 100);
+  }
+
+  async function handleDelete(id) {
+    if (!confirm('Delete this car?')) return;
+    try {
+      setLoading(true);
+      const res = await fetch(`${apiBase}/${id}`, { method: 'DELETE', headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      await load();
+    } catch (err) {
+      showError(err && err.message ? err.message : 'Delete failed');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSave(e) {
+    e.preventDefault();
+    clearError();
+    const id = Number(editForm.elements['id'].value);
+
+    // пїЅпїЅпїЅпїЅпїЅпїЅ: JSON пїЅпїЅпїЅ multipart
+    const replaceImg = !!document.getElementById('replaceImgChk')?.checked;
+    const replaceCover = !!document.getElementById('replaceCoverChk')?.checked;
+
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ multipart/form-data
+    if (replaceImg || replaceCover) {
+      try {
+        saveBtn.disabled = true;
+        const fd = new FormData(editForm);
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        if (replaceImg) fd.set('replace_img', '1'); else fd.delete('replace_img');
+        if (replaceCover) fd.set('replace_img_cover', '1'); else fd.delete('replace_img_cover');
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅ > пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ brand (пїЅпїЅпїЅ пїЅ пїЅ create)
+        try {
+          const mdlId = fd.get('model_id');
+          if (mdlId) {
+            const res = await fetch('/api/models');
+            const all = await res.json();
+            const found = all.find(m => String(m.id) === String(mdlId));
+            if (found) fd.set('marca_id', String(found.marca_id || ''));
+          }
+        } catch (_) {}
+
+        const res = await fetch(`${apiBase}/${id}`, { method: 'PUT', body: fd });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const modal = bootstrap.Modal.getInstance(editModal);
+        if (modal) modal.hide();
+        await load();
+      } catch (err) {
+        showError(err && err.message ? err.message : 'Save failed');
+      } finally {
+        saveBtn.disabled = false;
+      }
+      return;
+    }
+
+    // пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ JSON пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, img пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    const fd = new FormData(editForm);
+    const payload = {
+      marca_id: fd.get('marca_id') ? Number(fd.get('marca_id')) : null,
+      model_id: fd.get('model_id') ? Number(fd.get('model_id')) : null,
+      // img_id пїЅ img_cover пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      price_id: fd.get('price_id') ? Number(fd.get('price_id')) : null,
+      category: fd.get('category') || '',
+      fuel: fd.get('fuel') || '',
+      transmission: fd.get('transmission') || '',
+      drive_type: fd.get('drive_type') || '',
+      seats: fd.get('seats') ? Number(fd.get('seats')) : null,
+      luggage_capacity: fd.get('luggage_capacity') ? Number(fd.get('luggage_capacity')) : null,
+      currency: fd.get('currency') || 'Lei',
+      // Отправляем base_value только если поле заполнено и не пустое
+      base_value: (() => {
+        const val = fd.get('base_value');
+        if (val) {
+          const strVal = String(val).trim();
+          if (strVal !== '') {
+            const num = Number(strVal);
+            return isNaN(num) ? null : num;
+          }
+        }
+        return null;
+      })()
+    };
+
+    try {
+      saveBtn.disabled = true;
+      const res = await fetch(`${apiBase}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const modal = bootstrap.Modal.getInstance(editModal);
+      if (modal) modal.hide();
+      await load();
+    } catch (err) {
+      showError(err && err.message ? err.message : 'Save failed');
+    } finally {
+      saveBtn.disabled = false;
+    }
+  }
+
+  async function populateMarcaEdit(selectedId, selectedName, modelId = null, modelName = null) {
+    try {
+      console.log('populateMarcaEdit called with:', { selectedId, selectedName, modelId, modelName });
+      
+      const res = await fetch('/api/marcas');
+      const items = await res.json();
+      marcaEdit.innerHTML = '<option value="">-- select brand --</option>' + items.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+      
+      // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ selectedId, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+      if (selectedId) {
+        marcaEdit.value = String(selectedId);
+      } 
+      // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ selectedId, пїЅпїЅ пїЅпїЅпїЅпїЅ selectedName, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      else if (selectedName) {
+        const found = items.find(m => m.name === selectedName);
+        if (found) {
+          marcaEdit.value = String(found.id);
+        }
+      }
+      
+      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+      const currentMarcaId = marcaEdit.value;
+      console.log('Loading models for marcaId:', currentMarcaId, 'with modelId:', modelId, 'modelName:', modelName);
+      
+      if (currentMarcaId) {
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ modelId, пїЅпїЅ пїЅпїЅпїЅпїЅ modelName, пїЅпїЅпїЅпїЅпїЅпїЅ modelId пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        let targetModelId = modelId;
+        if (!targetModelId && modelName) {
+          const modelsRes = await fetch(`/api/models?marca_id=${currentMarcaId}`);
+          const models = await modelsRes.json();
+          const foundModel = models.find(m => m.name === modelName);
+          if (foundModel) {
+            targetModelId = foundModel.id;
+            console.log('Found modelId by name:', modelName, '->', targetModelId);
+          }
+        }
+        await populateModelEdit(currentMarcaId, targetModelId);
+      }
+    } catch (error) {
+      console.error('Error in populateMarcaEdit:', error);
+    }
+  }
+
+  async function populateModelEdit(marcaId, selectedId = null) {
+    try {
+      console.log('populateModelEdit called with:', { marcaId, selectedId });
+      
+      const response = await fetch(`/api/models?marca_id=${marcaId}`);
+      const data = await response.json();
+      console.log('Loaded models:', data);
+      
+      modelEdit.innerHTML = '<option value="">Select Model</option>';
+      
+      data.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model.id;
+        option.textContent = model.name;
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        if (selectedId && String(model.id) === String(selectedId)) {
+          option.selected = true;
+          console.log('Selected model:', model.name, 'with id:', model.id);
+        }
+        modelEdit.appendChild(option);
+      });
+      
+      console.log('Final modelEdit value:', modelEdit.value);
+    } catch (error) {
+      console.error('Error loading models:', error);
+    }
+  }
+
+
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ Create
+
+  async function populateModelCreate(marcaId) {
+    try {
+      if (!modelCreate) return; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      const response = await fetch(`/api/models?marca_id=${marcaId}`);
+      const data = await response.json();
+      modelCreate.innerHTML = '<option value="">Select Model</option>';
+      
+      data.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model.id;
+        option.textContent = model.name;
+        modelCreate.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Error loading models:', error);
+    }
+  }
+
+  // -------- Create flow --------
+  let createModal, createForm, createBtn;
+  let marcaCreate, modelCreate;
+
+  function initCreateRefs() {
+    createModal = document.getElementById('carCreateModal');
+    createForm  = document.getElementById('carCreateForm');
+    createBtn   = document.getElementById('carCreateBtn');
+    marcaCreate = document.getElementById('marcaCreate');
+    modelCreate = document.getElementById('modelCreate');
+    
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ Create
+    marcaCreate?.addEventListener('change', async function () {
+      const marcaId = this.value;
+      if (marcaId) {
+        await populateModelCreate(marcaId);
+      } else {
+        modelCreate.innerHTML = '<option value="">Select Model</option>';
+      }
+    });
+  }
+
+  async function populateMarcaCreate(selectedId) {
+    try {
+      if (!marcaCreate) return; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      const res = await fetch('/api/marcas');
+      const items = await res.json();
+      marcaCreate.innerHTML = '<option value="">-- select brand --</option>' + items.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+      if (selectedId) marcaCreate.value = String(selectedId);
+    } catch (_) {}
+  }
+
+
+
+  addBtn?.addEventListener('click', async function () {
+    if (!createModal) initCreateRefs();
+    createForm.reset();
+    await populateMarcaCreate();
+    const modal = new bootstrap.Modal(createModal);
+    modal.show();
+
+    // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  });
+
+  async function handleCreate(e) {
+    e.preventDefault();
+    clearError();
+
+    try {
+      createBtn.disabled = true;
+      const fd = new FormData(createForm); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+      const res = await fetch(`${apiBase}`, { method: 'POST', body: fd });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const modal = bootstrap.Modal.getInstance(createModal);
+      if (modal) modal.hide();
+      offset = 0;
+      await load();
+    } catch (err) {
+      showError(err && err.message ? err.message : 'Create failed');
+    } finally {
+      createBtn.disabled = false;
+    }
+  }
+
+  // Bulk edit functions
+  async function loadMarcasForBulk() {
+    try {
+      const res = await fetch('/api/marcas');
+      allMarcas = await res.json();
+    } catch (err) {
+      console.error('Error loading marcas:', err);
+    }
+  }
+
+  async function loadModelsForBulk(marcaId) {
+    try {
+      const res = await fetch(`/api/models?marca_id=${marcaId}`);
+      return await res.json();
+    } catch (err) {
+      console.error('Error loading models:', err);
+      return [];
+    }
+  }
+
+  function updateBulkEditMode() {
+    const selectedCount = selectedCarIds.size;
+    isBulkEditMode = selectedCount >= 1;
+    const bulkSaveBtn = document.getElementById('bulkSaveBtn');
+    
+    if (bulkSaveBtn) {
+      bulkSaveBtn.classList.toggle('d-none', !isBulkEditMode);
+    }
+
+    // Update all rows
+    const rows = tbody.querySelectorAll('tr[data-car-id]');
+    rows.forEach(row => {
+      const carId = Number(row.dataset.carId);
+      const isSelected = selectedCarIds.has(carId);
+      
+      if (isBulkEditMode && isSelected) {
+        makeRowEditable(row);
+      } else {
+        makeRowReadonly(row);
+      }
+    });
+
+    // Update select all checkbox
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    if (selectAllCheckbox) {
+      const allRowsSelected = rows.length > 0 && Array.from(rows).every(r => selectedCarIds.has(Number(r.dataset.carId)));
+      selectAllCheckbox.checked = allRowsSelected;
+      selectAllCheckbox.indeterminate = selectedCount > 0 && selectedCount < rows.length;
+    }
+  }
+
+  function makeRowEditable(row) {
+    const car = JSON.parse(row.dataset.car);
+    
+    // Brand dropdown
+    const marcaCell = row.querySelector('td[data-field="marca_id"]');
+    if (marcaCell && !marcaCell.querySelector('select')) {
+      const select = document.createElement('select');
+      select.className = 'form-select form-select-sm';
+      select.innerHTML = '<option value="">-- select --</option>' + 
+        allMarcas.map(m => `<option value="${m.id}" ${m.id == car.marca_id ? 'selected' : ''}>${m.name}</option>`).join('');
+      select.value = car.marca_id || '';
+      select.addEventListener('change', async function() {
+        const marcaId = this.value;
+        const modelCell = row.querySelector('td[data-field="model_id"]');
+        if (modelCell) {
+          const modelSelect = modelCell.querySelector('select');
+          if (modelSelect) {
+            const models = await loadModelsForBulk(marcaId);
+            modelSelect.innerHTML = '<option value="">-- select --</option>' + 
+              models.map(m => `<option value="${m.id}" ${m.id == car.model_id ? 'selected' : ''}>${m.name}</option>`).join('');
+            modelSelect.value = car.model_id || '';
+          }
+        }
+      });
+      marcaCell.innerHTML = '';
+      marcaCell.appendChild(select);
+    }
+
+    // Model dropdown
+    const modelCell = row.querySelector('td[data-field="model_id"]');
+    if (modelCell && !modelCell.querySelector('select')) {
+      const select = document.createElement('select');
+      select.className = 'form-select form-select-sm';
+      select.innerHTML = '<option value="">-- select --</option>';
+      select.value = car.model_id || '';
+      if (car.marca_id) {
+        loadModelsForBulk(car.marca_id).then(models => {
+          select.innerHTML = '<option value="">-- select --</option>' + 
+            models.map(m => `<option value="${m.id}" ${m.id == car.model_id ? 'selected' : ''}>${m.name}</option>`).join('');
+          select.value = car.model_id || '';
+        });
+      }
+      modelCell.innerHTML = '';
+      modelCell.appendChild(select);
+    }
+
+    // Category dropdown
+    const categoryCell = row.querySelector('td[data-field="category"]');
+    if (categoryCell && !categoryCell.querySelector('select')) {
+      const select = document.createElement('select');
+      select.className = 'form-select form-select-sm';
+      const categories = ['Bus | Psg', 'Cabrio', 'Coupe', 'Hatchback', 'Minivan', 'MPV', 'Sedan', 'SUV', 'Universal'];
+      select.innerHTML = '<option value="">-- select --</option>' + 
+        categories.map(c => `<option value="${c}" ${c === car.category ? 'selected' : ''}>${c}</option>`).join('');
+      categoryCell.innerHTML = '';
+      categoryCell.appendChild(select);
+    }
+
+    // Fuel dropdown
+    const fuelCell = row.querySelector('td[data-field="fuel"]');
+    if (fuelCell && !fuelCell.querySelector('select')) {
+      const select = document.createElement('select');
+      select.className = 'form-select form-select-sm';
+      const fuels = ['Motorina', 'Hybrid/Benzina', 'Benzina 95'];
+      select.innerHTML = '<option value="">-- select --</option>' + 
+        fuels.map(f => `<option value="${f}" ${f === car.fuel ? 'selected' : ''}>${f}</option>`).join('');
+      fuelCell.innerHTML = '';
+      fuelCell.appendChild(select);
+    }
+
+    // Transmission dropdown
+    const transmissionCell = row.querySelector('td[data-field="transmission"]');
+    if (transmissionCell && !transmissionCell.querySelector('select')) {
+      const select = document.createElement('select');
+      select.className = 'form-select form-select-sm';
+      const transmissions = ['Automatic', 'Manual', 'Variator'];
+      select.innerHTML = '<option value="">-- select --</option>' + 
+        transmissions.map(t => `<option value="${t}" ${t === car.transmission ? 'selected' : ''}>${t}</option>`).join('');
+      transmissionCell.innerHTML = '';
+      transmissionCell.appendChild(select);
+    }
+
+    // Drive Type dropdown
+    const driveTypeCell = row.querySelector('td[data-field="drive_type"]');
+    if (driveTypeCell && !driveTypeCell.querySelector('select')) {
+      const select = document.createElement('select');
+      select.className = 'form-select form-select-sm';
+      const driveTypes = ['Front', 'Rear', 'All'];
+      select.innerHTML = '<option value="">-- select --</option>' + 
+        driveTypes.map(d => `<option value="${d}" ${d === car.drive_type ? 'selected' : ''}>${d}</option>`).join('');
+      driveTypeCell.innerHTML = '';
+      driveTypeCell.appendChild(select);
+    }
+
+    // Seats input
+    const seatsCell = row.querySelector('td[data-field="seats"]');
+    if (seatsCell && !seatsCell.querySelector('input')) {
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'form-control form-control-sm';
+      input.min = '1';
+      input.max = '9';
+      input.value = car.seats || '5';
+      seatsCell.innerHTML = '';
+      seatsCell.appendChild(input);
+    }
+
+    // Luggage input
+    const luggageCell = row.querySelector('td[data-field="luggage_capacity"]');
+    if (luggageCell && !luggageCell.querySelector('input')) {
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'form-control form-control-sm';
+      input.min = '1';
+      input.max = '5';
+      input.value = car.luggage_capacity || '2';
+      luggageCell.innerHTML = '';
+      luggageCell.appendChild(input);
+    }
+
+    // Price input
+    const priceCell = row.querySelector('td[data-field="price"]');
+    if (priceCell && !priceCell.querySelector('input')) {
+      const originalPrice = priceCell.dataset.originalPrice || '';
+      const originalCurrency = priceCell.dataset.originalCurrency || 'Lei';
+      const div = document.createElement('div');
+      div.className = 'd-flex gap-1';
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.step = '0.01';
+      input.className = 'form-control form-control-sm';
+      input.value = originalPrice;
+      input.placeholder = 'Price';
+      const currencyInput = document.createElement('input');
+      currencyInput.type = 'text';
+      currencyInput.className = 'form-control form-control-sm';
+      currencyInput.style.maxWidth = '70px';
+      currencyInput.value = originalCurrency;
+      currencyInput.readOnly = true; // Make currency readonly
+      div.appendChild(input);
+      div.appendChild(currencyInput);
+      priceCell.innerHTML = '';
+      priceCell.appendChild(div);
+    }
+  }
+
+  function makeRowReadonly(row) {
+    const car = JSON.parse(row.dataset.car);
+    
+    // Restore original values from car data
+    const marcaCell = row.querySelector('td[data-field="marca_id"]');
+    if (marcaCell) {
+      marcaCell.textContent = car.marca_name || '';
+    }
+
+    const modelCell = row.querySelector('td[data-field="model_id"]');
+    if (modelCell) {
+      modelCell.textContent = car.model_name || '';
+    }
+
+    const categoryCell = row.querySelector('td[data-field="category"]');
+    if (categoryCell) {
+      categoryCell.textContent = car.category || '';
+    }
+
+    const fuelCell = row.querySelector('td[data-field="fuel"]');
+    if (fuelCell) {
+      fuelCell.textContent = car.fuel || '';
+    }
+
+    const transmissionCell = row.querySelector('td[data-field="transmission"]');
+    if (transmissionCell) {
+      transmissionCell.textContent = car.transmission || '';
+    }
+
+    const driveTypeCell = row.querySelector('td[data-field="drive_type"]');
+    if (driveTypeCell) {
+      driveTypeCell.textContent = car.drive_type || '';
+    }
+
+    const seatsCell = row.querySelector('td[data-field="seats"]');
+    if (seatsCell) {
+      seatsCell.textContent = car.seats || '';
+    }
+
+    const luggageCell = row.querySelector('td[data-field="luggage_capacity"]');
+    if (luggageCell) {
+      luggageCell.textContent = car.luggage_capacity || '';
+    }
+
+    const priceCell = row.querySelector('td[data-field="price"]');
+    if (priceCell) {
+      priceCell.textContent = formatPrice(car.currency, (car.base_value ?? car.price_value));
+    }
+  }
+
+  async function handleBulkSave() {
+    const bulkSaveBtn = document.getElementById('bulkSaveBtn');
+    if (!bulkSaveBtn) return;
+
+    clearError();
+    bulkSaveBtn.disabled = true;
+
+    try {
+      const rows = Array.from(tbody.querySelectorAll('tr[data-car-id]')).filter(r => selectedCarIds.has(Number(r.dataset.carId)));
+      const updates = [];
+
+      for (const row of rows) {
+        const carId = Number(row.dataset.carId);
+        const payload = {};
+
+        // Get marca_id
+        const marcaSelect = row.querySelector('td[data-field="marca_id"] select');
+        if (marcaSelect && marcaSelect.value) {
+          payload.marca_id = Number(marcaSelect.value);
+        }
+
+        // Get model_id
+        const modelSelect = row.querySelector('td[data-field="model_id"] select');
+        if (modelSelect && modelSelect.value) {
+          payload.model_id = Number(modelSelect.value);
+        }
+
+        // Get category
+        const categorySelect = row.querySelector('td[data-field="category"] select');
+        if (categorySelect && categorySelect.value) {
+          payload.category = categorySelect.value;
+        }
+
+        // Get fuel
+        const fuelSelect = row.querySelector('td[data-field="fuel"] select');
+        if (fuelSelect && fuelSelect.value) {
+          payload.fuel = fuelSelect.value;
+        }
+
+        // Get transmission
+        const transmissionSelect = row.querySelector('td[data-field="transmission"] select');
+        if (transmissionSelect && transmissionSelect.value) {
+          payload.transmission = transmissionSelect.value;
+        }
+
+        // Get drive_type
+        const driveTypeSelect = row.querySelector('td[data-field="drive_type"] select');
+        if (driveTypeSelect && driveTypeSelect.value) {
+          payload.drive_type = driveTypeSelect.value;
+        }
+
+        // Get seats
+        const seatsInput = row.querySelector('td[data-field="seats"] input');
+        if (seatsInput && seatsInput.value) {
+          payload.seats = Number(seatsInput.value);
+        }
+
+        // Get luggage_capacity
+        const luggageInput = row.querySelector('td[data-field="luggage_capacity"] input');
+        if (luggageInput && luggageInput.value) {
+          payload.luggage_capacity = Number(luggageInput.value);
+        }
+
+        // Get price
+        const priceDiv = row.querySelector('td[data-field="price"] div');
+        if (priceDiv) {
+          const priceInput = priceDiv.querySelector('input[type="number"]');
+          const currencyInput = priceDiv.querySelector('input[type="text"]');
+          if (priceInput && priceInput.value) {
+            payload.base_value = Number(priceInput.value);
+            payload.currency = currencyInput ? currencyInput.value : 'Lei';
+          }
+        }
+
+        if (Object.keys(payload).length > 0) {
+          updates.push({ carId, payload });
+        }
+      }
+
+      // Save all updates
+      let hasErrors = false;
+      const errors = [];
+      for (const { carId, payload } of updates) {
+        try {
+          const res = await fetch(`${apiBase}/${carId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) {
+            const errorText = await res.text().catch(() => `HTTP ${res.status}`);
+            throw new Error(`HTTP ${res.status} for car ${carId}: ${errorText}`);
+          }
+        } catch (err) {
+          console.error(`Error updating car ${carId}:`, err);
+          hasErrors = true;
+          errors.push(`Car ${carId}: ${err.message || err}`);
+        }
+      }
+
+      // Clear selection before reload
+      selectedCarIds.clear();
+      updateBulkEditMode(); // Update UI state before reload
+      
+      // Small delay to ensure server processed all updates
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Reload data
+      try {
+        await load();
+        // Show success message if no errors, or show errors if any
+        if (hasErrors) {
+          showError('Some cars were not updated: ' + errors.join('; '));
+        } else {
+          clearError();
+        }
+      } catch (loadErr) {
+        console.error('Error reloading data:', loadErr);
+        // If save was successful but reload failed, show a warning
+        if (!hasErrors) {
+          showError('Data saved but failed to reload. Please refresh the page.');
+        } else {
+          showError('Save completed with errors and reload failed. Please refresh the page.');
+        }
+      }
+    } catch (err) {
+      console.error('Bulk save error:', err);
+      showError(err && err.message ? err.message : 'Bulk save failed');
+    } finally {
+      bulkSaveBtn.disabled = false;
+    }
+  }
+
+  // Initial load + bindings
+  document.addEventListener('DOMContentLoaded', function () {
+    initModalRefs();
+    initCreateRefs();
+    loadMarcas();
+    loadModels(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    loadMarcasForBulk();
+    load();
+
+    // handlers
+    const ef = document.getElementById('carEditForm');
+    if (ef) ef.addEventListener('submit', handleSave);
+
+    const cf = document.getElementById('carCreateForm');
+    if (cf) cf.addEventListener('submit', handleCreate);
+
+    // Bulk edit handlers
+    const bulkSaveBtn = document.getElementById('bulkSaveBtn');
+    if (bulkSaveBtn) {
+      bulkSaveBtn.addEventListener('click', handleBulkSave);
+    }
+
+    // Row checkbox handlers
+    tbody.addEventListener('change', function(e) {
+      if (e.target.classList.contains('row-checkbox')) {
+        const carId = Number(e.target.dataset.carId);
+        if (e.target.checked) {
+          selectedCarIds.add(carId);
+        } else {
+          selectedCarIds.delete(carId);
+        }
+        updateBulkEditMode();
+      }
+    });
+
+    // Select all checkbox
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.addEventListener('change', function() {
+        const checkboxes = tbody.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(cb => {
+          const carId = Number(cb.dataset.carId);
+          cb.checked = this.checked;
+          if (this.checked) {
+            selectedCarIds.add(carId);
+          } else {
+            selectedCarIds.delete(carId);
+          }
+        });
+        updateBulkEditMode();
+      });
+    }
+  });
+
+})();
+</script>
+{% endblock %}
