@@ -1,0 +1,2405 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Carsline</title>
+    <link rel="canonical" href="https://new.carsline.md/about-us.html" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="msapplication-TileColor" content="#0E0E0E" />
+    <meta name="template-color" content="#0E0E0E" />
+    <meta name="description" content="Index page" />
+    <meta name="keywords" content="index, page" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/template/icons/favicon_cars_line_3.svg" />
+    
+    <!-- Preconnect для внешних ресурсов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    
+    <link href="assets/css/main.css?v=1.0.0" rel="stylesheet" />
+    
+    <!-- Оптимизация font-display для Font Awesome - переопределение @font-face правил с font-display: swap -->
+    <style>
+        /* Переопределяем @font-face правила Font Awesome с font-display: swap для оптимизации загрузки */
+        /* Эти правила загружаются раньше CSS из CDN, поэтому имеют приоритет */
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 900;
+            font-display: swap;
+            src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2") format("woff2"),
+                 url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff") format("woff");
+        }
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2") format("woff2"),
+                 url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff") format("woff");
+        }
+        @font-face {
+            font-family: "Font Awesome 6 Brands";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2"),
+                 url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff") format("woff");
+        }
+        
+        /* Brand Guide Fonts from project - Trial versions, no fallback */
+        @font-face {
+            font-family: "Basenji Variable";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("assets/fonts/Basenji_Variable_Regular.otf") format("opentype");
+        }
+        
+        @font-face {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("assets/fonts/Nexa_Bold/Nexa-Trial-Regular.ttf") format("truetype");
+        }
+
+        @font-face {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-style: normal;
+            font-weight: 800;
+            font-display: swap;
+            src: url("assets/fonts/Nexa_Bold/Nexa-Trial-ExtraBold.ttf") format("truetype");
+        }
+
+        /* Применяем Nexa Trial по всему сайту */
+        body,
+        body * {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1; /* включает локализацию для ro */
+            font-synthesis-weight: none;     /* запрет "фальш-жирного" */
+        }
+
+        /* Basenji Variable для заголовка h1 в баннере */
+        .block-banner-home1 h1,
+        .block-banner-home1 h1 *,
+        .block-banner-home1 h1 span {
+            font-family: "Basenji Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1;
+            font-synthesis-weight: none;
+        }
+
+        /* Применение шрифта Nexa к элементам с icon-address */
+        .text-md.neutral-400.icon-address,
+        .text-md.neutral-400.icon-worktime,
+        .text-md.neutral-400.icon-email {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        /* Применение шрифта Nexa к элементам в box-info-contact */
+        .box-info-contact.mt-0,
+        .box-info-contact.mt-0 * {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        /* Basenji Variable для заголовка "Despre noi" */
+        h2[data-lang-key="about.title"],
+        h2.text-white[data-lang-key="about.title"] {
+            font-family: "Basenji Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1;
+            font-synthesis-weight: none;
+        }
+
+        /* Для русского языка - без Basenji, используем Nexa */
+        body[data-lang="ru"] .block-banner-home1 h1,
+        body[data-lang="ru"] .block-banner-home1 h1 *,
+        body[data-lang="ru"] .block-banner-home1 h1 span,
+        body[data-lang="ru"] h2[data-lang-key="about.title"],
+        body[data-lang="ru"] h2.text-white[data-lang-key="about.title"] {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1;
+            font-synthesis-weight: none;
+        }
+
+        /* Лаймовый цвет для box-tag background-brand-2 */
+        .box-tag.background-brand-2 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+        }
+
+        /* Убираем промежуток между box-why-book-22 и section-cta-7 */
+        .section-box.box-why-book-22.background-body {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        /* Убираем padding-top у section-cta-7, чтобы поднять к box-why-book-22 */
+        .section-cta-7.background-body.py-96 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        /* Убираем отступ между этими секциями */
+        .section-box.box-why-book-22.background-body + .section-cta-7.background-body.py-96,
+        .box-why-book-22 + .section-cta-7,
+        section.section-box.box-why-book-22.background-body + section.section-cta-7.background-body.py-96 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        /* Убираем отступы у контейнеров внутри секций */
+        .section-box.box-why-book-22.background-body > .container {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .section-cta-7.background-body.py-96 > .box-cta-6 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* Лаймовый цвет для btn-signin и убираем кликабельность */
+        .btn.btn-signin.bg-2.text-dark.mb-4 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        .btn.btn-signin.bg-2.text-dark.mb-4:hover {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+        }
+
+        /* Лаймовый цвет для section-static-1 */
+        .section-static-1.background-body.background-2.pt-80.pb-80 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            padding-bottom: 80px !important;
+        }
+        /* Отсоединяем section-static-1 от section-cta-7 - черное пространство между ними */
+        .section-cta-7.background-body.py-96 + .section-static-1.background-body.background-2.pt-80.pb-80,
+        section.section-cta-7 + section.section-static-1 {
+            margin-top: -85px !important;
+            padding-top: 80px !important;
+        }
+        /* Добавляем margin-top для элементов внутри .row */
+        .row > * {
+            margin-top: 20px !important;
+        }
+        /* Черный шрифт в section-static-1 */
+        .section-static-1.background-body.background-2.pt-80.pb-80,
+        .section-static-1.background-body.background-2.pt-80.pb-80 * {
+            color: #101010 !important;
+        }
+        .section-static-1.background-body.background-2.pt-80.pb-80 h3,
+        .section-static-1.background-body.background-2.pt-80.pb-80 p,
+        .section-static-1.background-body.background-2.pt-80.pb-80 .neutral-1000 {
+            color: #101010 !important;
+        }
+        /* Убираем отступы у контейнера и элементов внутри section-static-1 */
+        .section-static-1.background-body.background-2.pt-80.pb-80 > .container {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+        .section-static-1.background-body.background-2.pt-80.pb-80 .row {
+            margin-bottom: 0 !important;
+        }
+        .section-static-1.background-body.background-2.pt-80.pb-80 .row > *:last-child {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+    </style>
+    <style>
+        /* Хедер не должен обрезать дропдауны */
+        .header.header-fixed.sticky-bar,
+        .sticky-bar {
+            overflow: visible !important;
+        }
+        
+        /* На всякий случай — все внутренние обёртки тоже не режут содержимое */
+        .header,
+        .header .container-fluid,
+        .header .main-header,
+        .header-left,
+        .header-right {
+            overflow: visible !important;
+        }
+        
+        /* Мобильная версия: нормальное позиционирование и z-index для языка */
+        @media (max-width: 991px) {
+            .header,
+            .header.header-fixed,
+            .header.sticky-bar {
+                position: relative !important;
+                z-index: 9999 !important;
+            }
+        
+            .head-lang {
+                position: relative !important;
+                z-index: 10000 !important;
+            }
+        
+            .head-lang .dropdown-account {
+                position: absolute !important;
+                top: 100%;   /* сразу под RO/EN/RU */
+                right: 0;
+                z-index: 10001 !important;
+            }
+        }
+        </style>
+    <!-- Preload шрифтов для ускорения загрузки -->
+    <link rel="preload" href="assets/fonts/Basenji_Variable_Regular.otf" as="font" type="font/otf" crossorigin="anonymous" />
+    <link rel="preload" href="assets/fonts/Nexa_Bold/Nexa-Trial-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/fonts/Nexa_Bold/Nexa-Trial-ExtraBold.ttf" as="font" type="font/ttf" crossorigin>
+
+</head>
+
+<body>
+    <!-- prettier-ignore -->
+    <!--Preloader-->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <div class="page-loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Preloader-end -->
+
+    <!-- Navbar -->
+    <header class="header header-fixed sticky-bar">
+
+        <div class="container-fluid">
+            <div class="main-header">
+                <div class="header-left">
+                    <div class="header-logo">
+                        <a class="d-flex" href="index.html">
+                            <img class="light-mode" alt="Carento" src="assets/imgs/template/icons/LOGO_BLACK_1.png" width="150" height="40" style="max-width: 100%; height: auto;" />
+                            <img class="dark-mode" alt="Carento" src="assets/imgs/template/icons/LOGO_BLACK_1.png" width="150" height="40" style="max-width: 100%; height: auto;" />
+                        </a>
+                    </div>
+                    <div class="header-nav">
+                        <nav class="nav-main-menu">
+                            <ul class="main-menu">
+                                <li><a class="color-white" href="index.html" data-lang-key="nav.home">Acasă</a></li>
+                                <li><a class="color-white" href="about-us.html" target="_self" data-lang-key="nav.about">Despre noi</a></li>
+                                <li><a class="color-white" href="contact.html" data-lang-key="nav.contact">Contact</a></li>
+                                    </ul>
+                        </nav>
+                                                </div>
+                                                </div>
+                <div class="header-right">
+                    <!-- Contact Information -->
+                    <div class="d-flex align-items-center" style="gap: 0.5rem;">
+                        <a class="phone-head text-white d-flex align-items-center" href="tel:+373 60 411 444" style="white-space: nowrap;">
+                            <svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
+                                <path d="M13.656 2.34229C10.5314 -0.781426 5.46601 -0.780676 2.34229 2.34401C-0.781426 5.4687 -0.780676 10.534 2.34401 13.6577C5.4687 16.7814 10.534 16.7807 13.6577 13.656C15.1579 12.1554 16.0005 10.1202 16 7.99829C15.9996 5.87673 15.1564 3.84223 13.656 2.34229ZM12.1157 11.1439C12.1154 11.1443 12.115 11.1446 12.1147 11.145V11.1423L11.7093 11.545C11.1851 12.0758 10.4216 12.2942 9.69598 12.121C8.96489 11.9253 8.26989 11.6138 7.63732 11.1983C7.04964 10.8227 6.50501 10.3837 6.01332 9.88898C5.56092 9.43989 5.15448 8.94676 4.79998 8.41698C4.41223 7.84692 4.10532 7.22592 3.88798 6.57164C3.63882 5.80301 3.84529 4.95961 4.42132 4.39298L4.89598 3.91832C5.02795 3.78576 5.24239 3.78529 5.37492 3.91726C5.37526 3.91761 5.37564 3.91795 5.37598 3.91832L6.87464 5.41698C7.0072 5.54895 7.00767 5.76339 6.8757 5.89592C6.87536 5.89626 6.87501 5.89661 6.87464 5.89698L5.99464 6.77698C5.74214 7.02673 5.71039 7.42361 5.91998 7.71032C6.23826 8.14714 6.59048 8.55817 6.97332 8.93967C7.40017 9.36835 7.8642 9.75832 8.35998 10.105C8.64645 10.3048 9.03482 10.2711 9.28264 10.025L10.1333 9.16101C10.2653 9.02845 10.4797 9.02798 10.6122 9.15995C10.6126 9.16029 10.6129 9.16064 10.6133 9.16101L12.1146 10.665C12.2472 10.7969 12.2477 11.0114 12.1157 11.1439Z" fill="white"></path>
+                            </svg>
+                            +373 60 411 444
+                        </a>
+                        <a class="email-head text-white d-flex align-items-center d-none d-lg-flex" href="mailto:info@carsline.md" style="white-space: nowrap;">
+                            <svg width="16" height="12" viewbox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.96372 1.07378L6.28622 5.39816C7.22897 6.33909 8.77003 6.33991 9.71356 5.39816L14.0361 1.07378C14.0796 1.03025 14.0732 0.958563 14.0227 0.923344C13.5819 0.615875 13.0455 0.433594 12.4677 0.433594H3.53216C2.95431 0.433594 2.41791 0.615906 1.97703 0.923344C1.92653 0.958563 1.92019 1.03025 1.96372 1.07378ZM0.808594 3.15713C0.808594 2.70275 0.92125 2.27344 1.11969 1.89609C1.15072 1.83706 1.22938 1.82513 1.27653 1.87228L5.54431 6.14006C6.89578 7.4935 9.10322 7.49428 10.4555 6.14006L14.7233 1.87228C14.7704 1.82513 14.8491 1.83706 14.8801 1.89609C15.0785 2.27344 15.1912 2.70278 15.1912 3.15713V8.84266C15.1912 10.3456 13.9687 11.5662 12.4677 11.5662H3.53216C2.03116 11.5662 0.808594 10.3456 0.808594 8.84266V3.15713Z" fill="white"></path>
+                            </svg>
+                            info@carsline.md
+                        </a>
+                    </div>
+                    
+                    <!-- Language and Currency Selectors -->
+                    <div class="d-flex align-items-center" style="gap: 0.5rem;">
+                        <div class="box-dropdown-cart align-middle head-lang">
+                            <span class="text-14-medium icon-list icon-account icon-lang"><span class="text-14-medium arrow-down">RO</span></span>
+                            <div class="dropdown-account">
+                                <ul>
+                                    <li><a class="text-sm-medium" href="#" data-lang="ro">RO</a></li>
+                                    <li><a class="text-sm-medium" href="#" data-lang="en">EN</a></li>
+                                    <li><a class="text-sm-medium" href="#" data-lang="ru">RU</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <div class="top-button-mode">
+                        <a class="btn btn-mode change-mode" href="#" data-bs-theme-value="dark" style="background: none; border: none; padding: 0;"> 
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#101010" style="display: block;">
+                                <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <!-- Mobile Menu -->
+                    <div class="burger-icon d-lg-none">
+                        <img src="assets/imgs/template/icons/burger.png" alt="Menu" style="width: 28px; height: 28px; display: block !important; visibility: visible !important; opacity: 1 !important; position: relative; z-index: 10;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar button-bg-2">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-logo">
+                <a class="d-flex" href="index.html"><img class="light-mode" alt="Carento" src="assets/imgs/template/logo-carsline.svg" /><img class="dark-mode" alt="Carento" src="assets/imgs/template/logo-carsline.svg" /></a>
+                <div class="burger-icon burger-icon-white"></div>
+            </div>
+
+            <div class="mobile-header-content-area">
+                <div class="perfect-scroll">
+                    <div class="mobile-menu-wrap mobile-header-border">
+                        <nav>
+                            <ul class="mobile-menu font-heading">
+                                <li><a href="index.html" data-lang-key="nav.home">Acasă</a></li>
+                                <li><a href="about-us.html" data-lang-key="nav.about">Despre noi</a></li>
+                                <li><a href="contact.html" data-lang-key="nav.contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- offCanvas Sidebar -->
+    <div class="sidebar-canvas-wrapper perfect-scrollbar button-bg-2">
+        <div class="sidebar-canvas-container">
+            <div class="sidebar-canvas-head">
+                <div class="sidebar-canvas-logo">
+                    <a class="d-flex" href="index.html">
+                        <img class="light-mode" alt="Carento" src="assets/imgs/template/logo-d.svg" />
+                        <img class="dark-mode" alt="Carento" src="assets/imgs/template/logo-w.svg" />
+                    </a>
+                </div>
+                <div class="sidebar-canvas-lang">
+                    <div class="d-inline-block box-dropdown-cart align-middle mr-15">
+                        <span class="text-14-medium icon-list icon-account icon-lang"><span class="text-14-medium arrow-down text-dark">EN</span></span>
+                        <div class="dropdown-account">
+                            <ul>
+                                <li><a class="text-sm-medium" href="#">English</a></li>
+                                <li><a class="text-sm-medium" href="#">French</a></li>
+                                <li><a class="text-sm-medium" href="#">Chinese</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-inline-block box-dropdown-cart align-middle mr-15">
+                        <span class="text-14-medium icon-list icon-cart"><span class="text-14-medium arrow-down text-dark">USD</span></span>
+                        <div class="dropdown-cart">
+                            <ul>
+                                <li><a class="text-sm-medium" href="#">USD</a></li>
+                                <li><a class="text-sm-medium" href="#">EUR</a></li>
+                                <li><a class="text-sm-medium" href="#">SGP</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a class="close-canvas" href="#"> <img alt="Carento" src="assets/imgs/template/icons/close.png" /></a>
+                </div>
+            </div>
+
+            <div class="sidebar-canvas-content">
+                <div class="box-author-profile">
+                    <div class="card-author">
+                        <div class="card-image"><img src="assets/imgs/page/homepage1/author2.png" alt="Carento" /></div>
+                        <div class="card-info">
+                            <p class="text-md-bold neutral-1000">Howdy, Steven</p>
+                            <p class="text-xs neutral-1000">25 September 2024</p>
+                        </div>
+                    </div>
+                    <a class="btn btn-black" href="#">Logout</a>
+                </div>
+
+                <div class="sidebar-banner">
+                    <div class="position-relative">
+                        <p class="text-xl-bold neutral-1000 mb-4">Viewed products</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 border rounded-3 overflow-hidden mw-65">
+                                <a href="shop-details.html">
+                                    <img src="assets/imgs/shop/shop-details/other-item1.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="position-relative">
+                                <a href="#" class="text-md-bold neutral-1000">R1 Concepts® – eLINE Series Plain Brake Rotors</a>
+                                <p class="text-md-bold text-success">$20.00</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 border rounded-3 overflow-hidden mw-65">
+                                <a href="shop-details.html">
+                                    <img src="assets/imgs/shop/shop-details/other-item2.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="position-relative">
+                                <a href="#" class="text-md-bold neutral-1000">PIRELLI TIRES® – P4 FOUR SEASONS PLUS</a>
+                                <p class="text-md-bold text-success">$160.00</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 border rounded-3 overflow-hidden mw-65">
+                                <a href="shop-details.html">
+                                    <img src="assets/imgs/shop/shop-details/other-item3.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="position-relative">
+                                <a href="#" class="text-md-bold neutral-1000">Mobil 1 Extended Performance Full Synthetic Motor Oil</a>
+                                <p class="text-md-bold text-success">$33.00</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 border rounded-3 overflow-hidden mw-65">
+                                <a href="shop-details.html">
+                                    <img src="assets/imgs/shop/shop-details/other-item4.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="position-relative">
+                                <a href="#" class="text-md-bold neutral-1000">HRE FlowForm® – FT01 Tarma Honda 2024</a>
+                                <p class="text-md-bold text-success">$250.00</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3 border rounded-3 overflow-hidden mw-65">
+                                <a href="shop-details.html">
+                                    <img src="assets/imgs/shop/shop-details/other-item5.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="position-relative">
+                                <a href="#" class="text-md-bold neutral-1000">Mobil Delvac 1300 Super Heavy Duty Synthetic</a>
+                                <p class="text-md-bold text-success">$44.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-contactus">
+                    <h6 class="title-contactus neutral-1000">Contact Us</h6>
+                    <div class="contact-info">
+                        <p class="address-2 text-md-medium neutral-1000">4517 Washington Ave. <br />Manchester, Kentucky 39495</p>
+                        <p class="hour-work-2 text-md-medium neutral-1000">Hours: 8:00 - 17:00, Mon - Sat</p>
+                        <p class="email-2 text-md-medium neutral-1000">support@carento.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <!-- prettier-ignore -->
+        <!-- page header -->
+        <div class="page-header pt-30 background-body">
+            <div class="custom-container position-relative mx-auto">
+                <div class="bg-overlay rounded-12 overflow-hidden">
+                    <img class="w-100 h-100 img-banner" src="assets/imgs/template/new5.jpg" alt="Carento" />
+                </div>
+                <div class="container position-absolute z-1 top-50 start-50 translate-middle">
+                    <h2 class="text-white" data-lang-key="about.title">Despre noi – CarsLine.md</h2>
+                    <span class="text-white text-xl-medium" data-lang-key="about.subtitle">La CarsLine.md, oferim închiriere auto rapidă, sigură și fără complicații. <br />Punem la dispoziție o flotă modernă, prețuri transparente și un serviciu orientat spre nevoile fiecărui client. <br />Alegem calitatea și încrederea pentru ca mobilitatea ta să fie mereu simplă și comodă. <br /><strong>CarsLine.md — ușor de închiriat, sigur de condus.</strong></span>
+                </div>
+                <div class="background-body position-absolute z-1 top-100 start-50 translate-middle px-3 py-2 rounded-12 border d-flex gap-3 @@navigation-page" style="display: none;">
+                    <a href="index.html" class="neutral-700 text-md-medium" data-lang-key="nav.home">Acasă</a>
+                    <span>
+                        <img src="assets/imgs/template/icons/arrow-right.svg" alt="Carento" />
+                    </span>
+                    <a href="#" class="neutral-1000 text-md-bold" data-lang-key="about.title">Despre noi</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- section-1 -->
+        <section class="section-1 py-96 background-body">
+            <div class="container">
+                <div class="row pb-50">
+                    <div class="col-lg-4">
+                        <h3 class="neutral-1000" data-lang-key="about.rentPriority">
+                            Închiriază cu prioritate <br />
+                            <span class="text-primary">
+                            </span>
+                      
+                        </h3>
+                    </div>
+                    <div class="col-lg-7 offset-lg-1">
+                        <p class="text-lg-medium neutral-500" data-lang-key="about.description">La CarsLine.md, găsești mașina potrivită rapid, sigur și fără complicații. Flota noastră modernă îți oferă confort, libertate și mobilitate atunci când ai nevoie. Alege CarsLine.md și pornește la drum cu încredere.
+                        </p>
+                    </div>
+                </div>
+                <div class="row pb-50">
+                    <div class="col-lg-4">
+                        <h3 class="neutral-1000" data-lang-key="about.advantages.title">
+                            Avantajele chiriei auto CarsLine.md <br />
+                            <span class="text-primary">
+                            </span>
+                      
+                        </h3>
+                    </div>
+                    <div class="col-lg-7 offset-lg-1">
+                        <p class="text-lg-medium neutral-500" data-lang-key="about.advantages.description">Alege CarsLine.md pentru o experiență de închiriere simplă, sigură și fără complicații. Oferim servicii orientate spre confortul și încrederea clienților.
+                        </p>
+                        <p class="text-lg-medium neutral-500 mt-3" data-lang-key="about.advantages.points"><strong>Puncte forte:</strong>
+                        </p>
+                        <ul class="text-lg-medium neutral-500" style="list-style-type: none; padding-left: 0;">
+                            <li data-lang-key="about.advantages.point1">Proces rapid și transparent – rezervare ușoară, fără taxe ascunse.</li>
+                            <li data-lang-key="about.advantages.point2">Flotă modernă și bine întreținută – mașini verificate tehnic, curate și pregătite pentru drum.</li>
+                            <li data-lang-key="about.advantages.point3">Prețuri corecte și suport profesionist – echipă pregătită să te ajute oricând.</li>
+                        </ul>
+                        <p class="text-lg-medium neutral-500 mt-3" data-lang-key="about.advantages.footer"><strong>CarsLine.md — mobilitate simplă, încredere la fiecare kilometru.</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box-image rounded-12 position-relative overflow-hidden">
+                            <img class="rounded-12" src="assets/imgs/template/new2.png" alt="Carento" />
+                            <div class="box-tag bg-white p-3 d-flex flex-column position-absolute bottom-0 end-0 rounded-12 m-3">
+                                <span class="text-dark fs-72" style="line-height: 1;">24/7</span>
+                                <h6 data-lang-key="about.assistance" style="margin-top: 0;">
+                                    Asistență
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="box-image rounded-12 position-relative overflow-hidden">
+                            <img class="rounded-12" src="assets/imgs/template/new1.png" alt="Carento" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="d-flex flex-column gap-4 align-self-stretch h-100">
+                            <div class="box-tag background-brand-2 p-5 d-flex flex-column rounded-12">
+                                <span class="text-dark" style="font-size: 48px; font-weight: bold; line-height: 1;">200+</span>
+                                <h4 data-lang-key="about.cars" style="margin-top: 0; font-size: 50px; font-weight: bold;">
+                                    Mașini
+                                </h4>
+                            </div>
+                            <img class="rounded-12" src="assets/imgs/template/new3.png" alt="Carento" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container pt-96" style="display: none;">
+                <div class="row mt-40">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why text-center wow fadeInUp">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <g clip-path="url(#clip0_248_13431)">
+                                        <path d="M61.7728 34.1092C60.9303 30.4572 57.672 27.594 54.0977 26.74L47.0384 25.0471L40.7293 18.6169C38.0943 15.9331 34.4262 14.3938 30.6658 14.3938H7.09004C6.62395 14.3938 6.19915 14.6613 5.99777 15.0819C5.79652 15.5023 5.85428 16.0008 6.1466 16.364L7.58737 18.1542C7.68812 18.2793 7.67202 18.4598 7.55068 18.5651L1.33106 23.9664C1.06623 24.1963 0.914137 24.53 0.914137 24.8808V31.5047L0.141195 32.9617C0.0484375 33.1363 0 33.3312 0 33.529V38.3389C0 38.5782 0.0708399 38.8119 0.203559 39.0109L2.03329 41.7537C2.25791 42.0904 2.63597 42.2926 3.04066 42.2926H5.14879C5.71817 45.3134 8.37484 47.6063 11.5586 47.6063C14.7424 47.6063 17.399 45.3134 17.9684 42.2926H24.1976C24.8664 42.2926 25.4085 41.7503 25.4085 41.0816C25.4085 40.413 24.8664 39.8707 24.1976 39.8707H17.9702C17.3966 36.8279 14.6465 34.5578 11.5585 34.5578C8.46724 34.5578 5.71974 36.8314 5.14648 39.8707H3.68852L2.42188 37.972V33.8303L3.19494 32.3733C3.2877 32.1986 3.33613 32.0036 3.33613 31.8057V25.4327L9.13882 20.3935C10.1909 19.4799 10.3775 17.9474 9.60746 16.8156H30.6658C33.7806 16.8156 36.8187 18.0904 39.0009 20.3133L45.5533 26.9915C45.7124 27.1538 45.9142 27.2679 46.1353 27.321L53.534 29.0953C53.9923 29.2048 54.4353 29.3542 54.8626 29.5379L53.9921 30.0975C53.1414 30.6432 52.6334 31.5737 52.6334 32.5868C52.6334 34.198 53.9801 35.5452 55.5917 35.5452H59.5545C59.5686 35.7113 59.5781 35.8776 59.5781 36.044V38.017L58.5183 39.8707H53.4956C52.9232 36.8303 50.1752 34.5578 47.0844 34.5578C43.9932 34.5578 41.2479 36.8317 40.6732 39.8707H34.8528C34.1842 39.8707 33.6419 40.413 33.6419 41.0816C33.6419 41.7503 34.1842 42.2926 34.8528 42.2926H40.6748C41.2442 45.3134 43.9008 47.6063 47.0845 47.6063C50.2682 47.6063 52.925 45.3134 53.4944 42.2926H59.2211C59.6556 42.2926 60.0567 42.0598 60.2725 41.6828L61.8406 38.94C61.9453 38.7569 62.0002 38.5497 62.0002 38.3389V36.0441C62 35.3911 61.9229 34.7369 61.7728 34.1092ZM11.5586 45.1844C9.29661 45.1844 7.45635 43.3442 7.45635 41.082C7.45635 38.8507 9.32603 36.9802 11.5585 36.9802C13.7908 36.9802 15.6609 38.848 15.6609 41.082C15.6609 43.344 13.8206 45.1844 11.5586 45.1844ZM47.0843 45.1844C44.8232 45.1844 42.9837 43.3456 42.9821 41.0849C42.9821 41.0838 42.9822 41.0827 42.9822 41.0816C42.9822 38.8201 44.8226 36.9802 47.0849 36.9802C49.3464 36.9802 51.1863 38.8201 51.1863 41.0816C51.1863 41.0832 51.1866 41.0848 51.1866 41.0865C51.1841 43.3465 49.345 45.1844 47.0843 45.1844ZM55.2112 32.9643C54.977 32.7308 55.0196 32.3158 55.3007 32.1355L57.1065 30.9747C57.7926 31.5887 58.3815 32.3125 58.8197 33.1234H55.5917C55.3992 33.1234 55.2718 33.0247 55.2112 32.9643Z" fill="#101010" />
+                                        <path d="M39.5949 28.7908C40.9991 28.7908 41.775 27.0747 40.8475 26.0182L37.6949 22.4269C35.6852 20.1377 32.7855 18.8247 29.7392 18.8247H15.3369C14.6672 18.8247 14.028 19.0753 13.5372 19.5302L9.22746 23.523C8.74151 23.9734 8.56738 24.6688 8.78389 25.2949C9.00029 25.9206 9.56652 26.3596 10.2265 26.4134C15.8664 26.8736 34.6425 28.4043 39.4603 28.7856C39.5053 28.789 39.5501 28.7908 39.5949 28.7908ZM15.1832 21.3066C15.2251 21.2679 15.2796 21.2465 15.3369 21.2465H24.9858V25.1856C20.1221 24.7901 15.2354 24.3919 12.1267 24.1384L15.1832 21.3066ZM27.4075 25.3824V21.2465H29.7389C32.0883 21.2465 34.3247 22.259 35.8746 24.0245L37.8052 26.2238C35.2926 26.0222 31.4654 25.712 27.4075 25.3824Z" fill="#101010" />
+                                        <path d="M26.1965 33.3613H28.9048C29.5736 33.3613 30.1157 32.8191 30.1157 32.1504C30.1157 31.4817 29.5736 30.9395 28.9048 30.9395H26.1965C25.5277 30.9395 24.9856 31.4817 24.9856 32.1504C24.9856 32.8191 25.5279 33.3613 26.1965 33.3613Z" fill="#101010" />
+                                        <path d="M9.92456 29.2563C9.25576 29.2563 8.71362 29.7986 8.71362 30.4673C8.71362 31.136 9.25576 31.6782 9.92456 31.6782H12.6329C13.3017 31.6782 13.8439 31.136 13.8439 30.4673C13.8439 29.7986 13.3017 29.2563 12.6329 29.2563H9.92456Z" fill="#101010" />
+                                        <path d="M30.764 40.6185C30.5654 40.1422 30.072 39.8358 29.5565 39.8743C29.0507 39.9123 28.6156 40.2713 28.4794 40.7592C28.1903 41.7953 29.3509 42.6653 30.2677 42.12C30.7784 41.8162 30.9881 41.1658 30.764 40.6185Z" fill="#101010" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_248_13431">
+                                            <rect width="62" height="62" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="why.location.title">Choose a Location</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="why.location.desc">Select the ideal destination to begin your journey with ease</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why text-center wow fadeInUp">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <path d="M47.023 27.9968H43.8262C43.2934 27.9968 42.8574 28.4328 42.8574 28.9656C42.8574 29.4984 43.2934 29.9343 43.8262 29.9343H47.023C47.459 29.9343 47.8174 30.2928 47.8174 30.7287V44.64C47.8174 45.0759 47.459 45.4343 47.023 45.4343H43.8262C43.2934 45.4343 42.8574 45.8703 42.8574 46.4031C42.8574 46.9359 43.2934 47.3718 43.8262 47.3718H47.023C48.5246 47.3718 49.7549 46.1512 49.7549 44.64V30.7287C49.7549 29.2271 48.5343 27.9968 47.023 27.9968Z" fill="#101010" />
+                                    <path d="M10.1623 29.9343H13.3592C13.892 29.9343 14.3279 29.4984 14.3279 28.9656C14.3279 28.4328 13.892 27.9968 13.3592 27.9968H10.1623C8.66073 27.9968 7.43042 29.2175 7.43042 30.7287V44.64C7.43042 46.1415 8.65104 47.3718 10.1623 47.3718H13.3592C13.892 47.3718 14.3279 46.9359 14.3279 46.4031C14.3279 45.8703 13.892 45.4343 13.3592 45.4343H10.1623C9.72636 45.4343 9.36792 45.0759 9.36792 44.64V30.7287C9.36792 30.2928 9.72636 29.9343 10.1623 29.9343Z" fill="#101010" />
+                                    <path d="M29.5565 29.6632V28.9463C29.5565 28.4135 29.1205 27.9775 28.5877 27.9775C28.0549 27.9775 27.619 28.4135 27.619 28.9463V29.7116C25.0808 30.1475 23.1821 31.9591 23.1821 34.1194C23.1821 36.2797 25.0712 38.0719 27.619 38.5079V43.7004C25.9818 43.4388 24.7224 42.4022 24.7224 41.1913C24.7224 40.6585 24.2865 40.2225 23.7537 40.2225C23.2208 40.2225 22.7849 40.6585 22.7849 41.1913C22.7849 43.4679 24.8968 45.3472 27.619 45.6475V46.3644C27.619 46.8972 28.0549 47.3332 28.5877 47.3332C29.1205 47.3332 29.5565 46.8972 29.5565 46.3644V45.5991C32.0946 45.1632 34.003 43.3516 34.003 41.1913C34.003 39.031 32.1333 37.2291 29.5565 36.8029V31.6104C31.1937 31.8622 32.453 32.9085 32.453 34.1194C32.453 34.6522 32.889 35.0882 33.4218 35.0882C33.9546 35.0882 34.3905 34.6522 34.3905 34.1194C34.3905 31.8429 32.2787 29.9635 29.5565 29.6632ZM25.1196 34.1194C25.1196 33.015 26.1852 32.0463 27.619 31.6975V36.5413C26.1755 36.1925 25.1196 35.2238 25.1196 34.1194ZM32.0655 41.201C32.0655 42.3054 30.9999 43.2644 29.5565 43.6229V38.7791C31.0096 39.1279 32.0655 40.0966 32.0655 41.2107V41.201Z" fill="#101010" />
+                                    <path d="M57.9991 33.044L51.5569 12.9425C51.1016 11.5087 49.5516 10.7144 48.1275 11.1794L7.44969 24.3834H6.60688C5.10531 24.3834 3.875 25.604 3.875 27.1153V48.2243C3.875 49.7259 5.09563 50.9562 6.60688 50.9562H50.5784C52.08 50.9562 53.3103 49.7356 53.3103 48.2243V37.3744C53.3781 37.3744 53.4459 37.3647 53.5138 37.3453L56.2262 36.4734C57.66 36.0181 58.4447 34.4778 57.9894 33.044H57.9991ZM51.3728 48.2243C51.3728 48.6603 51.0144 49.0187 50.5784 49.0187H6.60688C6.17094 49.0187 5.8125 48.6603 5.8125 48.2243V27.1153C5.8125 26.6793 6.17094 26.3209 6.60688 26.3209H26.7181C26.7181 26.3209 26.7278 26.3209 26.7375 26.3209H26.7472H30.1959C30.1959 26.3209 30.2056 26.3209 30.2153 26.3209C30.225 26.3209 30.225 26.3209 30.2347 26.3209H50.5784C51.0144 26.3209 51.3728 26.6793 51.3728 27.1153V48.2243ZM55.645 34.6328L53.3103 35.3787V27.1153C53.3103 25.9043 52.5159 24.8872 51.4213 24.5287L49.2706 17.4569C49.0478 16.7594 48.5731 16.1975 47.9241 15.8584C47.275 15.529 46.5387 15.4612 45.8413 15.684L42.7994 16.6625C42.2859 16.8272 42.005 17.3697 42.1697 17.8831C42.3344 18.3965 42.8769 18.6678 43.3903 18.5128L46.4322 17.5344C46.6356 17.4665 46.8488 17.4859 47.0328 17.5828C47.2169 17.6797 47.3622 17.8444 47.4203 18.0284L49.3481 24.3737H35.1656C34.1969 22.9981 32.3369 22.3006 30.3316 22.5234L30.1087 21.8356C29.9441 21.3319 29.4016 21.0509 28.8881 21.2059C28.3747 21.3706 28.0938 21.9131 28.2584 22.4265L28.4425 22.9981C27.6384 23.3275 26.9216 23.7925 26.3403 24.3737H13.7175L48.7087 13.02C48.9122 12.9522 49.1253 12.9715 49.3094 13.0684C49.4934 13.1653 49.6387 13.33 49.6969 13.5334L56.1391 33.635C56.2747 34.0515 56.0422 34.4972 55.6256 34.6328H55.645Z" fill="#101010" />
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="why.pricing.title">Transparent Pricing</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="why.pricing.desc">Enjoy clear and upfront pricing with no surprises, ensuring you know exactly what you're paying for.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why text-center wow fadeInUp">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <path d="M55.0559 32.6118H40.0821C40.0672 32.4878 40.0538 32.5591 40.0388 32.5325C39.8328 32.169 39.6362 31.7438 39.4473 31.4958H36.6589C37.0335 32.1158 37.4571 32.8539 37.947 33.7183C38.2146 34.1907 38.4366 34.5958 38.6197 35.0918H55.0559C55.7407 35.0918 56.2959 34.5366 56.2959 33.8518C56.2959 33.1671 55.7407 32.6118 55.0559 32.6118Z" fill="#101010" />
+                                    <path d="M58.7759 26.5359H35.9445C35.2801 25.9159 34.5821 25.6028 33.7153 25.402C32.9617 25.2277 31.8364 25.1738 30.6175 25.8913C30.3576 25.7897 30.0946 25.7058 29.8289 25.6537C28.9538 25.4835 28.0713 25.5862 27.2799 25.9519V16.3945C27.2799 13.5483 25.0234 11.2839 22.1771 11.2839H7.32236C4.47606 11.2839 2.10791 13.5483 2.10791 16.3946V31.2493C2.10791 34.0956 4.47606 36.4559 7.32236 36.4559H18.2504C18.1092 36.7039 17.9839 37.0798 17.8853 37.4462C17.4767 38.9623 17.4095 41.3697 19.4103 44.2943C21.3587 47.1428 24.1722 49.0259 27.3335 49.6101C30.0883 50.1191 32.9493 49.6153 34.9861 48.2219C35.3931 47.9435 35.8793 47.6159 36.3995 47.2439H48.2359C48.9206 47.2439 49.4759 46.6887 49.4759 46.0039C49.4759 45.3192 48.9206 44.7639 48.2359 44.7639H39.1224C39.5536 44.2679 39.9602 43.728 40.316 43.139C40.6589 42.5717 40.9817 41.9119 41.2294 41.1679H51.9559C52.6406 41.1679 53.1959 40.6127 53.1959 39.9279C53.1959 39.2432 52.6406 38.6879 51.9559 38.6879H41.6893C41.7056 38.3159 41.6991 37.9439 41.6712 37.5719H39.2653C39.7119 42.0359 35.7556 44.7788 33.6285 46.2338C30.7757 48.1851 24.9375 48.1161 21.3949 42.9369C19.9501 40.8251 19.876 39.1383 20.2459 37.9207L22.343 40.9829C22.718 41.5315 23.4662 41.6696 24.0139 41.2949C24.5617 40.9201 24.7027 40.1712 24.3277 39.6229L15.4451 26.622C15.3842 26.5387 13.8425 24.5072 15.4607 23.4006C16.409 22.7517 17.1446 22.6169 18.469 24.5532L22.9207 31.0606C23.021 30.4603 23.3315 29.9113 23.9418 29.494C24.6197 29.0301 25.303 28.8606 25.9727 28.9899C26.372 29.0667 26.7202 29.2404 27.019 29.4586C27.1667 29.0724 27.4665 28.6646 28.0204 28.2859C28.4237 28.0102 28.8892 27.9136 29.3662 28.0065C29.9417 28.1193 30.4844 28.4894 30.9626 28.9536C31.0887 28.5982 31.3293 28.2898 31.6807 28.0494C32.1792 27.7087 32.6663 27.6274 33.1721 27.7442C33.8266 27.896 34.3231 28.1481 35.0064 29.0161H58.7759C59.4606 29.0161 60.0159 28.4608 60.0159 27.7761C60.0159 27.0913 59.4606 26.5359 58.7759 26.5359ZM23.1637 27.158L20.4532 23.1955C18.5596 20.4276 16.4232 19.8287 14.1032 21.4156C13.1551 22.0641 12.5581 22.9783 12.376 24.0588C12.0773 25.8317 13.0301 27.4174 13.4833 28.0393L17.5174 33.9759H7.32236C5.84353 33.9759 4.58791 32.7281 4.58791 31.2493V16.3946C4.58791 14.9158 5.84353 13.7639 7.32236 13.7639H22.1771C23.6559 13.7639 24.7999 14.9158 24.7999 16.3946V26.6017C24.2445 26.6892 23.6954 26.8747 23.1637 27.158Z" fill="#101010" />
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="why.booking.title">Convenient Booking</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="why.booking.desc">Benefit from a variety of rental options, including short-term, long-term, and weekend specials</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why text-center wow fadeInUp">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <g clip-path="url(#clip0_248_13453)">
+                                        <path d="M16.1459 44.4933L12.6739 45.2662C10.8334 45.6655 9.186 46.685 8.00747 48.154C6.82895 49.623 6.19086 51.4522 6.20005 53.3355V55.0074C6.20164 56.1401 6.57449 57.241 7.2615 58.1415C7.9485 59.042 8.91177 59.6925 10.0037 59.9933C13.3569 60.9078 19.7212 62 31.0001 62C42.2789 62 48.6432 60.9078 51.9964 59.9933C53.0883 59.6925 54.0516 59.042 54.7386 58.1415C55.4256 57.241 55.7985 56.1401 55.8001 55.0074V53.3355C55.8092 51.4522 55.1712 49.623 53.9926 48.154C52.8141 46.685 51.1667 45.6655 49.3262 45.2662L45.8542 44.4933L41.1174 41.6526L39.213 37.2093L39.833 36.4953L40.299 36.6203C40.7866 36.7493 41.2888 36.8149 41.7932 36.8156C43.3169 36.8123 44.7771 36.2047 45.8532 35.126C46.9294 34.0473 47.5337 32.5857 47.5334 31.062V29.822C48.4184 29.5935 49.2027 29.0781 49.7636 28.3564C50.3246 27.6347 50.6304 26.7474 50.6334 25.8333V21.7C50.63 20.7863 50.3239 19.8995 49.763 19.1782C49.2021 18.4569 48.4181 17.9418 47.5334 17.7134V16.5333C47.5334 12.1484 45.7915 7.9431 42.6909 4.8425C39.5903 1.7419 35.385 0 31.0001 0C26.6151 0 22.4098 1.7419 19.3092 4.8425C16.2086 7.9431 14.4667 12.1484 14.4667 16.5333V17.7134C13.582 17.9418 12.798 18.4569 12.2371 19.1782C11.6762 19.8995 11.3701 20.7863 11.3667 21.7V25.8333C11.3667 26.9296 11.8022 27.9809 12.5773 28.756C13.3525 29.5312 14.4038 29.9667 15.5 29.9667H17.5667C17.9195 29.9632 18.2691 29.8989 18.6 29.7765V30.133C18.5995 31.6083 19.1349 33.0335 20.1067 34.1434L22.7933 37.2072L20.8879 41.6506L16.1459 44.4933ZM21.4066 43.7482C23.2756 46.211 25.8348 48.0623 28.7588 49.0668C27.7623 50.0426 26.9344 51.1767 26.3087 52.4231C23.0558 50.9046 20.2193 48.6205 18.042 45.7663L21.4066 43.7482ZM53.7334 53.3355V55.0074C53.7338 55.6879 53.5108 56.3496 53.0986 56.891C52.6864 57.4324 52.1078 57.8235 51.4518 58.0041C48.2206 58.8814 42.0495 59.9333 31.0001 59.9333C19.9506 59.9333 13.7796 58.8814 10.5483 57.9989C9.89314 57.8185 9.3152 57.4282 8.90308 56.8879C8.49097 56.3476 8.26743 55.687 8.26672 55.0074V53.3355C8.25963 51.9229 8.7383 50.5508 9.62251 49.4491C10.5067 48.3474 11.7427 47.5831 13.1234 47.2843L16.0932 46.624C17.2577 48.1874 20.7887 52.4789 25.7879 54.4401C26.2157 54.6045 26.6898 54.6006 27.1148 54.4292C27.5397 54.2577 27.8839 53.9315 28.0778 53.5163C28.7557 52.0821 29.7558 50.8238 31.0001 49.8397C32.2447 50.8235 33.2455 52.0814 33.9244 53.5153C34.0708 53.8272 34.3029 54.0911 34.5937 54.2761C34.8844 54.4611 35.2218 54.5595 35.5664 54.56C35.7885 54.5603 36.0087 54.5185 36.2153 54.437C41.2135 52.4737 44.7444 48.1843 45.909 46.6209L48.8788 47.2812C50.2596 47.5805 51.4955 48.3455 52.3794 49.4477C53.2632 50.55 53.7413 51.9226 53.7334 53.3355ZM35.6914 52.4231C35.0662 51.1764 34.2382 50.0422 33.2414 49.0668C36.1653 48.0623 38.7245 46.211 40.5935 43.7482L43.9581 45.7663C41.7806 48.6203 38.9441 50.9044 35.6914 52.4231ZM44.0304 33.9812C43.2808 34.5519 42.3397 34.8111 41.4037 34.7045L41.8935 34.1444C42.8651 33.034 43.4005 31.6086 43.4001 30.133V29.7765C43.731 29.8989 44.0806 29.9632 44.4334 29.9667H45.4667V31.062C45.4687 31.6264 45.3401 32.1836 45.0909 32.6901C44.8418 33.1965 44.4788 33.6384 44.0304 33.9812ZM41.3334 17.5512C31.8402 17.266 29.9058 13.0799 29.8934 13.05C29.8167 12.8581 29.6842 12.6935 29.5131 12.5777C29.342 12.4618 29.14 12.3999 28.9334 12.4C25.9269 12.4047 23.0346 13.5521 20.8424 15.6095C21.7672 10.4811 26.193 6.2 31.0001 6.2C33.7397 6.20301 36.3663 7.29266 38.3035 9.22989C40.2407 11.1671 41.3304 13.7937 41.3334 16.5333V17.5512ZM48.5667 21.7V25.8333C48.5667 26.3814 48.349 26.9071 47.9614 27.2947C47.5738 27.6823 47.0482 27.9 46.5001 27.9H44.4334C44.1593 27.9 43.8965 27.7911 43.7027 27.5973C43.5089 27.4036 43.4001 27.1407 43.4001 26.8667V20.6667C43.4001 20.3926 43.5089 20.1298 43.7027 19.936C43.8965 19.7422 44.1593 19.6333 44.4334 19.6333H46.5001C47.0482 19.6333 47.5738 19.8511 47.9614 20.2386C48.349 20.6262 48.5667 21.1519 48.5667 21.7ZM31.0001 2.06667C34.8356 2.07077 38.5129 3.59625 41.225 6.30839C43.9371 9.02052 45.4626 12.6978 45.4667 16.5333V17.5667H44.4334C44.0806 17.5701 43.731 17.6344 43.4001 17.7568V16.5333C43.3965 13.2457 42.0889 10.0938 39.7642 7.76914C37.4396 5.44446 34.2876 4.13689 31.0001 4.13333C24.394 4.13333 18.6 10.4108 18.6 17.5667V17.7568C18.2691 17.6344 17.9195 17.5701 17.5667 17.5667H16.5334V16.5333C16.5375 12.6978 18.063 9.02052 20.7751 6.30839C23.4872 3.59625 27.1645 2.07077 31.0001 2.06667ZM17.5667 27.9H15.5C14.9519 27.9 14.4263 27.6823 14.0387 27.2947C13.6511 26.9071 13.4334 26.3814 13.4334 25.8333V21.7C13.4334 21.1519 13.6511 20.6262 14.0387 20.2386C14.4263 19.8511 14.9519 19.6333 15.5 19.6333H17.5667C17.8408 19.6333 18.1036 19.7422 18.2974 19.936C18.4912 20.1298 18.6 20.3926 18.6 20.6667V26.8667C18.6 27.1407 18.4912 27.4036 18.2974 27.5973C18.1036 27.7911 17.8408 27.9 17.5667 27.9ZM20.6667 30.133V18.91C21.5378 17.6494 22.6785 16.5984 24.0061 15.8333C25.3337 15.0682 26.8149 14.608 28.3423 14.4863C29.3178 15.9629 32.5294 19.3585 41.3334 19.6106V30.133C41.3335 31.1081 40.9795 32.0499 40.3373 32.7835L39.1283 34.1651L36.2349 33.3922L36.2659 33.264C36.3291 33 36.3397 32.726 36.297 32.4579C36.2543 32.1897 36.1591 31.9326 36.017 31.7012C35.8749 31.4699 35.6886 31.2688 35.4687 31.1094C35.2488 30.9501 34.9997 30.8357 34.7356 30.7727L31.7213 30.0493C30.9213 29.8578 30.078 29.9918 29.3769 30.422C28.6758 30.8523 28.1743 31.5434 27.9827 32.3433C27.7912 33.1433 27.9252 33.9866 28.3554 34.6877C28.7856 35.3889 29.4767 35.8904 30.2767 36.0819L33.291 36.8053C33.45 36.8434 33.613 36.8628 33.7766 36.8631C34.2176 36.8634 34.6468 36.7213 35.0005 36.4581C35.3543 36.1948 35.6136 35.8244 35.74 35.402L37.6093 35.9021L36.0634 37.665C35.6235 38.168 35.0812 38.5711 34.4727 38.8474C33.8643 39.1236 33.2038 39.2666 32.5356 39.2667H29.4645C28.7964 39.2663 28.136 39.1231 27.5276 38.8469C26.9192 38.5707 26.3768 38.1677 25.9367 37.665L21.6649 32.7825C21.0219 32.0496 20.6671 31.108 20.6667 30.133ZM34.2551 32.7835L33.7756 34.7923L30.7603 34.069C30.6268 34.039 30.5005 33.9827 30.3888 33.9035C30.2772 33.8243 30.1824 33.7237 30.11 33.6076C30.0375 33.4914 29.9889 33.362 29.9669 33.2269C29.9449 33.0918 29.95 32.9537 29.9818 32.8205C30.0136 32.6874 30.0716 32.5619 30.1523 32.4513C30.2331 32.3408 30.335 32.2474 30.4521 32.1766C30.5692 32.1057 30.6993 32.0589 30.8347 32.0387C30.9701 32.0186 31.1081 32.0255 31.2408 32.0592L34.2551 32.7835ZM24.3785 39.0259C25.0126 39.751 25.7946 40.332 26.6718 40.73C27.549 41.1279 28.5012 41.3337 29.4645 41.3333H32.5356C33.4989 41.3336 34.451 41.1278 35.3283 40.7299C36.2055 40.3319 36.9874 39.7509 37.6217 39.0259L37.7043 38.9319L39.1272 42.254C37.1667 44.9579 34.2693 46.8345 31.0001 47.5178C27.7308 46.8345 24.8334 44.9579 22.8729 42.254L24.2968 38.9319L24.3785 39.0259Z" fill="#101010" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_248_13453">
+                                            <rect width="62" height="62" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="why.support.title">24/7 Customer Support</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="why.support.desc">Get assistance whenever you need it with our dedicated support team available around the clock.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-box box-why-book-22 background-body @@classList">
+            <div class="container">
+                <div class="row mt-40">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why wow fadeIn" data-wow-delay="0.1s">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <path d="M49.313 41.2315L48.8132 39.4095H50.9677C51.6364 39.4095 52.1787 38.8673 52.1787 38.1985C52.1787 37.5297 51.6364 36.9876 50.9677 36.9876H48.1489L46.524 31.0641C45.7819 28.3587 43.2978 26.4692 40.483 26.4692H38.0675C41.1541 22.8713 44.2066 18.0707 44.2066 13.153C44.2066 5.90053 38.2821 0 31 0C23.7179 0 17.7934 5.90054 17.7934 13.1531C17.7934 18.0708 20.846 22.8715 23.9326 26.4693H21.5171C18.7023 26.4693 16.2182 28.3588 15.4761 31.0641L13.8512 36.9876H11.0322C10.3634 36.9876 9.82129 37.5297 9.82129 38.1985C9.82129 38.8673 10.3634 39.4095 11.0322 39.4095H13.1867L12.687 41.2315C10.357 42.1409 8.70117 44.4081 8.70117 47.0562V54.675C8.70117 55.3438 9.24331 55.886 9.91211 55.886H12.7843V60.7891C12.7843 61.4579 13.3265 62 13.9953 62H20.7225C21.3913 62 21.9334 61.4579 21.9334 60.7891V55.886H40.0668V60.7891C40.0668 61.4579 40.609 62 41.2777 62H48.0049C48.6736 62 49.2159 61.4579 49.2159 60.7891V55.886H52.0881C52.7568 55.886 53.299 55.3438 53.299 54.675V47.0562C53.2989 44.4081 51.6431 42.141 49.313 41.2315ZM31 2.42188C36.9467 2.42188 41.7847 7.23584 41.7847 13.1531C41.7847 20.4116 33.5408 27.8992 30.9995 30.0344C28.4568 27.9007 20.2152 20.4228 20.2152 13.1531C20.2152 7.23584 25.0533 2.42188 31 2.42188ZM17.8117 31.7049C18.2661 30.0482 19.7898 28.8913 21.5171 28.8913H26.1727C28.3142 31.0467 30.0748 32.412 30.2634 32.5565C30.4806 32.723 30.7404 32.8064 31 32.8064C31.2597 32.8064 31.5192 32.723 31.7366 32.5565C31.9253 32.412 33.6858 31.0467 35.8273 28.8913H40.4828C42.2101 28.8913 43.7338 30.0483 44.1883 31.7049L46.6846 40.8048H43.0379V40.7703C43.0379 37.2302 40.1578 34.3499 36.6175 34.3499H36.5943C33.0541 34.3499 30.1739 37.2302 30.1739 40.7703V40.8048H15.3153L17.8117 31.7049ZM40.616 40.8048H32.5959V40.7703C32.5959 38.5656 34.3895 36.7718 36.5944 36.7718H36.6176C38.8224 36.7718 40.6162 38.5655 40.6162 40.7703V40.8048H40.616ZM19.5115 59.5781H15.2061V55.886H19.5115V59.5781ZM46.7939 59.5781H42.4885V55.886H46.7939V59.5781ZM50.877 53.4641H11.1229V47.0562C11.1229 44.9445 12.8409 43.2266 14.9524 43.2266H47.0474C49.1591 43.2266 50.8769 44.9445 50.8769 47.0562V53.4641H50.877Z" fill="black" />
+                                    <path d="M38.1231 47.1348H23.8767C23.2079 47.1348 22.6658 47.6769 22.6658 48.3457C22.6658 49.0145 23.2079 49.5566 23.8767 49.5566H38.1231C38.7918 49.5566 39.3341 49.0145 39.3341 48.3457C39.3341 47.6769 38.7919 47.1348 38.1231 47.1348Z" fill="black" />
+                                    <path d="M45.6955 47.1172H44.2898C43.6211 47.1172 43.0789 47.6593 43.0789 48.3281C43.0789 48.9969 43.6211 49.5391 44.2898 49.5391H45.6955C46.3641 49.5391 46.9064 48.9969 46.9064 48.3281C46.9064 47.6593 46.3643 47.1172 45.6955 47.1172Z" fill="black" />
+                                    <path d="M17.7101 47.1172H16.3044C15.6356 47.1172 15.0935 47.6593 15.0935 48.3281C15.0935 48.9969 15.6356 49.5391 16.3044 49.5391H17.7101C18.3789 49.5391 18.921 48.9969 18.921 48.3281C18.921 47.6593 18.3789 47.1172 17.7101 47.1172Z" fill="black" />
+                                    <path d="M36.7687 13.1526C36.7687 9.98299 34.1809 7.4043 31 7.4043C27.8192 7.4043 25.2314 9.98299 25.2314 13.1526C25.2314 16.3222 27.8192 18.9009 31 18.9009C34.1809 18.9009 36.7687 16.3222 36.7687 13.1526ZM27.6533 13.1526C27.6533 11.3184 29.1546 9.82617 31 9.82617C32.8453 9.82617 34.3468 11.3184 34.3468 13.1526C34.3468 14.9868 32.8455 16.4791 31 16.4791C29.1545 16.4791 27.6533 14.9868 27.6533 13.1526Z" fill="black" />
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="how.step1.title">Alege o Locație</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="how.step1.desc">Selectează destinația ideală pentru a-ți începe călătoria cu ușurință</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why wow fadeIn" data-wow-delay="0.2s">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <path d="M46.6118 11.5695H41.3404V10.9738C41.3292 9.06305 39.7782 7.512 37.8674 7.52324H36.1253C35.0014 4.66841 31.7756 3.26347 28.9208 4.38742C27.4822 4.9494 26.347 6.08458 25.785 7.52324H24.0766C22.1884 7.52324 20.6598 9.05181 20.6598 10.94C20.6598 10.9513 20.6598 10.9625 20.6598 10.985V11.5807H15.3885C12.8259 11.5807 10.769 13.705 10.769 16.2676V53.4028C10.769 55.9317 12.8146 57.9885 15.3548 57.9998C15.366 57.9998 15.3772 57.9998 15.3997 57.9998H46.6118C49.1406 58.0222 51.22 55.9879 51.2312 53.4478C51.2312 53.4365 51.2312 53.4253 51.2312 53.4028V16.2563C51.2312 13.6937 49.1631 11.5695 46.6118 11.5695ZM22.9077 10.9738C22.8852 10.3331 23.391 9.79361 24.0316 9.77114C24.0429 9.77114 24.0654 9.77114 24.0766 9.77114H26.5942C27.1225 9.77114 27.5721 9.40023 27.6845 8.89446C28.0554 7.30969 29.3592 6.24194 30.9327 6.24194C32.495 6.24194 33.8437 7.34341 34.1697 8.87198C34.282 9.40023 34.7316 9.77114 35.2711 9.77114H37.8562C38.5306 9.7599 39.0813 10.2994 39.0813 10.9738V15.3909H22.9077V10.9738ZM48.9833 53.3916C48.9833 54.6841 47.938 55.7294 46.6567 55.7406C46.6455 55.7406 46.623 55.7406 46.6118 55.7406H15.3885C14.0959 55.7631 13.0282 54.7291 13.0169 53.4365C13.0169 53.4253 13.0169 53.4028 13.0169 53.3916V16.2563C13.0169 14.9301 14.0735 13.8174 15.3885 13.8174H20.6598V16.5485C20.6373 17.1218 21.0869 17.6163 21.6713 17.6388C21.6938 17.6388 21.7163 17.6388 21.7275 17.6388H40.2165C40.8234 17.6613 41.3292 17.178 41.3404 16.571C41.3404 16.5598 41.3404 16.5598 41.3404 16.5485V13.8174H46.6118C47.938 13.8174 48.9833 14.9413 48.9833 16.2563V53.3916Z" fill="black" />
+                                    <path d="M27.9652 41.6914H18.2992C17.6811 41.6914 17.1753 42.1972 17.1753 42.8154V52.1441C17.1753 52.7623 17.6811 53.2681 18.2992 53.2681H27.9652C28.5834 53.2681 29.0891 52.7623 29.0891 52.1441V42.8154C29.0891 42.1972 28.5834 41.6914 27.9652 41.6914ZM26.8412 51.0202H19.4232V43.9393H26.8412V51.0202Z" fill="black" />
+                                    <path d="M25.5826 45.389C25.1218 44.9956 24.425 45.0406 24.0203 45.4902L22.6154 47.0862L22.1321 46.704C21.6488 46.3106 20.9407 46.3893 20.5473 46.8726C20.1764 47.3671 20.2551 48.0752 20.7497 48.4686L22.0759 49.5251C22.548 49.896 23.2223 49.8398 23.627 49.3903L25.7175 46.9738C26.1221 46.5017 26.0547 45.7936 25.5826 45.389Z" fill="black" />
+                                    <path d="M38.9911 43.9395H32.0114C31.3932 43.9395 30.8875 44.4452 30.8875 45.0634C30.8875 45.6816 31.382 46.1874 32.0114 46.1874H38.9911C39.6093 46.1874 40.1151 45.6816 40.1151 45.0634C40.1151 44.4452 39.6093 43.9395 38.9911 43.9395Z" fill="black" />
+                                    <path d="M43.678 48.6602H32.0114C31.3932 48.6602 30.8875 49.1659 30.8875 49.7841C30.8875 50.4023 31.3932 50.9081 32.0114 50.9081H43.6892C44.3074 50.9081 44.8132 50.4023 44.8132 49.7841C44.8132 49.1659 44.3074 48.6602 43.678 48.6602Z" fill="black" />
+                                    <path d="M45.6112 28.0133L43.0262 26.8444L40.7221 23.1803C39.9465 21.9552 38.5978 21.2134 37.1479 21.2358H28.2125C26.8975 21.2246 25.6612 21.8315 24.8632 22.8656L21.8959 26.7544L16.9056 28.1144C15.4108 28.519 14.3655 29.879 14.3655 31.4188V33.3745C14.3655 35.274 15.9165 36.8587 17.816 36.8587H17.9284C18.5016 38.4323 20.0864 39.7136 21.9409 39.7136C23.7954 39.7136 25.3802 38.4323 25.9534 36.8587H35.6531C36.2263 38.4323 37.811 39.7136 39.6656 39.7136C41.5201 39.7136 43.1048 38.4323 43.6781 36.8587H44.1838C46.0833 36.8587 47.6344 35.274 47.6344 33.3745V31.1491C47.6344 29.8003 46.8363 28.5752 45.6112 28.0133ZM21.9409 37.4207C20.8394 37.4207 19.9403 36.5215 19.9403 35.4201C19.9403 34.3186 20.8394 33.4195 21.9409 33.4195C23.0424 33.4195 23.9415 34.3186 23.9415 35.4201C23.9415 36.5328 23.0424 37.4207 21.9409 37.4207ZM39.6768 37.4207C38.5753 37.4207 37.6762 36.5215 37.6762 35.4201C37.6762 34.3186 38.5753 33.4195 39.6768 33.4195C40.7783 33.4195 41.6774 34.3186 41.6774 35.4201C41.6662 36.5328 40.7783 37.4207 39.6768 37.4207ZM44.1838 34.6108H43.8354C43.442 32.5877 41.7224 31.2165 39.6768 31.2165C37.6312 31.2165 35.9003 32.5877 35.507 34.6108H26.0995C25.7286 32.6102 23.964 31.1716 21.9409 31.194C19.929 31.194 18.1869 32.599 17.771 34.5771C17.1304 34.5546 16.6134 34.0264 16.6134 33.3745V31.4188C16.6134 30.8793 16.973 30.4073 17.4901 30.2724L22.8513 28.8113C23.0873 28.7438 23.3009 28.609 23.447 28.4066L26.6502 24.2256C27.0211 23.7423 27.6056 23.4725 28.2125 23.4837H37.1479C37.8223 23.4725 38.4517 23.8097 38.8114 24.3829L41.2953 28.3392C41.4077 28.519 41.5875 28.6651 41.7786 28.7551L44.6671 30.0588C45.0942 30.2499 45.364 30.677 45.364 31.1378L45.3752 33.3745C45.3752 34.0376 44.8582 34.5884 44.1838 34.6108Z" fill="black" />
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="how.step2.title">Alege-ți Vehiculul</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="how.step2.desc">Răsfoiește flota noastră și găsește mașina perfectă pentru nevoile tale</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why wow fadeIn" data-wow-delay="0.3s">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <g clip-path="url(#clip0_39_1134)">
+                                        <path d="M61.7728 34.1089C60.9303 30.457 57.672 27.5937 54.0977 26.7398L47.0384 25.0469L40.7293 18.6167C38.0943 15.9329 34.4262 14.3936 30.6658 14.3936H7.09004C6.62395 14.3936 6.19915 14.6611 5.99777 15.0816C5.79652 15.502 5.85428 16.0006 6.1466 16.3637L7.58737 18.154C7.68812 18.2791 7.67202 18.4595 7.55068 18.5649L1.33106 23.9661C1.06623 24.1961 0.914137 24.5297 0.914137 24.8805V31.5045L0.141195 32.9615C0.0484375 33.1361 0 33.3309 0 33.5288V38.3386C0 38.5779 0.0708399 38.8116 0.203559 39.0107L2.03329 41.7535C2.25791 42.0901 2.63597 42.2923 3.04066 42.2923H5.14879C5.71817 45.3131 8.37484 47.6061 11.5586 47.6061C14.7424 47.6061 17.399 45.3131 17.9684 42.2923H24.1976C24.8664 42.2923 25.4085 41.7501 25.4085 41.0814C25.4085 40.4127 24.8664 39.8705 24.1976 39.8705H17.9702C17.3966 36.8276 14.6465 34.5576 11.5585 34.5576C8.46724 34.5576 5.71974 36.8311 5.14648 39.8705H3.68852L2.42188 37.9717V33.8301L3.19494 32.3731C3.2877 32.1983 3.33613 32.0034 3.33613 31.8055V25.4325L9.13882 20.3933C10.1909 19.4796 10.3775 17.9472 9.60746 16.8153H30.6658C33.7806 16.8153 36.8187 18.0902 39.0009 20.3131L45.5533 26.9913C45.7124 27.1536 45.9142 27.2676 46.1353 27.3208L53.534 29.0951C53.9923 29.2045 54.4353 29.354 54.8626 29.5377L53.9921 30.0972C53.1414 30.643 52.6334 31.5735 52.6334 32.5866C52.6334 34.1977 53.9801 35.545 55.5917 35.545H59.5545C59.5686 35.711 59.5781 35.8774 59.5781 36.0438V38.0168L58.5183 39.8705H53.4956C52.9232 36.83 50.1752 34.5576 47.0844 34.5576C43.9932 34.5576 41.2479 36.8315 40.6732 39.8705H34.8528C34.1842 39.8705 33.6419 40.4127 33.6419 41.0814C33.6419 41.7501 34.1842 42.2923 34.8528 42.2923H40.6748C41.2442 45.3131 43.9008 47.6061 47.0845 47.6061C50.2682 47.6061 52.925 45.3131 53.4944 42.2923H59.2211C59.6556 42.2923 60.0567 42.0596 60.2725 41.6825L61.8406 38.9397C61.9453 38.7566 62.0002 38.5495 62.0002 38.3386V36.0439C62 35.3908 61.9229 34.7367 61.7728 34.1089ZM11.5586 45.1842C9.29661 45.1842 7.45635 43.3439 7.45635 41.0818C7.45635 38.8505 9.32603 36.98 11.5585 36.98C13.7908 36.98 15.6609 38.8477 15.6609 41.0818C15.6609 43.3438 13.8206 45.1842 11.5586 45.1842ZM47.0843 45.1842C44.8232 45.1842 42.9837 43.3454 42.9821 41.0847C42.9821 41.0836 42.9822 41.0825 42.9822 41.0814C42.9822 38.8199 44.8226 36.98 47.0849 36.98C49.3464 36.98 51.1863 38.8199 51.1863 41.0814C51.1863 41.083 51.1866 41.0846 51.1866 41.0863C51.1841 43.3462 49.345 45.1842 47.0843 45.1842ZM55.2112 32.964C54.977 32.7305 55.0196 32.3156 55.3007 32.1352L57.1065 30.9744C57.7926 31.5885 58.3815 32.3123 58.8197 33.1231H55.5917C55.3992 33.1231 55.2718 33.0244 55.2112 32.964Z" fill="black" />
+                                        <path d="M39.5949 28.7904C40.9991 28.7904 41.775 27.0742 40.8475 26.0177L37.6949 22.4264C35.6852 20.1372 32.7855 18.8242 29.7392 18.8242H15.3369C14.6672 18.8242 14.028 19.0748 13.5372 19.5297L9.22746 23.5225C8.74151 23.9729 8.56738 24.6683 8.78389 25.2944C9.00029 25.9201 9.56652 26.3592 10.2265 26.4129C15.8664 26.8731 34.6425 28.4038 39.4603 28.7851C39.5053 28.7885 39.5501 28.7904 39.5949 28.7904ZM15.1832 21.3062C15.2251 21.2674 15.2796 21.246 15.3369 21.246H24.9858V25.1852C20.1221 24.7897 15.2354 24.3914 12.1267 24.1379L15.1832 21.3062ZM27.4075 25.3819V21.246H29.7389C32.0883 21.246 34.3247 22.2586 35.8746 24.024L37.8052 26.2233C35.2926 26.0217 31.4654 25.7115 27.4075 25.3819Z" fill="black" />
+                                        <path d="M26.1965 33.3613H28.9048C29.5736 33.3613 30.1157 32.8191 30.1157 32.1504C30.1157 31.4817 29.5736 30.9395 28.9048 30.9395H26.1965C25.5277 30.9395 24.9856 31.4817 24.9856 32.1504C24.9856 32.8191 25.5279 33.3613 26.1965 33.3613Z" fill="black" />
+                                        <path d="M9.92456 29.2559C9.25576 29.2559 8.71362 29.7981 8.71362 30.4668C8.71362 31.1355 9.25576 31.6777 9.92456 31.6777H12.6329C13.3017 31.6777 13.8439 31.1355 13.8439 30.4668C13.8439 29.7981 13.3017 29.2559 12.6329 29.2559H9.92456Z" fill="black" />
+                                        <path d="M30.764 40.6185C30.5654 40.1422 30.072 39.8358 29.5565 39.8743C29.0507 39.9123 28.6156 40.2713 28.4794 40.7592C28.1903 41.7953 29.3509 42.6653 30.2677 42.12C30.7784 41.8162 30.9881 41.1658 30.764 40.6185Z" fill="black" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_39_1134">
+                                            <rect width="62" height="62" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="how.step3.title">Verificare</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="how.step3.desc">Revizuiește informațiile și confirmă rezervarea ta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card-why wow fadeIn" data-wow-delay="0.4s">
+                            <div class="card-image">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
+                                    <path d="M32.464 33.8438C32.2496 33.8463 32.0407 33.9122 31.8636 34.0331C31.6866 34.1541 31.5493 34.3247 31.469 34.5236C31.3887 34.7224 31.369 34.9405 31.4124 35.1505C31.4558 35.3605 31.5603 35.553 31.7128 35.7037C31.8653 35.8544 32.059 35.9566 32.2695 35.9975C32.48 36.0384 32.6979 36.0162 32.8957 35.9335C33.0936 35.8509 33.2626 35.7115 33.3814 35.5331C33.5003 35.3546 33.5637 35.145 33.5637 34.9305C33.5616 34.6407 33.4447 34.3635 33.2385 34.1598C33.0324 33.956 32.7538 33.8424 32.464 33.8438Z" fill="black" />
+                                    <path d="M28.9354 33.8438C28.721 33.8463 28.5121 33.9122 28.3351 34.0331C28.158 34.1541 28.0207 34.3247 27.9404 34.5236C27.8601 34.7224 27.8404 34.9405 27.8838 35.1505C27.9272 35.3605 28.0317 35.553 28.1842 35.7037C28.3368 35.8544 28.5304 35.9566 28.7409 35.9975C28.9514 36.0384 29.1693 36.0162 29.3672 35.9335C29.565 35.8509 29.734 35.7115 29.8529 35.5331C29.9717 35.3546 30.0351 35.145 30.0351 34.9305C30.0331 34.6407 29.9161 34.3635 29.71 34.1598C29.5038 33.956 29.2253 33.8424 28.9354 33.8438Z" fill="black" />
+                                    <path d="M58.125 32.6378C58.1244 32.0859 57.9049 31.5569 57.5147 31.1667C57.1245 30.7765 56.5955 30.5571 56.0436 30.5565H53.8621C53.1374 30.5569 52.4246 30.7402 51.7896 31.0894C51.1546 31.4385 50.618 31.9423 50.2295 32.554L46.1041 25.6849C45.678 25.1471 45.1355 24.713 44.5173 24.4153C43.8992 24.1175 43.2215 23.9638 42.5354 23.9658H19.7078C19.0053 23.9642 18.3113 24.1199 17.6769 24.4217C17.0425 24.7234 16.4838 25.1635 16.0418 25.7095L11.7989 32.5641C11.413 31.9402 10.8742 31.4251 10.2335 31.0678C9.59286 30.7105 8.87153 30.5227 8.13793 30.5223H5.95636C5.40453 30.5229 4.87549 30.7424 4.4853 31.1326C4.0951 31.5228 3.87562 32.0519 3.875 32.6037C3.876 33.4774 4.22353 34.3151 4.84137 34.9329C5.4592 35.5507 6.29687 35.8983 7.17061 35.8993H8.73214L7.00653 37.2912C6.68453 37.5497 6.4248 37.8772 6.24657 38.2496C6.06834 38.622 5.97619 39.0298 5.97693 39.4427V49.6855C5.97793 50.1483 6.09481 50.6035 6.31692 51.0096C6.53903 51.4156 6.85929 51.7596 7.24848 52.0101V54.8404C7.25003 55.5329 7.52624 56.1966 8.01651 56.6858C8.50678 57.175 9.17107 57.4497 9.86364 57.4497H13.0885C13.781 57.4497 14.4453 57.175 14.9356 56.6858C15.4259 56.1966 15.7021 55.533 15.7037 54.8404V53.8759H46.2963V54.8404C46.2979 55.533 46.5741 56.1966 47.0644 56.6858C47.5547 57.175 48.219 57.4497 48.9115 57.4497H52.1364C52.8289 57.4497 53.4932 57.175 53.9835 56.6858C54.4738 56.1966 54.75 55.5329 54.7515 54.8404V52.0122C55.1403 51.7651 55.4605 51.424 55.6828 51.0205C55.905 50.6171 56.022 50.1641 56.0231 49.7035V39.4648C56.0238 39.045 55.9301 38.6305 55.7489 38.2518C55.5677 37.8732 55.3037 37.5402 54.9763 37.2774L53.3102 35.9334H54.8294C55.7032 35.9324 56.5408 35.5849 57.1587 34.967C57.7765 34.3492 58.124 33.5115 58.125 32.6378ZM53.8621 32.494H56.0436C56.0818 32.494 56.1183 32.5091 56.1453 32.5361C56.1723 32.5631 56.1875 32.5996 56.1875 32.6378C56.1871 32.9978 56.0439 33.3431 55.7893 33.5977C55.5347 33.8523 55.1895 33.9955 54.8294 33.9959H51.6571C51.8317 33.5534 52.1354 33.1736 52.5286 32.9058C52.9217 32.638 53.3863 32.4945 53.8621 32.494ZM5.8125 32.6037C5.81253 32.5656 5.8277 32.529 5.85467 32.502C5.88164 32.475 5.91821 32.4598 5.95636 32.4598H8.13794C8.61366 32.4603 9.07825 32.6038 9.47142 32.8716C9.8646 33.1395 10.1682 33.5193 10.3429 33.9618H7.17061C6.81055 33.9613 6.46535 33.8181 6.21075 33.5635C5.95614 33.309 5.81292 32.9638 5.8125 32.6037ZM13.7662 54.8404C13.7652 55.0193 13.6933 55.1905 13.5662 55.3164C13.4392 55.4423 13.2674 55.5127 13.0885 55.5122H9.86364C9.68475 55.5127 9.51295 55.4423 9.38591 55.3164C9.25887 55.1904 9.18697 55.0193 9.18598 54.8404V52.9263L11.0736 53.7884C11.1999 53.8461 11.3372 53.8759 11.4761 53.8759H13.7662V54.8404ZM20.1191 50.1847H41.2846C41.693 50.828 42.1809 51.4173 42.7369 51.9384H18.7011C19.2404 51.411 19.7163 50.8224 20.1191 50.1847ZM21.1329 48.2472C21.4001 47.6177 21.6254 46.9713 21.8073 46.3121H39.6519C39.816 46.9715 40.0273 47.6181 40.284 48.2472H21.1329ZM52.1364 55.5122H48.9115C48.7326 55.5127 48.5608 55.4423 48.4338 55.3164C48.3067 55.1905 48.2348 55.0193 48.2338 54.8404V53.8759H50.5239C50.6628 53.8759 50.8001 53.8461 50.9264 53.7884L52.814 52.9262V54.8404C52.813 55.0193 52.7411 55.1905 52.6141 55.3164C52.4871 55.4423 52.3152 55.5127 52.1364 55.5122ZM54.0856 39.4648V49.7035C54.085 49.8566 54.0406 50.0064 53.9575 50.1351C53.8744 50.2638 53.7562 50.366 53.6169 50.4296L50.3132 51.9384H47.309C43.8841 51.6866 41.8723 48.2507 41.3956 45.1995C41.3611 44.9701 41.2454 44.7606 41.0696 44.6093C40.8938 44.4579 40.6696 44.3746 40.4376 44.3746H21.0444C20.819 44.3749 20.6007 44.4537 20.4271 44.5974C20.2534 44.7411 20.1352 44.9407 20.0928 45.1621C20.081 45.2233 18.875 51.2547 14.6546 51.9384H11.6868L8.39952 50.437C8.25527 50.3712 8.13291 50.2655 8.04694 50.1323C7.96096 49.9991 7.91498 49.844 7.91443 49.6855V39.4427C7.91429 39.3192 7.94195 39.1972 7.99535 39.0859C8.04875 38.9745 8.12652 38.8766 8.2229 38.7994L11.8181 35.8993H25.6343C25.8912 35.8993 26.1376 35.7972 26.3193 35.6155C26.501 35.4338 26.603 35.1874 26.603 34.9305C26.603 34.6736 26.501 34.4272 26.3193 34.2455C26.1376 34.0638 25.8912 33.9618 25.6343 33.9618H13.213L17.5828 26.8863C17.8439 26.5774 18.1694 26.3293 18.5364 26.1595C18.9035 25.9897 19.3033 25.9023 19.7078 25.9033H42.5354C42.92 25.9021 43.3001 25.9859 43.6485 26.1487C43.9969 26.3116 44.305 26.5495 44.5507 26.8454L48.8142 33.9618H35.6858C35.4289 33.9618 35.1825 34.0638 35.0008 34.2455C34.8191 34.4272 34.7171 34.6736 34.7171 34.9305C34.7171 35.1874 34.8191 35.4338 35.0008 35.6155C35.1825 35.7972 35.4289 35.8993 35.6858 35.8993H50.1819L53.7598 38.7854C53.8616 38.867 53.9437 38.9704 54.0001 39.088C54.0565 39.2056 54.0857 39.3344 54.0856 39.4648Z" fill="black" />
+                                    <path d="M17.8423 41.9642C17.7813 41.6029 17.6088 41.2697 17.3489 41.0113C17.089 40.7528 16.7549 40.5822 16.3932 40.5232L12.0916 39.821C11.8221 39.7768 11.546 39.7961 11.2852 39.8773C11.0245 39.9586 10.7863 40.0995 10.5895 40.2889C10.3928 40.4784 10.243 40.7111 10.1519 40.9685C10.0609 41.226 10.0312 41.5012 10.0651 41.7722L10.3304 43.8996C10.3789 44.2763 10.5475 44.6272 10.8112 44.9005C11.0749 45.1738 11.4197 45.3547 11.7944 45.4166L16.1915 46.1247C16.4671 46.1688 16.7493 46.1467 17.0146 46.0602C17.2799 45.9736 17.5208 45.8252 17.7174 45.627C17.914 45.4289 18.0606 45.1869 18.145 44.9209C18.2295 44.6549 18.2494 44.3726 18.2031 44.0973L17.8423 41.9642ZM12.2363 43.5252L12.0177 41.7721L15.9535 42.4146L16.2507 44.1717L12.2363 43.5252Z" fill="black" />
+                                    <path d="M50.185 39.821L45.8834 40.5232C45.5217 40.5822 45.1876 40.7529 44.9277 41.0113C44.6679 41.2696 44.4953 41.6028 44.4342 41.9641L44.0734 44.0973C44.0271 44.3726 44.0471 44.6548 44.1315 44.9208C44.216 45.1868 44.3626 45.4289 44.5591 45.627C44.7557 45.8251 44.9966 45.9736 45.2619 46.0601C45.5272 46.1467 45.8093 46.1688 46.0849 46.1247L50.4821 45.4166C50.8568 45.3548 51.2016 45.1738 51.4654 44.9006C51.7291 44.6273 51.8977 44.2763 51.9461 43.8996L52.2114 41.7722C52.2454 41.5012 52.2156 41.226 52.1246 40.9685C52.0336 40.7111 51.8838 40.4783 51.687 40.2889C51.4903 40.0995 51.2521 39.9585 50.9913 39.8773C50.7306 39.7961 50.4545 39.7768 50.185 39.821ZM50.0403 43.5252L46.0258 44.1717L46.323 42.4146L50.2589 41.7721L50.0403 43.5252Z" fill="black" />
+                                    <path d="M13.4956 20.722H24.3199C24.6502 20.722 24.947 20.7115 25.2269 20.3949C26.3916 19.0774 27.1793 17.7933 27.6897 16.5703H34.9959C35.1578 16.5703 35.3172 16.5297 35.4594 16.4522C35.6016 16.3747 35.7221 16.2629 35.8099 16.1268L36.5484 14.9826L37.429 16.1765C37.519 16.2986 37.6365 16.3978 37.7719 16.4662C37.9073 16.5346 38.0569 16.5702 38.2086 16.5703H40.2845C40.4468 16.5703 40.6065 16.5295 40.749 16.4517C40.8914 16.3738 41.012 16.2615 41.0997 16.1249L41.9107 14.8619L43.1137 16.2389C43.2046 16.343 43.3168 16.4264 43.4426 16.4835C43.5684 16.5407 43.705 16.5702 43.8432 16.5703H46.8582C46.9868 16.5703 47.114 16.5447 47.2326 16.495C47.3512 16.4453 47.4587 16.3724 47.5489 16.2808L50.5144 13.2658C50.6905 13.0867 50.7902 12.8463 50.7924 12.5951C50.7947 12.3439 50.6993 12.1017 50.5264 11.9195L47.7585 9.00332C47.6679 8.90798 47.559 8.83206 47.4382 8.78017C47.3174 8.72829 47.1873 8.70153 47.0558 8.70153H27.6457C27.0186 7.23845 26.1097 5.91308 24.9707 4.80099C24.7913 4.64135 24.5601 4.55211 24.3199 4.5498H13.4956C13.2387 4.54981 12.9923 4.65187 12.8106 4.83355C12.6289 5.01522 12.5269 5.26163 12.5269 5.51855V19.7532C12.5269 20.0102 12.6289 20.2566 12.8106 20.4382C12.9923 20.6199 13.2387 20.722 13.4956 20.722ZM48.4767 12.5745L46.4522 14.6328H44.2832L42.5215 12.6163C42.4226 12.5032 42.2988 12.4147 42.1598 12.3577C42.0208 12.3007 41.8705 12.2768 41.7207 12.2878C41.5709 12.2989 41.4257 12.3446 41.2966 12.4214C41.1675 12.4982 41.058 12.6039 40.9768 12.7303L39.7553 14.6328H38.6978L37.2749 12.7034C37.1818 12.5772 37.0594 12.4755 36.9184 12.407C36.7773 12.3385 36.6217 12.3053 36.465 12.3102C36.3083 12.3151 36.1551 12.3579 36.0186 12.4351C35.882 12.5122 35.7663 12.6213 35.6812 12.7531L34.4681 14.6328H28.2911C28.5614 13.3144 28.5532 11.954 28.2669 10.639H46.6397L48.4767 12.5745ZM24.0564 18.7845H18.5507V6.4873H23.9217C25.0428 7.6629 29.1451 12.6898 24.0564 18.7845ZM14.4644 6.4873H16.6132V18.7845H14.4644V6.4873Z" fill="black" />
+                                </svg>
+                            </div>
+                            <div class="card-info">
+                                <h6 class="text-xl-bold neutral-1000 text-center" data-lang-key="how.step4.title">Începe-ți Călătoria</h6>
+                                <p class="text-md-medium neutral-500" data-lang-key="how.step4.desc">Pornește în aventură cu încredere și ușurință</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- team 1 -->
+        <section class="section-team-1 py-96 background-body border-top border-bottom" style="display: none;">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-6 col-lg-7 col-md-9 col-sm-11">
+                        <div class="text-center mb-5">
+                            <span class="text-xl-medium neutral-500">Awesome Teams</span>
+                            <h3 class="section-title neutral-1000">Meet Our Agents</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-50">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card-news background-card hover-up shadow-2 mb-4 mb-lg-0">
+                            <div class="card-image">
+                                <a href="dealer-details.html">
+                                    <img src="assets/imgs/team/team-1/portrait-1.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="card-info p-4">
+                                <div class="card-title">
+                                    <a class="text-xl-bold neutral-1000" href="dealer-details.html">
+                                        <h6>Cody Fisher</h6>
+                                    </a>
+                                    <span class="text-sm-medium neutral-500">CFO (Chief Financial Officer)</span>
+                                </div>
+                                <div class="card-program">
+                                    <div class="endtime">
+                                        <div class="card-author d-flex align-items-center gap-2">
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-1.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-2.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-3.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-4.svg" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <a href="dealer-details.html" class="rounded-circle background-100 icon-shape icon icon-sm hover-up border icon-shape-arrow">
+                                            <img class="m-0" src="assets/imgs/team/team-1/arrow-up-right.svg" alt="Carento" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card-news background-card hover-up shadow-2 mb-4 mb-lg-0">
+                            <div class="card-image">
+                                <a href="dealer-details.html">
+                                    <img src="assets/imgs/team/team-1/portrait-2.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="card-info p-4">
+                                <div class="card-title">
+                                    <a class="text-xl-bold neutral-1000" href="dealer-details.html">
+                                        <h6>Darrell Steward</h6>
+                                    </a>
+                                    <span class="text-sm-medium neutral-500">CEO (Chief Financial Officer)</span>
+                                </div>
+                                <div class="card-program">
+                                    <div class="endtime">
+                                        <div class="card-author d-flex align-items-center gap-2">
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-1.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-2.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-3.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-4.svg" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <a href="dealer-details.html" class="rounded-circle background-100 icon-shape icon icon-sm hover-up border icon-shape-arrow">
+                                            <img class="m-0" src="assets/imgs/team/team-1/arrow-up-right.svg" alt="Carento" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card-news background-card hover-up shadow-2 mb-4 mb-lg-0">
+                            <div class="card-image">
+                                <a href="dealer-details.html">
+                                    <img src="assets/imgs/team/team-1/portrait-3.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="card-info p-4">
+                                <div class="card-title">
+                                    <a class="text-xl-bold neutral-1000" href="dealer-details.html">
+                                        <h6>Ronald Richards</h6>
+                                    </a>
+                                    <span class="text-sm-medium neutral-500">COO (Chief Financial Officer)</span>
+                                </div>
+                                <div class="card-program">
+                                    <div class="endtime">
+                                        <div class="card-author d-flex align-items-center gap-2">
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-1.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-2.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-3.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-4.svg" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <a href="dealer-details.html" class="rounded-circle background-100 icon-shape icon icon-sm hover-up border icon-shape-arrow">
+                                            <img class="m-0" src="assets/imgs/team/team-1/arrow-up-right.svg" alt="Carento" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card-news background-card hover-up shadow-2 mb-4 mb-lg-0">
+                            <div class="card-image">
+                                <a href="dealer-details.html">
+                                    <img src="assets/imgs/team/team-1/portrait-4.png" alt="Carento" />
+                                </a>
+                            </div>
+                            <div class="card-info p-4">
+                                <div class="card-title">
+                                    <a class="text-xl-bold neutral-1000" href="dealer-details.html">
+                                        <h6>Jerome Bell</h6>
+                                    </a>
+                                    <span class="text-sm-medium neutral-500">CMO (Chief Financial Officer)</span>
+                                </div>
+                                <div class="card-program">
+                                    <div class="endtime">
+                                        <div class="card-author d-flex align-items-center gap-2">
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-1.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-2.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-3.svg" alt="Carento" />
+                                            </a>
+                                            <a href="#" class="rounded-circle background-100 icon-shape icon icon-sm hover-up">
+                                                <img class="m-0" src="assets/imgs/team/team-1/icon-4.svg" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <a href="dealer-details.html" class="rounded-circle background-100 icon-shape icon icon-sm hover-up border icon-shape-arrow">
+                                            <img class="m-0" src="assets/imgs/team/team-1/arrow-up-right.svg" alt="Carento" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- cta 8-->
+        <section class="section-cta-7 background-body pt-96 pb-96">
+            <div class="box-cta-6">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <a class="btn btn-signin bg-2 text-dark mb-3" href="#" data-lang-key="mission.button">Misiunea noastră</a>
+                            <h4 class="mb-1 neutral-1000" data-lang-key="mission.title">Închiriere simplă, rapidă și de încredere. <br />La CarsLine.md, ai transparență totală și rezervări fără complicații.</h4>
+                           <!-- <p class="text-lg-medium neutral-500 mb-4">Our mission is to make car rental easy, accessible, and affordable for everyone. We believe that renting a car should be a hassle-free experience, and we're dedicated to ensuring that every customer finds the perfect vehicle for their journey.</p>-->
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-lg-medium neutral-500 mt-1" data-lang-key="mission.points" style="margin-bottom: 26px !important;"><strong>Puncte forte:</strong></p>
+                                    <ul class="list-ticks-green list-ticks-green-2 mb-1">
+                                        <li class="neutral-1000 pe-0" data-lang-key="mission.item1">Proces rapid și contract clar</li>
+                                        <li class="neutral-1000 pe-0" data-lang-key="mission.item2">Mașini verificate și pregătite pentru drum</li>
+                                        <li class="neutral-1000 pe-0" data-lang-key="mission.item3">Prețuri corecte și echipă profesionistă</li>
+                                    </ul>
+                                    <p class="text-lg-medium neutral-500 mt-1" data-lang-key="mission.footer"><strong>CarsLine.md — închiriezi ușor, conduci cu încredere.</strong></p>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary mt-2" href="#" style="display:none;">
+                                Get Started Now
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 15L15 8L8 1M15 8L1 8" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 offset-lg-1 position-relative z-1 mt-lg-0 mt-4">
+                            <div class="d-flex flex-column gap-4">
+                                <div class="d-flex gap-4">
+                                    <div class="position-relative">
+                                        <img class="bdrd8 w-100" src="assets/imgs/cta/cta-8/img-1.png" alt="Carento" />
+                                    </div>
+                                    <div class="mt-auto">
+                                        <img class="bdrd8 w-100" src="assets/imgs/cta/cta-8/img-2.png" alt="Carento" />
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-4">
+                                    <div class="position-relative">
+                                        <img class="bdrd8 w-100" src="assets/imgs/cta/cta-8/img-3.png" alt="Carento" />
+                                    </div>
+                                    <div class="position-relative">
+                                        <img class="bdrd8 w-100" src="assets/imgs/cta/cta-8/img-4.png" alt="Carento" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-overlay position-absolute bottom-0 end-0 h-75 background-brand-2 opacity-25 z-0 rounded-start-pill"></div>
+            </div>
+        </section>
+
+        <!-- Static 1 -->
+        <section class="section-static-1 background-body background-2 pt-80 pb-80">
+            <div class="container">
+                <div class="row">
+                    <div class="">
+                        <div class="wow fadeIn">
+                            <div class="d-flex align-items-center justify-content-around flex-nowrap" style="gap: 1rem;">
+                                <div class="mb-4 mb-lg-0 d-block px-lg-5 px-3">
+                                    <div class="d-flex justify-content-center justify-content-md-start">
+                                        <h3 class="count neutral-1000"><span class="odometer" data-count="7"></span></h3>
+                                        <h3 class="neutral-1000">+</h3>
+                                    </div>
+                                    <div class="text-md-start text-center">
+                                        <p class="text-lg-bold neutral-1000" data-lang-key="stats.branches.line1" style="white-space: nowrap !important;">Filiale în Moldova</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4 mb-lg-0 d-block px-lg-5 px-3">
+                                    <div class="d-flex justify-content-center justify-content-md-start">
+                                        <h3 class="count neutral-1000" style="white-space: nowrap !important;"><span class="odometer" data-count="300"></span>+</h3>
+                                    </div>
+                                    <div class="text-md-start text-center">
+                                        <p class="text-lg-bold neutral-1000" data-lang-key="stats.fleet.line1" style="white-space: nowrap !important;">Flotă de mașini</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4 mb-lg-0 d-block px-lg-5 px-3">
+                                    <div class="d-flex justify-content-center justify-content-md-start">
+                                        <h3 class="count neutral-1000" style="white-space: nowrap !important;"><span class="odometer" data-count="13"></span>+</h3>
+                                    </div>
+                                    <div class="text-md-start text-center">
+                                        <p class="text-lg-bold neutral-1000" data-lang-key="stats.experience.line1" style="white-space: nowrap !important;">Ani experiență</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4 mb-lg-0 d-block px-lg-5 px-3">
+                                    <div class="d-flex justify-content-center justify-content-md-start align-items-center flex-wrap" style="gap: 0.5rem;">
+                                        <h3 class="count neutral-1000 mb-0" style="white-space: nowrap !important;"><span class="odometer" data-count="51"></span>+</h3>
+                                        <p class="text-lg-bold neutral-1000 mb-0" data-lang-key="stats.employees" style="white-space: nowrap !important;">Angajați</p>
+                                    </div>
+                                </div>
+                                <div class="mb-4 mb-lg-0 d-block px-lg-5 px-3">
+                                    <div class="d-flex justify-content-center justify-content-md-start align-items-center flex-wrap" style="gap: 0.5rem;">
+                                        <h3 class="count neutral-1000 mb-0" style="white-space: nowrap !important;">1 000 000 KM</h3>
+                                        <p class="text-lg-bold neutral-1000 mb-0" data-lang-key="stats.km.line1" style="white-space: nowrap !important;">Parcurși de clienții noștri</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- cta 9-->
+        <section class="section-cta-7 background-body py-96">
+            <div class="box-cta-6">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="card-image d-inline-block position-relative mb-100">
+                                <img class="rounded-12" src="assets/imgs/cta/cta-9/img-1.png" alt="Carento" />
+                                <a class="btn btn-play popup-youtube position-absolute top-50 start-50 translate-middle" href="https://www.youtube.com/watch?v=AOg61RB75Ho" style="display: none;"></a>
+                                <img class="position-absolute top-100 start-100 translate-middle rounded-12 d-none d-md-block" src="assets/imgs/cta/cta-9/img-2.png" alt="Carento" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 ps-lg-5">
+                            <a class="btn btn-signin bg-2 text-dark mb-4" href="#" data-lang-key="offer.button">Noi oferim</a>
+                            <h4 class="mb-4 neutral-1000"></h4>
+                            <p class="text-lg-medium neutral-500 mb-4" data-lang-key="offer.description">Închirierea automobilelor pentru orice necesitate – de la călătorii zilnice până la evenimente speciale. Cu o rețea de 7 filiale în întreaga țară și un parc auto diversificat.</p>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="list-ticks-green list-ticks-green-2">
+                                        <li class="neutral-1000 pe-0" data-lang-key="offer.item1">7 filiale în toată Moldova</li>
+                                        <li class="neutral-1000 pe-0" data-lang-key="offer.item2">Gamă variată de automobile</li>
+                                        <li class="neutral-1000 pe-0" data-lang-key="offer.item3">First Class Service</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary mt-2" href="#" style="display:none;">
+                                Get Started Now
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 15L15 8L8 1M15 8L1 8" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-overlay position-absolute bottom-0 end-0 h-75 background-brand-2 opacity-25 z-0 rounded-start-pill"></div>
+            </div>
+        </section>
+
+        <!-- testimonials -->
+        <section class="section-box py-96 background-body" style="display:none;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-auto mx-auto wow fadeInUp text-center d-flex flex-column align-items-center justify-content-center">
+                        <div class="box-author-testimonials background-100">
+                            <img src="assets/imgs/page/homepage1/testimonial.png" alt="Carento" />
+                            <img src="assets/imgs/page/homepage1/testimonial2.png" alt="Carento" />
+                            <img src="assets/imgs/page/homepage1/testimonial3.png" alt="Carento" />
+                            Testimonials
+                        </div>
+                        <h3 class="mt-8 mb-15 neutral-1000">What they say about us?</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="block-testimonials wow fadeIn ps-0 mask-image">
+                <div class="container-testimonials ">
+                    <div class="container-slider ps-0">
+                        <div class="box-swiper mt-30">
+                            <div class="swiper-container swiper-group-animate swiper-group-journey">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="card-testimonial background-card">
+                                            <div class="card-info">
+                                                <p class="text-xl-bold card-title neutral-1000">No Hidden Fees</p>
+                                                <p class="text-md-regular neutral-500">The attention to detail in the booking process made our trip stress-free, allowing us to focus on creating lasting memories together.</p>
+                                            </div>
+                                            <div class="card-top pt-40 border-0 mb-0">
+                                                <div class="card-author">
+                                                    <div class="card-image"><img src="assets/imgs/testimonials/testimonials-1/author-1.png" alt="Carento" /></div>
+                                                    <div class="card-info">
+                                                        <p class="text-lg-bold neutral-1000">Sophia Moore</p>
+                                                        <p class="text-md-regular neutral-1000">New York</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-rate"><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card-testimonial background-card">
+                                            <div class="card-info">
+                                                <p class="text-xl-bold card-title neutral-1000">Mobile-Friendly and Fast!</p>
+                                                <p class="text-md-regular neutral-500">Embarking on our dream vacation was made a breeze through the seamless coordination of items and hotels using this exceptional booking platform.</p>
+                                            </div>
+                                            <div class="card-top pt-40 border-0 mb-0">
+                                                <div class="card-author">
+                                                    <div class="card-image"><img src="assets/imgs/testimonials/testimonials-1/author-2.png" alt="Carento" /></div>
+                                                    <div class="card-info">
+                                                        <p class="text-lg-bold neutral-1000">Atend John</p>
+                                                        <p class="text-md-regular neutral-1000">Paris</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-rate"><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card-testimonial background-card">
+                                            <div class="card-info">
+                                                <p class="text-xl-bold card-title neutral-1000">Excellent Customer Service</p>
+                                                <p class="text-md-regular neutral-500">The overall process was not just efficient but also enriching, as the platform's intuitive design and user-friendly interface made every step enjoyable.</p>
+                                            </div>
+                                            <div class="card-top pt-40 border-0 mb-0">
+                                                <div class="card-author">
+                                                    <div class="card-image"><img src="assets/imgs/testimonials/testimonials-1/author-3.png" alt="Carento" /></div>
+                                                    <div class="card-info">
+                                                        <p class="text-lg-bold neutral-1000">Sara Mohamed</p>
+                                                        <p class="text-md-regular neutral-1000">Jakatar</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-rate"><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card-testimonial background-card">
+                                            <div class="card-info">
+                                                <p class="text-xl-bold card-title neutral-1000">Highly Flexible and Customizable</p>
+                                                <p class="text-md-regular neutral-500">The attention to detail in the booking process made our trip stress-free, allowing us to focus on creating lasting memories together.</p>
+                                            </div>
+                                            <div class="card-top pt-40 border-0 mb-0">
+                                                <div class="card-author">
+                                                    <div class="card-image"><img src="assets/imgs/testimonials/testimonials-1/author-1.png" alt="Carento" /></div>
+                                                    <div class="card-info">
+                                                        <p class="text-lg-bold neutral-1000">Sara Mohamed</p>
+                                                        <p class="text-md-regular neutral-1000">Jakatar</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-rate"><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /><img class="background-brand-2 p-1" src="assets/imgs/template/icons/star-black.svg" alt="Carento" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- faqs 1 -->
+        <section class="section-box box-faqs background-body pt-0">
+            <div class="box-faqs-inner">
+                <div class="container">
+                    <div class="text-center">
+                        <span class="text-sm-bold bg-2 p-3 rounded-12" data-lang-key="faq.support">Our Support</span>
+                        <h3 class="mt-4 neutral-1000" data-lang-key="faq.title">Frequently Asked Questions</h3>
+                    </div>
+                    <div class="block-faqs">
+                        <div class="accordion" id="accordionFAQ">
+                            <div class="accordion-item wow fadeInUp border-bottom-0">
+                                <h5 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button text-heading-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <h3>01</h3>
+                                        <p data-lang-key="faq.q1">Cum pot face o rezervare pe site-ul dumneavoastră?</p>
+                                    </button>
+                                </h5>
+                                <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body" data-lang-key="faq.a1">Accesează site-ul CarsLine (sau sună la birou).<br /><br />Specifică data şi ora de preluare a maşinii.<br /><br />Specifică locaţia de preluare (de ex. biroul din Chișinău, aeroport, etc).<br /><br />Specifică data şi ora de returnare (şi locul de returnare, dacă este diferit).<br /><br />Alege tipul de maşină (SUV, Sedan, Hatchback, Universal, Bus, Minivan) potrivit nevoilor tale.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item wow fadeInUp border-bottom-0">
+                                <h5 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button text-heading-5 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <h3>02</h3>
+                                        <p data-lang-key="faq.q2">De ce documente am nevoie pentru călătoria mea și cum le pot obține?
+                                        </p>
+                                    </button>
+                                </h5>
+                                <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body" data-lang-key="faq.a3">Buletin, permis de conducere original!</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item wow fadeInUp border-bottom-0">
+                                <h5 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button text-heading-5 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <h3>03</h3>
+                                        <p data-lang-key="faq.q4">Puteți specifica tipurile de carduri de credit/debit, portofele digitale sau alte metode de plată online acceptate?</p>
+                                    </button>
+                                </h5>
+                                <div class="accordion-collapse collapse" id="collapseFour" aria-labelledby="headingFour" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body" data-lang-key="faq.a2">Cash, card(orice banca cu metoda de plata internationala), transfer bancar.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item wow fadeInUp border-bottom-0">
+                                <h5 class="accordion-header" id="headingFive">
+                                    <button class="accordion-button text-heading-5 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        <h3>04</h3>
+                                        <p data-lang-key="faq.q5">Care este programul de lucru și la ce mă pot aștepta în ceea ce privește timpii de răspuns?
+                                        </p>
+                                    </button>
+                                </h5>
+                                <div class="accordion-collapse collapse" id="collapseFive" aria-labelledby="headingFive" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body" data-lang-key="faq.a4">Cu CarsLine ai suport 24/7, raspuns imediat la solicitare!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 wow fadeInUp mt-4">
+                            <div class="d-flex justify-content-center gap-2">
+                                <a class="btn btn-primary mt-2" href="contact.html" data-lang-key="faq.contactUs">
+                                    Contact Us
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 15L15 8L8 1M15 8L1 8" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                                <a class="btn btn-primary bg-transparent mt-2 invert" href="#" style="display: none;">
+                                    Help Center
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 15L15 8L8 1M15 8L1 8" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- blog-1 -->
+        <section class="section-box box-news background-body" style="display:none;">
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-md-9 mb-30 wow fadeInUp">
+                        <h3 class="title-svg neutral-1000 mb-15">Upcoming Cars & Events</h3>
+                        <p class="text-lg-medium text-bold neutral-500">Stay ahead with the latest car releases and upcoming events</p>
+                    </div>
+                    <div class="col-md-3 position-relative mb-30 wow fadeInUp">
+                        <div class="box-button-slider box-button-slider-team justify-content-end">
+                            <div class="swiper-button-prev swiper-button-prev-style-1 swiper-button-prev-2" tabindex="0" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-f147def6ba09c37a">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M7.99992 3.33325L3.33325 7.99992M3.33325 7.99992L7.99992 12.6666M3.33325 7.99992H12.6666" stroke="" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
+                            <div class="swiper-button-next swiper-button-next-style-1 swiper-button-next-2" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-f147def6ba09c37a">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M7.99992 12.6666L12.6666 7.99992L7.99992 3.33325M12.6666 7.99992L3.33325 7.99992" stroke="" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-list-news wow fadeInUp mt-5">
+                    <div class="box-swiper">
+                        <div class="swiper-container swiper-group-3">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide pt-2">
+                                    <div class="card-news background-card hover-up">
+                                        <div class="card-image">
+                                            <a href="blog-details.html">
+                                                <img src="assets/imgs/blog/blog-1/img-1.png" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <div class="card-info">
+                                            <a class="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="blog-grid.html">News</a>
+                                            <div class="card-meta"><span class="post-date neutral-1000">18 Sep 2024</span><span class="post-time neutral-1000">6 mins</span><span class="post-comment neutral-1000">38 comments</span></div>
+                                            <div class="card-title"><a class="text-xl-bold neutral-1000" href="blog-details.html">2025 Cadillac Escalade costs more money </a></div>
+                                            <div class="card-program">
+                                                <div class="endtime">
+                                                    <div class="card-author">
+                                                        <img src="assets/imgs/blog/blog-1/avatar-1.png" alt="Carento" />
+                                                        <p class="text-sm-bold neutral-1000">Jimmy Dave</p>
+                                                    </div>
+                                                    <div class="card-button"><a class="btn btn-gray" href="blog-details.html">Keep Reading</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide pt-2">
+                                    <div class="card-news background-card hover-up">
+                                        <div class="card-image">
+                                            <a href="blog-details.html">
+                                                <img src="assets/imgs/blog/blog-1/img-2.png" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <div class="card-info">
+                                            <a class="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="blog-grid.html">Trend</a>
+                                            <div class="card-meta"><span class="post-date neutral-1000">18 Sep 2024</span><span class="post-time neutral-1000">6 mins</span><span class="post-comment neutral-1000">38 comments</span></div>
+                                            <div class="card-title"><a class="text-xl-bold neutral-1000" href="blog-details.html">2025 BMW 5 Series Review: A balanced luxury sedan</a></div>
+                                            <div class="card-program">
+                                                <div class="endtime">
+                                                    <div class="card-author">
+                                                        <img src="assets/imgs/blog/blog-1/avatar-2.png" alt="Carento" />
+                                                        <p class="text-sm-bold neutral-1000">Steven Job</p>
+                                                    </div>
+                                                    <div class="card-button"><a class="btn btn-gray" href="blog-details.html">Keep Reading</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide pt-2">
+                                    <div class="card-news background-card hover-up">
+                                        <div class="card-image">
+                                            <a href="blog-details.html">
+                                                <img src="assets/imgs/blog/blog-1/img-3.png" alt="Carento" />
+                                            </a>
+                                        </div>
+                                        <div class="card-info">
+                                            <a class="bg-2 rounded-12 position-absolute top-0 end-0 translate-middle-y px-3 py-2 me-4 text-sm-bold" href="blog-grid.html">Discovery</a>
+                                            <div class="card-meta"><span class="post-date neutral-1000">18 Sep 2024</span><span class="post-time neutral-1000">6 mins</span><span class="post-comment neutral-1000">38 comments</span></div>
+                                            <div class="card-title"><a class="text-xl-bold neutral-1000" href="blog-details.html">2025 Ruf Rodeo is ready to wrangle some rough roads</a></div>
+                                            <div class="card-program">
+                                                <div class="endtime">
+                                                    <div class="card-author">
+                                                        <img src="assets/imgs/blog/blog-1/avatar-3.png" alt="Carento" />
+                                                        <p class="text-sm-bold neutral-1000">David Jame</p>
+                                                    </div>
+                                                    <div class="card-button"><a class="btn btn-gray" href="blog-details.html">Keep Reading</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-top" style="display: none;">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 col-md-6 text-center text-md-start">
+                            <h5 class="color-white wow fadeInDown">Subscribe to see secret deals prices drop the moment you sign up!</h5>
+                        </div>
+                        <div class="col-lg-7 col-md-6 text-center text-md-end mt-md-0 mt-4">
+                            <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                                <form class="form-newsletter wow fadeInUp" action="#">
+                                    <input class="form-control" type="text" placeholder="Enter your email" />
+                                    <input class="btn btn-brand-2" type="submit" value="Subscribe" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 footer-1">
+                        <div class="mt-20 mb-20">
+                            <a class="d-flex logo-left" href="index.html">
+                                <img class="light-mode" alt="Carento" src="assets/imgs/template/logo-carsline.svg" width="150" height="40" style="max-width: 100%; height: auto;" />
+                                <img class="dark-mode" alt="Carento" src="assets/imgs/template/logo-carsline.svg" width="150" height="40" style="max-width: 100%; height: auto;" />
+                            </a>
+                            <div class="box-info-contact mt-0">
+                                <p class="text-md neutral-400 icon-address" data-lang-key="footer.address">Adresă: or. Chișinău, str. Ion Creanga 10/1</p>
+                                <p class="text-md neutral-400 icon-worktime" data-lang-key="footer.hours">Ore de lucru: 8:00 - 17:00, Luni - Vineri</p>
+                                <p class="text-md neutral-400 icon-email">info@carsline.md</p>
+                            </div>
+                            <div class="box-need-help">
+                                <p class="need-help text-md-medium mb-5"></p>
+                                <br /><a class="heading-6 phone-support" href="tel:+373 60 411 444">+373 60 411 444</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-6 footer-3">
+                        <h2 class="text-linear-3" style="font-size: 18px; margin: 0; color: #ffffff;" data-lang-key="footer.company">Company</h2>
+                        <ul class="menu-footer">
+                            <li><a href="about-us.html" data-lang-key="footer.aboutUs">About Us</a></li>
+                            <li><a href="privacy-policy.html" data-lang-key="footer.privacyNotice">Privacy Notice</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom mt-50">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-6 text-md-start text-center mb-20">
+                      <!--  <p class="text-sm color-white"> 2024 Carento Inc. All rights reserved.</p>-->
+                        </div>
+                        <div class="col-md-6 text-md-end text-center mb-20">
+                            <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                                <p class="text-lg-bold neutral-0 d-inline-block mr-10" data-lang-key="footer.follow">Urmărește-ne</p>
+                                <div class="box-socials-footer d-inline-block">
+                                    <a class="icon-socials icon-instagram" href="https://www.instagram.com/carsline_md" target="_blank" rel="noopener noreferrer" aria-label="Urmărește-ne pe Instagram" title="Instagram CarsLine">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" aria-hidden="true">
+                                            <path d="M13.9146 1.6665H6.93127C3.89793 1.6665 2.0896 3.47484 2.0896 6.50817V13.4832C2.0896 16.5248 3.89793 18.3332 6.93127 18.3332H13.9063C16.9396 18.3332 18.7479 16.5248 18.7479 13.4915V6.50817C18.7563 3.47484 16.9479 1.6665 13.9146 1.6665ZM10.4229 13.2332C8.6396 13.2332 7.1896 11.7832 7.1896 9.99984C7.1896 8.2165 8.6396 6.7665 10.4229 6.7665C12.2063 6.7665 13.6563 8.2165 13.6563 9.99984C13.6563 11.7832 12.2063 13.2332 10.4229 13.2332ZM15.3563 5.73317C15.3146 5.83317 15.2563 5.92484 15.1813 6.00817C15.0979 6.08317 15.0063 6.1415 14.9063 6.18317C14.8063 6.22484 14.6979 6.24984 14.5896 6.24984C14.3646 6.24984 14.1563 6.1665 13.9979 6.00817C13.9229 5.92484 13.8646 5.83317 13.8229 5.73317C13.7813 5.63317 13.7563 5.52484 13.7563 5.4165C13.7563 5.30817 13.7813 5.19984 13.8229 5.09984C13.8646 4.9915 13.9229 4.90817 13.9979 4.82484C14.1896 4.63317 14.4813 4.5415 14.7479 4.59984C14.8063 4.60817 14.8563 4.62484 14.9063 4.64984C14.9563 4.6665 15.0063 4.6915 15.0563 4.72484C15.0979 4.74984 15.1396 4.7915 15.1813 4.82484C15.2563 4.90817 15.3146 4.9915 15.3563 5.09984C15.3979 5.19984 15.4229 5.30817 15.4229 5.4165C15.4229 5.52484 15.3979 5.63317 15.3563 5.73317Z" fill="white" />
+                                        </svg>
+                                    </a>
+                                    <a class="icon-socials icon-facebook" href="https://www.facebook.com/people/CarsLine/61573755534237" target="_blank" rel="noopener noreferrer" aria-label="Urmărește-ne pe Facebook" title="Facebook CarsLine">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" aria-hidden="true">
+                                            <path d="M18.7563 13.4915C18.7563 16.5248 16.9479 18.3332 13.9146 18.3332H12.9229C12.4646 18.3332 12.0896 17.9582 12.0896 17.4998V12.6915C12.0896 12.4665 12.2729 12.2748 12.4979 12.2748L13.9646 12.2498C14.0813 12.2415 14.1813 12.1582 14.2063 12.0415L14.4979 10.4498C14.5229 10.2998 14.4063 10.1582 14.2479 10.1582L12.4729 10.1832C12.2396 10.1832 12.0563 9.99985 12.0479 9.77485L12.0146 7.73317C12.0146 7.59984 12.1229 7.48318 12.2646 7.48318L14.2646 7.44984C14.4063 7.44984 14.5146 7.34152 14.5146 7.19985L14.4813 5.19983C14.4813 5.05816 14.3729 4.94984 14.2313 4.94984L11.9813 4.98318C10.5979 5.00818 9.49794 6.1415 9.52294 7.52484L9.5646 9.8165C9.57293 10.0498 9.38961 10.2332 9.15628 10.2415L8.15627 10.2582C8.0146 10.2582 7.90628 10.3665 7.90628 10.5082L7.93127 12.0915C7.93127 12.2332 8.0396 12.3415 8.18126 12.3415L9.18127 12.3248C9.41461 12.3248 9.59792 12.5082 9.60626 12.7332L9.68125 17.4832C9.68959 17.9498 9.31459 18.3332 8.84792 18.3332H6.93126C3.89793 18.3332 2.0896 16.5248 2.0896 13.4832V6.50817C2.0896 3.47484 3.89793 1.6665 6.93126 1.6665H13.9146C16.9479 1.6665 18.7563 3.47484 18.7563 6.50817V13.4915Z" fill="white" />
+                                        </svg>
+                                    </a>
+                                    <a class="icon-socials icon-twitter" href="https://www.tiktok.com/@carsline_md" target="_blank" rel="noopener noreferrer" aria-label="Urmărește-ne pe TikTok" title="TikTok CarsLine">
+                                        <img src="assets/imgs/template/icons/tiktok3.png" alt="TikTok" width="21" height="20" style="display: block;" />
+                                    </a>
+                               <!-- <a class="icon-socials icon-be" href="#">
+                                        <svg width="21" height="15" viewbox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.82393 10.736L13.9225 7.78881L8.82393 4.84165V10.736ZM20.1803 3.04389C20.308 3.50561 20.3964 4.12451 20.4554 4.91042C20.5242 5.69633 20.5536 6.37418 20.5536 6.96361L20.6126 7.78881C20.6126 9.94024 20.4554 11.5219 20.1803 12.5337C19.9347 13.4179 19.3649 13.9877 18.4808 14.2333C18.0191 14.361 17.1742 14.4494 15.8775 14.5083C14.6004 14.5771 13.4313 14.6066 12.3507 14.6066L10.7887 14.6655C6.67251 14.6655 4.10848 14.5083 3.09662 14.2333C2.21247 13.9877 1.64269 13.4179 1.39709 12.5337C1.26938 12.072 1.18097 11.4531 1.12203 10.6672C1.05326 9.8813 1.02379 9.20345 1.02379 8.61402L0.964844 7.78881C0.964844 5.63739 1.12203 4.05575 1.39709 3.04389C1.64269 2.15974 2.21247 1.58996 3.09662 1.34436C3.55834 1.21665 4.4032 1.12823 5.69995 1.06929C6.97705 1.00052 8.14609 0.971052 9.22671 0.971052L10.7887 0.912109C14.9049 0.912109 17.4689 1.06929 18.4808 1.34436C19.3649 1.58996 19.9347 2.15974 20.1803 3.04389Z" fill=""></path>
+                                        </svg>
+                                </a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--Vendors Scripts-->
+        <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+        <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+        <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+        <!--Other-->
+        <script src="assets/js/plugins/magnific-popup.js"></script>
+        <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+        <script src="assets/js/plugins/swiper-bundle.min.js"></script>
+        <script src="assets/js/plugins/slick.js"></script>
+        <script src="assets/js/plugins/jquery.carouselTicker.js"></script>
+        <script src="assets/js/plugins/masonry.min.js"></script>
+        <script src="assets/js/plugins/scrollup.js"></script>
+        <script src="assets/js/plugins/wow.js"></script>
+        <script src="assets/js/plugins/waypoints.js"></script>
+        <script src="assets/js/plugins/jquery.appear.js"></script>
+        <!--<script src="assets/js/plugins/jquery.odometer.min.js"></script>-->
+        <script src="assets/js/plugins/bootstrap-datepicker.js"></script>
+        <script src="assets/js/plugins/dark.js"></script>
+        <!-- Count down-->
+        <script src="assets/js/vendor/jquery.countdown.min.js"></script>
+        <script src="assets/js/plugins/noUISlider.js"></script>
+        <script src="assets/js/plugins/slider.js"></script>
+        <!-- Locale -->
+        <script src="assets/js/locale.js"></script>
+        <!--Custom script for this template-->
+        <script src="assets/js/main.js?v=1.0.0"></script>
+
+  <style>
+        /* Лаймовый цвет header по умолчанию (без прозрачности) */
+        .header.header-fixed.sticky-bar,
+        header.header.header-fixed.sticky-bar {
+            background: rgba(214, 255, 102, 0.9) !important;
+            background-color: rgba(214, 255, 102, 0.9) !important;
+            backdrop-filter: blur(50px);
+        }
+        
+        .header.header-fixed.sticky-bar .container-fluid,
+        header.header.header-fixed.sticky-bar .container-fluid {
+            background: rgba(214, 255, 102, 0.9) !important;
+            background-color: rgba(214, 255, 102, 0.9) !important;
+        }
+        
+        /* Лаймовый цвет header при скролле (тот же цвет) */
+        .header.header-fixed.sticky-bar.stick,
+        .header.header-fixed.sticky-bar.stick {
+            background-color: rgba(214, 255, 102, 0.9) !important;
+            backdrop-filter: blur(50px);
+        }
+        
+        .header.header-fixed.sticky-bar.stick .container-fluid,
+        header.header.header-fixed.sticky-bar.stick .container-fluid {
+            background-color: rgba(214, 255, 102, 0.9) !important;
+        }
+        
+        /* Цвет текста в меню - темный на лаймовом фоне */
+        .header .nav-main-menu .main-menu > li > a { 
+            color: #101010 !important; 
+        }
+        .header .nav-main-menu .main-menu > li > a:hover { 
+            color: #101010 !important; 
+            opacity: 0.85; 
+        }
+        
+        /* Цвет телефона, email и языка - темный на лаймовом фоне */
+        .header .phone-head, 
+        .header .email-head, 
+        .header .head-lang, 
+        .header .head-lang span { 
+            color: #101010 !important; 
+        }
+        .header .phone-head svg path, 
+        .header .email-head svg path { 
+            fill: #101010 !important; 
+        }
+        
+        /* Черная стрелка на переключателе языка - используем filter для изменения цвета */
+        .header .head-lang .icon-lang span {
+            filter: brightness(0) !important;
+        }
+        
+        /* Скрытие header при скролле вниз */
+        .header.header-fixed.sticky-bar.header-hidden {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .header.header-fixed.sticky-bar.stick {
+            transform: translateY(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Выравнивание высоты header как в index.html */
+        .header.sticky-bar .main-header,
+        .header.header-fixed.sticky-bar .main-header,
+        .header.sticky-bar.header-home-2 .main-header {
+            padding: 15px 0 !important;
+            min-height: 70px !important;
+        }
+        
+        /* Центрирование меню относительно всего header */
+        .main-header {
+            position: relative !important;
+        }
+        
+        .header-nav {
+            position: absolute !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: auto !important;
+        }
+        /* Исключаем скрытые элементы из расчета позиции */
+        .main-menu li.d-none {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            visibility: hidden !important;
+        }
+        
+        .header-left {
+            justify-content: flex-start !important;
+        }
+        .header-logo {
+            margin-right: 0 !important;
+        }
+        .header-logo img {
+            transform: scale(1.5) !important;
+            transform-origin: left center !important;
+        }
+        /* Убеждаемся, что header-right остается справа */
+        .header-right {
+            margin-left: auto !important;
+        }
+        
+        /* Скрытие кнопки переключения темы - принудительно темная тема */
+        .top-button-mode,
+        .btn-mode,
+        .change-mode,
+        [data-bs-theme-value] {
+            display: none !important;
+        }
+        
+        /* Hover на элементы дропдауна языка - затемнение */
+        .dropdown-account a:hover,
+        .head-lang .dropdown-account li a:hover {
+            opacity: 0.7 !important;
+        }
+        
+        /* Hover на вкладки меню (Acasă, Despre noi, Contact) - затемнение на лаймовом фоне */
+        .main-menu li a:hover,
+        .main-menu li a.color-white:hover,
+        nav.main-menu a:hover {
+            opacity: 0.7 !important;
+        }
+        
+        /* Hover на телефон и email в header - затемнение на лаймовом фоне */
+        .phone-head:hover,
+        .phone-head:hover span,
+        .email-head:hover,
+        .email-head:hover span {
+            opacity: 0.7 !important;
+        }
+        
+        /* Отступ для main, чтобы хедер не перекрывал контент */
+        main.main {
+            padding-top: 70px !important;
+        }
+        
+        /* Растягиваем секцию page-header вверх к header */
+        .page-header.pt-30.background-body,
+        .page-header {
+            margin-top: 0 !important;
+            padding-top: 100px !important;
+        }
+        
+        /* Ограничиваем ширину баннера до ширины контента страницы */
+        .page-header.pt-30.background-body .custom-container {
+            max-width: 1248px !important;
+            width: 100% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+        
+        @media (max-width: 1399px) {
+            .page-header.pt-30.background-body .custom-container {
+                max-width: 1140px !important;
+            }
+        }
+        
+        @media (max-width: 1199px) {
+            .page-header.pt-30.background-body .custom-container {
+                max-width: 960px !important;
+            }
+        }
+        
+        @media (max-width: 991px) {
+            .page-header.pt-30.background-body .custom-container {
+                max-width: 720px !important;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .page-header.pt-30.background-body .custom-container {
+                max-width: 540px !important;
+            }
+        }
+        
+        /* Убираем отступ для main */
+        main.main {
+            padding-top: 0 !important;
+        }
+        
+        main.main .page-header {
+            margin-top: 0 !important;
+        }
+        
+        /* Увеличение расстояния между хедером и баннером */
+        .page-header .bg-overlay.rounded-12.overflow-hidden {
+            margin-top: 40px !important;
+            border-radius: 60px !important;
+        }
+        
+        /* Сдвигаем текст в контейнере правее от края */
+        .page-header .container.position-absolute.top-50.start-50.translate-middle {
+            left: 60% !important;
+            transform: translate(-50%, -50%) !important;
+        }
+        
+        @media (max-width: 991px) {
+            .page-header .container.position-absolute.top-50.start-50.translate-middle {
+                left: 55% !important;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .page-header .container.position-absolute.top-50.start-50.translate-middle {
+                left: 50% !important;
+            }
+        }
+        
+        /* Вертикальное центрирование для row pb-50 */
+        .row.pb-50 {
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        /* Изменение положения текста для mb-4 neutral-1000 - выравнивание по левому краю */
+        h4.mb-4.neutral-1000,
+        .mb-4.neutral-1000 {
+            text-align: left !important;
+        }
+        
+        /* Поднятие списков list-ticks-green ближе к тексту */
+        .list-ticks-green.list-ticks-green-2 {
+            margin-top: -20px !important;
+            padding-top: 0 !important;
+        }
+        
+        /* Центрирование первой строчки для mb-4 mb-lg-0 d-block px-lg-5 px-3 */
+        .mb-4.mb-lg-0.d-block.px-lg-5.px-3 > div:first-child {
+            justify-content: center !important;
+        }
+        
+        .mb-4.mb-lg-0.d-block.px-lg-5.px-3 > div:first-child.d-flex {
+            justify-content: center !important;
+        }
+        
+        /* Удаление самолетиков с фона секции box-faqs */
+        .section-box.box-faqs.background-body.pt-0 {
+            background-image: none !important;
+        }
+        
+        .section-box.box-faqs.background-body.pt-0 .box-faqs-inner {
+            background-image: none !important;
+        }
+        
+        /* Разрешение переноса строки для text-white text-xl-medium */
+        .text-white.text-xl-medium {
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            display: block !important;
+        }
+        
+        /* Принудительный перенос строки для about.subtitle через CSS */
+        span[data-lang-key="about.subtitle"].text-white.text-xl-medium {
+            white-space: pre-line !important;
+        }
+        
+        
+        /* Изменение цвета номера телефона при наведении на #d6ff66 */
+        .heading-6.phone-support:hover,
+        .phone-support.heading-6:hover,
+        a.heading-6.phone-support:hover {
+            color: #d6ff66 !important;
+        }
+        
+        /* Выравнивание иконок социальных сетей в один ряд */
+        .box-socials-footer {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+        }
+
+        .box-socials-footer .icon-socials {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            line-height: 1 !important;
+        }
+
+        .box-socials-footer .icon-socials svg,
+        .box-socials-footer .icon-socials img {
+            display: block !important;
+            margin: 0 !important;
+        }
+
+        /* Иконки социальных сетей - белые в темной теме */
+        .box-socials-footer .icon-socials svg path,
+        .box-socials-footer .icon-socials svg,
+        .box-socials-footer .icon-socials.icon-instagram svg path,
+        .box-socials-footer .icon-socials.icon-facebook svg path,
+        .box-socials-footer .icon-socials.icon-twitter svg path {
+            fill: #ffffff !important;
+        }
+
+        /* Текст "Urmărește-ne" - белый в темной теме */
+        .text-lg-bold.neutral-0.d-inline-block.mr-10,
+        .text-lg-bold.neutral-0,
+        .box-socials-footer + .text-lg-bold.neutral-0,
+        .box-socials-footer ~ .text-lg-bold.neutral-0 {
+            color: #ffffff !important;
+        }
+
+        /* Изменение цвета иконок социальных сетей при наведении на #d6ff66 */
+        .box-socials-footer .icon-socials:hover svg path,
+        a.icon-socials:hover svg path {
+            fill: #d6ff66 !important;
+        }
+
+        /* TikTok в стиле как на картинке - белый квадрат с черным кругом и белой нотой */
+        .box-socials-footer .icon-socials.icon-twitter {
+            background-color: #ffffff !important;
+            border-radius: 4px !important;
+            padding: 2px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 19px !important;
+            height: 18px !important;
+            margin-left: 0.5rem !important;
+        }
+        .box-socials-footer .icon-socials.icon-twitter img {
+            filter: none !important;
+            opacity: 1 !important;
+            display: block !important;
+            width: 19px !important;
+            height: 18px !important;
+            object-fit: contain !important;
+        }
+        /* Hover эффект для TikTok - лаймовый фон */
+        .box-socials-footer .icon-socials.icon-twitter:hover {
+            background-color: #d6ff66 !important;
+        }
+        .box-socials-footer .icon-socials.icon-twitter:hover img {
+            filter: none !important;
+            opacity: 1 !important;
+        }
+        
+        /* Изменение цвета ссылок в menu-footer при наведении на #d6ff66 */
+        .menu-footer li a:hover,
+        .footer .menu-footer li a:hover {
+            color: #d6ff66 !important;
+        }
+        
+        /* Все серые шрифты в футере - цвет как у neutral-500 */
+        .footer .menu-footer li a,
+        .footer .menu-footer a,
+        .footer-1 .menu-footer li a,
+        .footer-2 .menu-footer li a,
+        .footer-3 .menu-footer li a,
+        .footer-4 .menu-footer li a,
+        .footer-5 .menu-footer li a {
+            color: var(--bs-neutral-500) !important;
+        }
+
+        .footer .text-md.neutral-400,
+        .footer .box-info-contact .text-md.neutral-400 {
+            color: var(--bs-neutral-500) !important;
+        }
+        
+        /* Изменение цвета элемента heading-6 phone-support на #d6ff66 */
+        .heading-6.phone-support,
+        .phone-support.heading-6 {
+            color: #d6ff66 !important;
+        }
+        
+        /* Лаймовый фон кнопки scrollUp и черная стрелка */
+        #scrollUp {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+        }
+        #scrollUp svg path {
+            fill: #101010 !important;
+        }
+        
+        /* Изменение цвета кнопки "Noi oferim" при наведении на #d6ff66 */
+        a[data-lang-key="offer.button"]:hover,
+        a.btn.btn-signin[data-lang-key="offer.button"]:hover {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            border-color: #d6ff66 !important;
+            color: #000000 !important;
+        }
+        
+        /* Изменение цвета кнопки "Contact Us" на #d6ff66 */
+        a.btn.btn-primary[href="contact.html"],
+        a.btn.btn-primary.mt-2[href="contact.html"] {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            border-color: #d6ff66 !important;
+            color: #000000 !important;
+        }
+        a.btn.btn-primary[href="contact.html"] svg path {
+            stroke: #000000 !important;
+        }
+        /* Изменение цвета кнопки "Contact Us" при наведении на #d6ff66 */
+        a.btn.btn-primary[href="contact.html"]:hover,
+        a.btn.btn-primary.mt-2[href="contact.html"]:hover {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            border-color: #d6ff66 !important;
+            color: #000000 !important;
+            opacity: 0.9;
+        }
+        a.btn.btn-primary[href="contact.html"]:hover svg path {
+            stroke: #000000 !important;
+        }
+        
+        /* Ограничение ширины header и main-header - чтобы они не выходили за границы страницы */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+        
+        * {
+            box-sizing: border-box !important;
+        }
+        
+        .header {
+            max-width: 100vw !important;
+            width: 100% !important;
+            overflow-x: hidden !important;
+        }
+        
+        .header .container-fluid {
+            max-width: 100vw !important;
+            width: 100% !important;
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+            overflow-x: visible !important;
+        }
+        
+        .header .main-header {
+            max-width: 100% !important;
+            width: 100% !important;
+            overflow-x: visible !important;
+        }
+        
+        @media (max-width: 991px) {
+            html, body {
+                overflow-x: visible !important;
+                max-width: 100vw !important;
+            }
+            
+            /* Скрываем навигационное меню на мобильных */
+            .header .header-nav,
+            .header-nav {
+                display: none !important;
+            }
+            
+            /* Показываем номер телефона на мобильных */
+            .header .phone-head,
+            .header-right .phone-head,
+            .phone-head {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            
+            /* Показываем переключатель языка на мобильных */
+            .header .head-lang,
+            .header-right .head-lang,
+            .head-lang {
+                display: inline-block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            
+            /* Показываем бургер-меню на мобильных */
+            .header .burger-icon,
+            .header-right .burger-icon,
+            .burger-icon {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            
+            /* Скрываем email на мобильных */
+            .header .email-head,
+            .header-right .email-head,
+            .email-head {
+                display: none !important;
+            }
+            
+            /* Скрываем переключатель темы на мобильных */
+            .header .top-button-mode,
+            .header-right .top-button-mode,
+            .top-button-mode {
+                display: none !important;
+            }
+            
+            /* Реорганизация header для мобильных - все в один ряд */
+            .main-header {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                flex-wrap: nowrap !important;
+            }
+            
+            .header-left {
+                flex: 0 0 auto !important;
+                display: flex !important;
+                align-items: center !important;
+                max-width: 50% !important;
+                flex-shrink: 0 !important;
+            }
+            
+            .header-logo {
+                margin-right: 10px !important;
+            }
+            
+            .header-logo img {
+                transform: scale(1) !important;
+                max-width: 100px !important;
+                height: auto !important;
+            }
+            
+            /* Адаптация header-right для мобильных - все в один ряд */
+            .header-right {
+                display: flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+                flex-wrap: nowrap !important;
+                margin-left: auto !important;
+                margin-right: -35px !important;
+                max-width: 50% !important;
+                flex-shrink: 1 !important;
+                min-width: 0 !important;
+            }
+            
+            /* Уменьшаем отступы для мобильных */
+            .header-right > div {
+                margin-right: 0 !important;
+            }
+            
+            .header .phone-head,
+            .header-right .phone-head,
+            .phone-head {
+                font-size: 11px !important;
+                padding: 2px 0 !important;
+                white-space: nowrap !important;
+            }
+            
+            .header .phone-head svg,
+            .header-right .phone-head svg,
+            .phone-head svg {
+                width: 12px !important;
+                height: 12px !important;
+                margin-right: 4px !important;
+            }
+            
+            /* Компактный переключатель языка на мобильных */
+            .header .head-lang .text-14-medium,
+            .header-right .head-lang .text-14-medium,
+            .head-lang .text-14-medium {
+                font-size: 12px !important;
+            }
+            
+            /* Компактное бургер-меню на мобильных - изображение */
+            .header .burger-icon,
+            .header-right .burger-icon,
+            .burger-icon {
+                width: auto !important;
+                height: auto !important;
+                min-width: 24px !important;
+                min-height: 24px !important;
+                background-color: transparent !important;
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 8px 0 !important;
+                margin-right: 12px !important;
+                position: relative !important;
+                right: auto !important;
+                top: auto !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            
+            /* Стили для изображения бургер-меню */
+            .header .burger-icon img,
+            .header-right .burger-icon img,
+            .burger-icon img {
+                width: 28px !important;
+                height: 28px !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                object-fit: contain !important;
+                max-width: 28px !important;
+                max-height: 28px !important;
+                position: relative !important;
+                z-index: 10 !important;
+            }
+            
+            /* Скрываем span элементы, если они остались */
+            .header .burger-icon > span,
+            .header-right .burger-icon > span,
+            .burger-icon > span {
+                display: none !important;
+            }
+            
+            .header {
+                max-width: 100vw !important;
+                width: 100vw !important;
+                overflow-x: hidden !important;
+            }
+            
+            .header .container-fluid {
+                padding-left: 10px !important;
+                padding-right: 0 !important;
+                max-width: 100vw !important;
+                width: 100vw !important;
+                overflow: visible !important;
+            }
+            
+            .header .main-header {
+                max-width: 100% !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Header должен быть поверх контента */
+            .header,
+            .header.header-fixed,
+            .header.sticky-bar {
+                z-index: 1000 !important;
+            }
+            
+            /* Выпадающий список языка должен быть поверх всех элементов */
+            .header .head-lang,
+            .header-right .head-lang,
+            .head-lang {
+                position: relative !important;
+                z-index: 10001 !important;
+            }
+            
+            .header .head-lang .dropdown-account,
+            .header-right .head-lang .dropdown-account,
+            .head-lang .dropdown-account {
+                position: absolute !important;
+                z-index: 10002 !important;
+            }
+            
+            /* Убеждаемся, что выпадающий список виден */
+            .header .head-lang .dropdown-account ul,
+            .header-right .head-lang .dropdown-account ul,
+            .head-lang .dropdown-account ul {
+                z-index: 10003 !important;
+            }
+        }
+        
+        /* Скрытие секции навигации */
+        .background-body.position-absolute.z-1.top-100.start-50.translate-middle.px-3.py-2.rounded-12.border.d-flex.gap-3,
+        div[class*="navigation-page"],
+        [class*="navigation-page"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+    </style>
+    <style>
+        /* Переопределяем @font-face правила Font Awesome с font-display: swap для оптимизации загрузки */
+        /* Эти правила загружаются раньше CSS из CDN, поэтому имеют приоритет */
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 900;
+            font-display: swap;
+            src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2") format("woff2"),
+                 url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff") format("woff");
+        }
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2") format("woff2"),
+                 url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff") format("woff");
+        }
+        @font-face {
+            font-family: "Font Awesome 6 Brands";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2"),
+                 url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff") format("woff");
+        }
+        
+        /* Brand Guide Fonts from project - Trial versions, no fallback */
+        @font-face {
+            font-family: "Basenji Variable";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("assets/fonts/Basenji_Variable_Regular.otf") format("opentype");
+        }
+        
+        @font-face {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("assets/fonts/Nexa_Bold/Nexa-Trial-Regular.ttf") format("truetype");
+        }
+
+        @font-face {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-style: normal;
+            font-weight: 800;
+            font-display: swap;
+            src: url("assets/fonts/Nexa_Bold/Nexa-Trial-ExtraBold.ttf") format("truetype");
+        }
+
+        /* Применяем Nexa Trial по всему сайту */
+        body,
+        body * {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1; /* включает локализацию для ro */
+            font-synthesis-weight: none;     /* запрет "фальш-жирного" */
+        }
+
+        /* Basenji Variable для заголовка h1 в баннере */
+        .block-banner-home1 h1,
+        .block-banner-home1 h1 *,
+        .block-banner-home1 h1 span {
+            font-family: "Basenji Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1;
+            font-synthesis-weight: none;
+        }
+
+        /* Применение шрифта Nexa к элементам с icon-address */
+        .text-md.neutral-400.icon-address,
+        .text-md.neutral-400.icon-worktime,
+        .text-md.neutral-400.icon-email {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        /* Применение шрифта Nexa к элементам в box-info-contact */
+        .box-info-contact.mt-0,
+        .box-info-contact.mt-0 * {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        /* Basenji Variable для заголовка "Despre noi" */
+        h2[data-lang-key="about.title"],
+        h2.text-white[data-lang-key="about.title"] {
+            font-family: "Basenji Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1;
+            font-synthesis-weight: none;
+        }
+
+        /* Для русского языка - без Basenji, используем Nexa */
+        body[data-lang="ru"] .block-banner-home1 h1,
+        body[data-lang="ru"] .block-banner-home1 h1 *,
+        body[data-lang="ru"] .block-banner-home1 h1 span,
+        body[data-lang="ru"] h2[data-lang-key="about.title"],
+        body[data-lang="ru"] h2.text-white[data-lang-key="about.title"] {
+            font-family: "Nexa Trial", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+            font-feature-settings: "locl" 1;
+            font-synthesis-weight: none;
+        }
+
+        /* Лаймовый цвет для box-tag background-brand-2 */
+        .box-tag.background-brand-2 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+        }
+
+        /* Убираем промежуток между box-why-book-22 и section-cta-7 */
+        .section-box.box-why-book-22.background-body {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        /* Убираем padding-top у section-cta-7, чтобы поднять к box-why-book-22 */
+        .section-cta-7.background-body.py-96 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        /* Убираем отступ между этими секциями */
+        .section-box.box-why-book-22.background-body + .section-cta-7.background-body.py-96,
+        .box-why-book-22 + .section-cta-7,
+        section.section-box.box-why-book-22.background-body + section.section-cta-7.background-body.py-96 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        /* Убираем отступы у контейнеров внутри секций */
+        .section-box.box-why-book-22.background-body > .container {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .section-cta-7.background-body.py-96 > .box-cta-6 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* Лаймовый цвет для btn-signin и убираем кликабельность */
+        .btn.btn-signin.bg-2.text-dark.mb-4 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        .btn.btn-signin.bg-2.text-dark.mb-4:hover {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+        }
+
+        /* Лаймовый цвет для section-static-1 */
+        .section-static-1.background-body.background-2.pt-80.pb-80 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+            padding-bottom: 80px !important;
+        }
+        /* Отсоединяем section-static-1 от section-cta-7 - черное пространство между ними */
+        .section-cta-7.background-body.py-96 + .section-static-1.background-body.background-2.pt-80.pb-80,
+        section.section-cta-7 + section.section-static-1 {
+            margin-top: -85px !important;
+            padding-top: 80px !important;
+        }
+        /* Добавляем margin-top для элементов внутри .row */
+        .row > * {
+            margin-top: 20px !important;
+        }
+        /* Черный шрифт в section-static-1 */
+        .section-static-1.background-body.background-2.pt-80.pb-80,
+        .section-static-1.background-body.background-2.pt-80.pb-80 * {
+            color: #101010 !important;
+        }
+        .section-static-1.background-body.background-2.pt-80.pb-80 h3,
+        .section-static-1.background-body.background-2.pt-80.pb-80 p,
+        .section-static-1.background-body.background-2.pt-80.pb-80 .neutral-1000 {
+            color: #101010 !important;
+        }
+        /* Убираем отступы у контейнера и элементов внутри section-static-1 */
+        .section-static-1.background-body.background-2.pt-80.pb-80 > .container {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+        .section-static-1.background-body.background-2.pt-80.pb-80 .row {
+            margin-bottom: 0 !important;
+        }
+        .section-static-1.background-body.background-2.pt-80.pb-80 .row > *:last-child {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        
+        /* Весь текст в секции статистики в одной строке */
+        .section-static-1.background-body.background-2.pt-80.pb-80 p {
+            white-space: nowrap !important;
+        }
+        
+        /* Лаймовый цвет для box-tag */
+        .box-tag.bg-white.p-3.d-flex.flex-column.position-absolute.bottom-0.end-0.rounded-12.m-3 {
+            background-color: #d6ff66 !important;
+            background: #d6ff66 !important;
+        }
+        
+        /* Лаймовая иконка и серый текст для list-ticks-green-2 */
+        .list-ticks-green.list-ticks-green-2 li,
+        .list-ticks-green-2 li {
+            color: var(--bs-neutral-500) !important;
+            position: relative !important;
+        }
+        
+        /* Лаймовая иконка через псевдоэлемент */
+        .list-ticks-green.list-ticks-green-2 li {
+            background-image: none !important;
+            position: relative !important;
+        }
+        
+        .list-ticks-green.list-ticks-green-2 li::before,
+        .list-ticks-green-2 li::before {
+            content: "✓" !important;
+            color: #d6ff66 !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            line-height: 1 !important;
+            background-image: none !important;
+            width: 20px !important;
+            text-align: center !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Приближение галочки к тексту - сдвигаем галочку вправо */
+        .list-ticks-green.list-ticks-green-2 li::before,
+        .list-ticks-green-2 li::before {
+            left: 16px !important; /* Сдвигаем галочку вправо, ближе к тексту */
+        }
+        
+        /* Сдвиг текста вниз для элементов с классами mt-4 neutral-1000 */
+        .mt-4.neutral-1000,
+        h3.mt-4.neutral-1000 {
+            margin-top: 2.75rem !important;
+        }
+        
+        /* Центрирование изображения баннера */
+        .img-banner {
+            object-fit: cover !important;
+            object-position: center !important;
+        }
+        
+        /* Одинаковый размер для первой и второй картинки в секции section-1 */
+        .section-1 .row.g-4 > .col-lg-4.col-md-6:first-child .box-image,
+        .section-1 .row.g-4 > .col-lg-4.col-md-6:nth-child(2) .box-image {
+            height: 100% !important;
+        }
+        
+        .section-1 .row.g-4 > .col-lg-4.col-md-6:first-child .box-image img,
+        .section-1 .row.g-4 > .col-lg-4.col-md-6:nth-child(2) .box-image img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+        
+        /* Скрываем секцию статистики на мобильной версии */
+        @media (max-width: 991px) {
+            .section-static-1.background-body.background-2.pt-80.pb-80 {
+                display: none !important;
+            }
+        }
+/* Общий фикс: хедер не должен резать выпадающие элементы */
+.header .container-fluid,
+.header .main-header {
+    overflow: visible !important;
+}
+
+/* Мобильная версия — дополнительно страхуемся */
+@media (max-width: 991px) {
+    .header .container-fluid,
+    .header .main-header {
+        overflow: visible !important;
+    }
+
+    /* Языковой переключатель и его дропдаун — нормальное позиционирование */
+    .head-lang {
+        position: relative !important;
+        z-index: 10001 !important;
+    }
+
+    .head-lang .dropdown-account {
+        position: absolute !important;
+        top: 100%;   /* сразу под RO/EN/RU */
+        right: 0;
+        z-index: 10002 !important;
+    }
+}
+    </style>
+  </style>
+
+</body>
+
+</html>

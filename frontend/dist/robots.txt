@@ -1,0 +1,40 @@
+User-agent: *
+Allow: /
+
+# Блокируем служебные и тестовые страницы
+Disallow: /404.html
+Disallow: /test.html
+Disallow: /test-image.html
+Disallow: /*.backup
+Disallow: /*_utf8.html
+
+# Блокируем личные кабинеты (dashboard)
+Disallow: /agent-dashboard-*.html
+Disallow: /user-dashboard-*.html
+
+# Блокируем API endpoints
+Disallow: /admin/
+Disallow: /cars/
+Disallow: /api/
+
+# Блокируем служебные файлы
+Disallow: /*.map$
+Disallow: /*копия*
+
+# Разрешаем основные страницы
+Allow: /index.html
+Allow: /about-us.html
+Allow: /contact.html
+Allow: /cars-list-*.html
+Allow: /cars-details-*.html
+Allow: /blog-*.html
+Allow: /services.html
+Allow: /pricing.html
+Allow: /faqs.html
+Allow: /term.html
+Allow: /calculator.html
+Allow: /dealer-*.html
+Allow: /shop-*.html
+
+# Sitemap
+Sitemap: https://new.carsline.md/sitemap.xml
