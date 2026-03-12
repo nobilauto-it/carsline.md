@@ -34,7 +34,7 @@ const Locale = {
             'contact.hours': 'Hours: 8:00 - 17:00, Mon - Sat',
             'contact.email': 'support@carento.com',
             'contact.getInTouch': 'Luați legătura',
-            'contact.ourLocation': 'Locația noastră',
+            'contact.ourLocation': 'Locația noastrră',
             'contact.agentsWorldwide': 'Agenții noștri din întreaga țară',
             'contact.firstName': 'Prenume',
             'contact.lastName': 'Nume',
