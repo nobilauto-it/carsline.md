@@ -46,6 +46,20 @@ function copyAssets() {
         .pipe(gulp.dest('dist/assets'));
 }
 
+// Copy backend JS (locale, cars_loader, main) into dist so build includes translations and API loader
+function copyBackendAssets() {
+    return gulp
+        .src(
+            [
+                '../backend/assets/js/locale.js',
+                '../backend/assets/js/cars_loader.js',
+                '../backend/assets/js/main.js',
+            ],
+            { base: '../backend/assets/js' },
+        )
+        .pipe(gulp.dest('dist/assets/js'));
+}
+
 // Copy other resource files (changed only)
 function copyAssetsChanged() {
     return gulp
@@ -76,8 +90,8 @@ function buildStyles() {
         .pipe(gulp.dest('src/assets/css/'));
 }
 
-// Build task
-gulp.task('build', gulp.series(includeHtml, beautifyHtml, buildStyles, copyAssets));
+// Build task: frontend assets first, then backend JS (overwrites main.js, adds locale.js + cars_loader.js)
+gulp.task('build', gulp.series(includeHtml, beautifyHtml, buildStyles, copyAssets, copyBackendAssets));
 
 // Initialize BrowserSync and track changes
 gulp.task(
@@ -97,6 +111,9 @@ gulp.task(
             ],
             copyAssetsChanged
         );
+        gulp.watch('../backend/assets/js/locale.js', copyBackendAssets);
+        gulp.watch('../backend/assets/js/cars_loader.js', copyBackendAssets);
+        gulp.watch('../backend/assets/js/main.js', copyBackendAssets);
 
         browserSync.init({
             server: {
